@@ -1,10 +1,29 @@
 # 说明
 
-  `hawthorn-cli` hawthorn-cli的历史版本记录  
+  `hawthorn-pro` hawthorn-pro的历史版本记录  
   作者:andy.ten@tom.com
       xukaixing@hotmail.com
   
 ## 版本
+> v1.0.6 : 2020.08.26    
+>> 重构包结构  
+>> 将工程拆分为多个子module    
+>> 将platform工程增加自动装载    
+>> admin工程增加Generator生成器类   
+
+---
+
+> v1.0.5 : 2020.08.21  
+>> 实现公共字段自动填充功能
+>> 实现物理分页demo  
+>> 实现结果集封装功能，controller直接对象    
+>> 增加逻辑删除处理  
+>> 增加全表删除、全表更新阻断  
+>> 增加表乐观锁version处理  
+>> 实现generator功能     
+
+---
+
 > v1.0.4 : 2020.08.18  
 >> 增加BasePO、BaseModel、BaseDTO封装类     
 >> 增加Str2Util、Map2ObjectUtil工具类，处理字符串工具类、map和object对象互相转换工具类      

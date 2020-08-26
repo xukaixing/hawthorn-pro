@@ -1,10 +1,18 @@
 # 说明
 
-  `hawthorn-cli` hawthorn搭建模版。   
+  `hawthorn-pro` hawthorn微服务框架平台   
   作者:andy.ten@tom.com
       xukaixing@hotmail.com
   
 ## 版本
+
+> v1.0.6 : 2020.08.26    
+>> 重构包结构  
+>> 将工程拆分为多个子module    
+>> 将platform工程增加自动装载    
+>> admin工程增加Generator生成器类   
+
+---
 
 > v1.0.5 : 2020.08.21  
 >> 实现公共字段自动填充功能
@@ -22,16 +30,6 @@
 >> 增加Str2Util、Map2ObjectUtil工具类，处理字符串工具类、map和object对象互相转换工具类      
 >> 增加Yml、Property文件读取工具类    
 >> 增加mp generator功能  
-
----
-
-> v1.0.3 : 2020.08.10 
->> 增加application.yml多环境配置    
->> 增加bootstrap.yml配置文件    
->> 增加mybatis配置  
->> 增加logback.xml多环境配置  
-
----
 
 ## 环境
 
