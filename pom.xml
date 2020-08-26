@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <modules>
+    <module>hawthorn-component</module>
+    <module>hawthorn-platform</module>
+  </modules>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.3.1.RELEASE</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+  <groupId>com.andyten</groupId>
+  <artifactId>hawthorn-parent</artifactId>
+  <version>5.0.1-RELEASE</version>
+  <packaging>pom</packaging>
+  <name>hawthorn-parent</name>
+  <description>Hawthorn project for Parent</description>
+
+  <properties>
+    <!-- 设置源码和输出文件的编码规则 -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <!-- 版本清单 -->
+    <java.version>8</java.version>
+    <maven.build.timestamp.format>yyyy_MM_dd_HH_mm_ss</maven.build.timestamp.format>
+    <project.build.date>${maven.build.timestamp}</project.build.date>
+    <swagger2.version>2.9.2</swagger2.version>
+    <!-- swagger的annotations 、models 版本升级为1.5.22.默认为1.5.20,解决刷新swagger页面，会报java.lang.NumberFormatException: For input string: "" 错误-->
+    <swagger2.annotations.version>1.5.22</swagger2.annotations.version>
+    <swagger2.models.version>1.5.22</swagger2.models.version>
+    <swagger.ui.version>2.9.2</swagger.ui.version>
+    <swagger.bootstrap.ui.version>1.9.2</swagger.bootstrap.ui.version>
+    <hutool.version>5.3.9</hutool.version>
+    <!--
+    <jdbc.mysql.version>5.1.35</jdbc.mysql.version>
+    -->
+    <jdbc.mysql.version>8.0.20</jdbc.mysql.version>
+    <mybatis.plus.version>3.3.2</mybatis.plus.version>
+    <mybatis.plus.gen.version>3.3.2</mybatis.plus.gen.version>
+    <mybatis.plus.gen.velocity.version>2.2</mybatis.plus.gen.velocity.version>
+    <alibaba.druid.version>1.1.22</alibaba.druid.version>
+    <alibaba.fastjson.version>1.2.73</alibaba.fastjson.version>
+
+    <apache.common.lang3.version>3.7</apache.common.lang3.version>
+    <apache.httpclient.version>4.5.9</apache.httpclient.version>
+    <common.collection.version>3.2.2</common.collection.version>
+    <common.beanutils.version>1.9.4</common.beanutils.version>
+
+  </properties>
+  <!-- 配置Spring Icloud -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>Hoxton.RELEASE</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-config</artifactId>
+    </dependency>
+
+    <!-- 支持 @ConfigurationProperties 注解，application.yml自定义属性 -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <!-- junit test -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- spring aop -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-aop</artifactId>
+    </dependency>
+
+    <!-- spring监控 -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+
+    <!-- swagger2 -->
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger2</artifactId>
+      <version>${swagger2.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.swagger</groupId>
+      <artifactId>swagger-annotations</artifactId>
+      <version>${swagger2.annotations.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.swagger</groupId>
+      <artifactId>swagger-models</artifactId>
+      <version>${swagger2.models.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger-ui</artifactId>
+      <version>${swagger.ui.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.xiaoymin</groupId>
+      <artifactId>swagger-bootstrap-ui</artifactId>
+      <version>${swagger.bootstrap.ui.version}</version>
+    </dependency>
+
+    <!-- 配置lombok -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <!-- 配置hutool-->
+    <dependency>
+      <groupId>cn.hutool</groupId>
+      <artifactId>hutool-all</artifactId>
+      <version>${hutool.version}</version>
+    </dependency>
+
+    <!--mysql 驱动-->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>${jdbc.mysql.version}</version>
+    </dependency>
+
+    <!-- jpa 规范
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    -->
+    <!-- mybatis-plus -->
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-boot-starter</artifactId>
+      <version>${mybatis.plus.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-generator</artifactId>
+      <version>${mybatis.plus.gen.version}</version>
+    </dependency>
+    <!-- mybatis-plus 模版引擎依赖 -->
+    <dependency>
+      <groupId>org.apache.velocity</groupId>
+      <artifactId>velocity-engine-core</artifactId>
+      <version>${mybatis.plus.gen.velocity.version}</version>
+    </dependency>
+    <!--
+    <dependency>
+      <groupId>org.freemarker</groupId>
+      <artifactId>freemarker</artifactId>
+      <version>2.3.30</version>
+    </dependency>
+    -->
+    <!--配置druid数据库连接池 spring boot 2.x 集成durid需要将durid升级到1.1.10。-->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid-spring-boot-starter</artifactId>
+      <version>${alibaba.druid.version}</version>
+    </dependency>
+
+    <!-- alibaba fastjson工具类 -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>${alibaba.fastjson.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>${apache.httpclient.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+      <version>${common.collection.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils</artifactId>
+      <version>${common.beanutils.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${apache.common.lang3.version}</version>
+    </dependency>
+
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

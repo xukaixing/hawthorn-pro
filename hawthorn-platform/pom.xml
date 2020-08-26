@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.andyten</groupId>
+    <artifactId>hawthorn-parent</artifactId>
+    <version>5.0.1-RELEASE</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+  <artifactId>hawthorn-platform</artifactId>
+  <version>1.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <name>hawthorn-platform</name>
+  <description>Hawthorn project for Platform</description>
+
+  <properties>
+    <hawthorn.component.version>1.0.1-SNAPSHOT</hawthorn.component.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.andyten</groupId>
+      <artifactId>hawthorn-component</artifactId>
+      <version>${hawthorn.component.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <resources>
+      <!--java文件的路径-->
+      <!--
+      <resource>
+        <directory>src/main/java</directory>
+        <includes>
+          <include>**/*.*</include>
+        </includes>
+      </resource>
+      -->
+      <resource>
+        <directory>src/main/resources</directory><!--资源文件的路径-->
+        <includes>
+          <include>**/*.*</include>
+        </includes>
+        <!-- <filtering>false</filtering>-->
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>8</source>
+          <target>8</target>
+        </configuration>
+      </plugin>
+      <!-- mvn test：忽略对测试用例的调用 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.20.1</version>
+        <configuration>
+          <skipTests>true</skipTests>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
