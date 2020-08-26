@@ -7,7 +7,7 @@ package $poPackage;
 #foreach($pkg in ${table.importPackages})
 import ${pkg};
 #end
-import com.hawthorn.framework.model.BasePO;
+import com.hawthorn.platform.model.BasePO;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

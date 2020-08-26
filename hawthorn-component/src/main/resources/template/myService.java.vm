@@ -9,7 +9,7 @@ package ${package.Service};
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import $dtoPackage.$domainName;
-import com.hawthorn.framework.utils.bean.QcBean;
+import com.hawthorn.component.utils.bean.QcBean;
 
 import java.util.List;
 import java.util.Map;

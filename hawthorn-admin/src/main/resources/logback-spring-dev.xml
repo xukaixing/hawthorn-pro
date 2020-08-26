@@ -137,7 +137,7 @@
   </appender>
 
   <!-- execTime执行方法慢日志 -->
-  <logger name="com.hawthorn.framework.aspect.ExecTimeAspect">
+  <logger name="com.hawthorn.platform.aspect.ExecTimeAspect">
     <appender-ref ref="ExecTime_FILE"/>
   </logger>
 

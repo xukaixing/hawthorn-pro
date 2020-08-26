@@ -11,8 +11,8 @@ import $dtoPackage.$domainName;
 import $poPackage.$!{entity};
 import ${package.Mapper}.${table.mapperName};
 import ${package.Service}.${table.serviceName};
-import com.hawthorn.framework.service.DBService;
-import com.hawthorn.framework.utils.bean.QcBean;
+import com.hawthorn.platform.service.DBService;
+import com.hawthorn.component.utils.bean.QcBean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

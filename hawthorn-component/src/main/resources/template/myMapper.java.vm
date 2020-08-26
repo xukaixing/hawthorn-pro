@@ -8,7 +8,7 @@ package ${package.Mapper};
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.stereotype.Repository;
-import com.hawthorn.framework.utils.bean.QcBean;
+import com.hawthorn.component.utils.bean.QcBean;
 import $dtoPackage.$dtoName;
 import $poPackage.${entity};
 import ${superMapperClassPackage};

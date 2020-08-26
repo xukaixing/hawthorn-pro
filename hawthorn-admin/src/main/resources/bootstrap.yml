@@ -146,7 +146,7 @@ mybatis-plus:
       logic-not-delete-value: -1
       #sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
       #    #自定义填充策略接口实现
-      #meta-object-handler: com.hawthorn.framework.model.MetaObjectHandleImpl
+      #meta-object-handler: com.hawthorn.platform.model.MetaObjectHandleImpl
   configuration:
     #配置数据库column列名下划线命名返回为java实体属性的驼峰命名，自动匹配；无需as（没开启这个，SQL需要写as： select user_name as userName）
     map-underscore-to-camel-case: true

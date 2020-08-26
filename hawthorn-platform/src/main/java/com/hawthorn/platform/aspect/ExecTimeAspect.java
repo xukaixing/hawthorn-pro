@@ -58,7 +58,7 @@ public class ExecTimeAspect<T>
   //使用切入注解，@annotation：无法识别类上的注解，是针对方法的注解
   //@within和@target:标注在类上的自定义注解
   //标注在类或者方法上执行切入
-  //@Pointcut("@within(com.hawthorn.framework.annotation.ExecTime) || @annotation(com.hawthorn.framework.annotation.ExecTime)")
+  //@Pointcut("@within(com.hawthorn.platform.annotation.ExecTime) || @annotation(com.hawthorn.platform.annotation.ExecTime)")
   public void execTimePointcut()
   {
   }

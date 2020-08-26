@@ -112,11 +112,11 @@ public class MPCodeGenerator
     //策略配置
     CustomStrategyConfig customConfig = new CustomStrategyConfig();
     // 自定义继承的Entity类全称，带包名
-    customConfig.setSuperEntityClass("com.hawthorn.framework.model.BasePO");
+    customConfig.setSuperEntityClass("com.hawthorn.platform.model.BasePO");
     // 自定义基础的Entity类，公共字段
     customConfig.setSuperEntityColumns(new String[]{"CREATED_BY", "CREATED_TIME", "LAST_UPDATED_BY", "LAST_UPDATED_TIME", "VERSION", "DEL_FLAG"});
     // 自定义继承的Mapper类全称，带包名
-    customConfig.setSuperMapperClass("com.hawthorn.framework.repository.DBMapper");
+    customConfig.setSuperMapperClass("com.hawthorn.platform.repository.DBMapper");
     // 自定义继承的Controller类全称，带包名
     //customConfig.setSuperControllerClass("com.hawthorn.framwork.controller");
     // 是否移除is前缀(默认 false）
