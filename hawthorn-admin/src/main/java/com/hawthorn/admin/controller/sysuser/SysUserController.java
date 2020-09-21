@@ -88,7 +88,7 @@ public class SysUserController
     qc2.setId("nickName");
     qc2.setOp("=");
     qc2.setDs("nick_name");
-    qc2.setValue("%tet%");
+    qc2.setValue("%test%");
     HashMap<String, QcBean> hm = new HashMap<>();
     hm.put(qc.getId(), qc);
     hm.put(qc2.getId(), qc2);

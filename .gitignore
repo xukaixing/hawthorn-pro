@@ -63,7 +63,7 @@ $RECYCLE.BIN/
 ._*
 
 ### dic file ###
-dic
+#dic
 
 ### license ###
 license.dat

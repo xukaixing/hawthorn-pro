@@ -5,17 +5,17 @@
   <parent>
     <groupId>com.andyten</groupId>
     <artifactId>hawthorn-parent</artifactId>
-    <version>5.0.1-RELEASE</version>
+    <version>5.0-RELEASE</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <artifactId>hawthorn-admin</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.6-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>hawthorn-admin</name>
   <description>Hawthorn project for Admin</description>
 
   <properties>
-    <hawthorn.platform.version>1.0.1-SNAPSHOT</hawthorn.platform.version>
+    <hawthorn.platform.version>1.0.6-SNAPSHOT</hawthorn.platform.version>
   </properties>
 
   <dependencies>

@@ -35,11 +35,11 @@
   <sql id="Base_Column_ListAll">
     id, name, parent_id, order_num
     <!-- 公共字段 -->
-      ,create_by
-      ,create_time
-      ,last_update_by
-      ,last_update_time
-      ,del_flag
+    ,create_by
+    ,create_time
+    ,last_update_by
+    ,last_update_time
+    ,del_flag
   </sql>
   <!-- 表名 -->
   <sql id="Base_Table_List">

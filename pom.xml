@@ -14,7 +14,7 @@
   </parent>
   <groupId>com.andyten</groupId>
   <artifactId>hawthorn-parent</artifactId>
-  <version>5.0.1-RELEASE</version>
+  <version>5.0-RELEASE</version>
   <packaging>pom</packaging>
   <name>hawthorn-parent</name>
   <description>Hawthorn project for Parent</description>
