@@ -32,14 +32,13 @@ public class TransactionAdviceConfig
   private static final String AOP_POINTCUT_EXPRESSION = "execution(public * com.hawthorn.*.service..*.*(..)))";
 
   @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
-  @Autowired
+  @Autowired(required = false)
   private PlatformTransactionManager transactionManager;
 
   /**
    * @description springBoot事务配置
    */
   @Bean
-
   public TransactionInterceptor txAdvice()
   {
 
