@@ -47,13 +47,13 @@
   <sql id="Base_Column_ListAll">
     id, name, nick_name, avatar, password, salt, email, mobile, dept_id
     <!-- 公共字段 -->
-      ,status
-      ,create_by
-      ,create_time
-      ,last_update_by
-      ,last_update_time
-      ,del_flag
-      ,version
+    ,status
+    ,create_by
+    ,create_time
+    ,last_update_by
+    ,last_update_time
+    ,del_flag
+    ,version
   </sql>
   <!-- 表名 -->
   <sql id="Base_Table_List">
@@ -87,6 +87,31 @@
         <foreach item="item" collection="qc" separator=" and ">
           ${item.ds} ${item.op} #{item.value}
         </foreach>
+      </if>
+    </where>
+  </select>
+  <select id="selectAllByStatus" parameterType="java.lang.Byte" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from
+    <include refid="Base_Table_List"/>
+    where status = #{status,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllByField" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from
+    <include refid="Base_Table_List"/>
+    <where>
+      <if test="fieldName != null and fieldName != '' ">
+        <choose>
+          <when test="fieldValue != null and fieldValue != '' ">
+            ${fieldName} = #{fieldValue,jdbcType=VARCHAR}
+          </when>
+          <otherwise>
+            ${fieldName} is null
+          </otherwise>
+        </choose>
       </if>
     </where>
   </select>

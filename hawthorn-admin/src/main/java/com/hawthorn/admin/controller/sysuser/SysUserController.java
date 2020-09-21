@@ -122,10 +122,10 @@ public class SysUserController
    */
   @ApiOperation(value = "查询->按状态查询用户", notes = "按状态查询用户信息服务 带参数status")
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "status", value = "状态", required = false, dataType = "byte", paramType = "query")
+      @ApiImplicitParam(name = "status", value = "状态", required = true, dataType = "byte", paramType = "query")
   })
   @GetMapping(value = "/selectUsersByStatus")
-  public List<SysUserDTO> selectUsersByStatus(@RequestParam(value = "status", required = false) Byte status)
+  public List<SysUserDTO> selectUsersByStatus(@RequestParam(value = "status", required = true) Byte status)
   {
     List<SysUserDTO> users = sysUserService.selectAllByStatus(status);
     log.info("====== show userlist ====== ");
@@ -146,8 +146,7 @@ public class SysUserController
   @GetMapping(value = "/selectUsersByField")
   public List<SysUserDTO> selectUsersByField(@RequestParam(value = "fieldName") String fieldName, @RequestParam(value = "fieldValue") String fieldValue)
   {
-    List<SysUserDTO> users = sysUserService.selectAllByField(fieldName, fieldValue);
-    return users;
+    return sysUserService.selectAllByField(fieldName, fieldValue);
   }
 
   /**
