@@ -7,4 +7,4 @@
 
 :: Spring Boot ::               (v2.3.1 RELEASE)
 === HawThorn Cli Application | Version: 1.0.5 Releasze ===
-=== Author | andy.ten@tom.com & xukaixing@hotmail.com ===
+=== Author | andy.ten@tom.com & xukaixing@hotmail.com  ===
