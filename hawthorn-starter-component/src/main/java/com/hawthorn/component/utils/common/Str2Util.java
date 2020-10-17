@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.hawthorn.component.exception.BizCode;
 import com.hawthorn.component.utils.iassert.AssertUtil;
 
+import java.text.MessageFormat;
 import java.util.Locale;
 
 /**
@@ -82,10 +83,10 @@ public class Str2Util extends StrUtil
    * -----------------------------------------------------------
    * 2020/8/17    andy.ten        v1.0.1             init
    */
-  public static String placeHolder(CharSequence template, Object... params)
+  public static String placeHolder(String template, Object... params)
   {
     AssertUtil.notNull(template, BizCode.METHOD_ARGS_NOTNULL, "template");
-    return StrUtil.format(template, params);
+    return MessageFormat.format(template, params);
   }
 
   /**

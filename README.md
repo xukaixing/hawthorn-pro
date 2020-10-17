@@ -9,6 +9,7 @@
 >> 重构包结构  
 >> 新增login工程      
 >> 实现jwt认证和鉴权    
+>> 增加redis配置
 
 ---
 
@@ -52,6 +53,7 @@
   - `Map2ObjectUtil`: 、mapper与obj互相转换工具类
   - `AssertUtil`: 增加断言工具类
   - `PropertiesUtil、YmlUtil`: 增加.property、.yml文件读取工具类
+  - `Redis Client`: redis封装工具类
   
 ## 运行
 

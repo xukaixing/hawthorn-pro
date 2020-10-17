@@ -10,9 +10,19 @@ package com.hawthorn.component.constant;
  */
 public class SysConstant
 {
+  // session保存的登录页图片验证码
   public static final String SESSION_VERIFYCODE = "VerifyCode";
+  // admin权限的默认账号名
   public static final String ADMIN = "admin";
+  // superman权限默认的账号名
   public static final String SUPERMAN = "superman";
+  // redis expire的超时时间：1天
+  public static final Long EXPIRE_TIME_ONE_DAY = 1000 * 60 * 60 * 24L;
+  // redis expire的超时时间：1小时
+  public static final Long EXPIRE_TIME_ONE_HOUR = 1000 * 60 * 60L;
+  public static final String JWT = "hawthorn:auth:jwt:{0}:{1}";
+  //定义token的名称
+  public static final String TOKEN_NAME = "jwt";
 
   private SysConstant()
   {
