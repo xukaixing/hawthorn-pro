@@ -5,6 +5,12 @@
       xukaixing@hotmail.com
   
 ## 版本
+> v1.0.7 : 2020.10.17    
+>> 重构包结构  
+>> 新增login工程      
+>> 实现jwt认证和鉴权    
+
+---
 
 > v1.0.6 : 2020.08.26    
 >> 重构包结构  
@@ -22,14 +28,6 @@
 >> 增加全表删除、全表更新阻断  
 >> 增加表乐观锁version处理  
 >> 实现generator功能        
-
----
-
-> v1.0.4 : 2020.08.18  
->> 增加BasePO、BaseModel、BaseDTO封装类     
->> 增加Str2Util、Map2ObjectUtil工具类，处理字符串工具类、map和object对象互相转换工具类      
->> 增加Yml、Property文件读取工具类    
->> 增加mp generator功能  
 
 ## 环境
 

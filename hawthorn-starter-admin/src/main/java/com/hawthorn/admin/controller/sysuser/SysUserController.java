@@ -23,7 +23,7 @@ import java.util.List;
  * @date:2020/8/13 2:48 下午
  * @version v1.0.1
  */
-@Api(tags = {"admin-sysuser-controller"})
+@Api(tags = {"admin-sysuser"})
 @RestController
 @RequestMapping("/sysuser/")
 @Slf4j

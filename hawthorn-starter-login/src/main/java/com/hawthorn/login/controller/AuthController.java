@@ -1,7 +1,12 @@
 package com.hawthorn.login.controller;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
+import com.hawthorn.component.constant.SysConstant;
 import com.hawthorn.component.exception.BizCode;
+import com.hawthorn.login.model.pojo.AccessToken;
+import com.hawthorn.login.service.AuthService;
+import com.hawthorn.platform.ret.RestResult;
+import com.hawthorn.platform.utils.iassert.AssertUtil;
 import com.hawthorn.platform.validatecode.IVerifyCodeGen;
 import com.hawthorn.platform.validatecode.SimpleCharVerifyCodeGenImpl;
 import com.hawthorn.platform.validatecode.VerifyCode;
@@ -10,10 +15,8 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,30 +25,49 @@ import java.io.IOException;
 /**
  * @copyright: Copyright (c) 2020 andyten
  * <p></p>
- * @remark: 登录控制类
+ * @remark: 认证控制类
  * @author:andy.ten@tom.com
  * @date:2020/9/22 12:05 上午
  * @version v1.0.1
  */
-@Api(tags = {"login-syslogin"})
+@Api(tags = {"authentication-login"})
 @RestController
 @Slf4j
-public class LoginController
+@RequestMapping("/auth")
+public class AuthController
 {
+  @Autowired
+  private AuthService authService;
+
   /**
    * @author: andy.ten@tom.com
-   * @date: 2020/10/12 11:16 上午
+   * @date: 2020/10/12 11:26 上午
    * @version: 1.0.1
+   * @return
    */
-  @ApiOperation(value = "", notes = "")
+  @ApiOperation(value = "登录->登录操作", notes = "登录页面响应api")
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "request", value = "", required = false, dataType = "string", paramType = "query"),
-      @ApiImplicitParam(name = "response", value = "", required = false, dataType = "string", paramType = "query")
+      @ApiImplicitParam(name = "loginInfoDTO", value = "loginInfoDTO")
   })
   @PostMapping("/login")
-  public void login(@RequestBody LoginBean loginBean, HttpServletRequest request)
+  public RestResult login(@RequestBody AccessToken.LoginInfoDTO loginInfoDTO, HttpServletRequest request)
   {
-
+    String loginAccount = loginInfoDTO.getLoginAccount();
+    String loginPassword = loginInfoDTO.getPassword();
+    AssertUtil.notEmpty(loginAccount, BizCode.AUTH_LOGINACCOUNT_NOTEMPTY);
+    AssertUtil.notEmpty(loginPassword, BizCode.AUTH_LOGINPASSWROD_NOTEMPTY);
+    String verifyCode = loginInfoDTO.getVerifyCode();
+    // 从session中获取之前保存的验证码跟前台传来的验证码进行匹配
+    Object verifyCodeObj = request.getSession().getAttribute(SysConstant.SESSION_VERIFYCODE);
+    // if (verifyCodeObj == null)
+    // {
+    //   return RestResult.fail(BizCode.VERIFY_CODE_INVALID);
+    // }
+    // if (!verifyCode.equals(verifyCodeObj))
+    // {
+    //   return RestResult.fail(BizCode.VERIFY_CODE_INCORRECT);
+    // }
+    return authService.login(request, loginAccount, loginPassword);
   }
 
   /**
@@ -55,8 +77,6 @@ public class LoginController
    */
   @ApiOperation(value = "登录->图形验证码", notes = "登陆页验证码")
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "request", value = "", required = false, dataType = "string", paramType = "query"),
-      @ApiImplicitParam(name = "response", value = "", required = false, dataType = "string", paramType = "query")
   })
   @GetMapping("/verifyCode")
   public void verifyCode(HttpServletRequest request, HttpServletResponse response)
@@ -67,9 +87,8 @@ public class LoginController
       //设置长宽
       VerifyCode verifyCode = iVerifyCodeGen.generate(80, 28);
       String code = verifyCode.getCode();
-      log.info(code);
       //将VerifyCode绑定session
-      request.getSession().setAttribute("VerifyCode", code);
+      request.getSession().setAttribute(SysConstant.SESSION_VERIFYCODE, code);
       //设置响应头
       response.setHeader("Pragma", "no-cache");
       //设置响应头

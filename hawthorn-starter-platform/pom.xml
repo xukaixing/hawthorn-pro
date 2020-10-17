@@ -8,20 +8,20 @@
     <version>5.0-RELEASE</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
-  <artifactId>hawthorn-platform-starter</artifactId>
-  <version>1.0.6-SNAPSHOT</version>
+  <artifactId>hawthorn-starter-platform</artifactId>
+  <version>1.0.7-SNAPSHOT</version>
   <packaging>jar</packaging>
-  <name>hawthorn-platform-starter</name>
+  <name>hawthorn-starter-platform</name>
   <description>Hawthorn project for Platform</description>
 
   <properties>
-    <hawthorn.component.version>1.0.6-SNAPSHOT</hawthorn.component.version>
+    <hawthorn.component.version>1.0.7-SNAPSHOT</hawthorn.component.version>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>com.andyten</groupId>
-      <artifactId>hawthorn-component-starter</artifactId>
+      <artifactId>hawthorn-starter-component</artifactId>
       <version>${hawthorn.component.version}</version>
     </dependency>
   </dependencies>

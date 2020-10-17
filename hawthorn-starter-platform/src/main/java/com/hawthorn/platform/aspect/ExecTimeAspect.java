@@ -54,7 +54,7 @@ public class ExecTimeAspect<T>
    * 第五处 *(..) *代表类中的方法名，(..)表示方法中的任何参数
    */
   // 针对所有匹配的文件进行切入拦截
-  @Pointcut("execution(public * com.hawthorn.*.service..*.*(..)))")
+  @Pointcut("execution(public * com.hawthorn.*.controller..*.*(..)))")
   //使用切入注解，@annotation：无法识别类上的注解，是针对方法的注解
   //@within和@target:标注在类上的自定义注解
   //标注在类或者方法上执行切入

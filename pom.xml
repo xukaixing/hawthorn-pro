@@ -3,8 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <modules>
-    <module>hawthorn-component</module>
-    <module>hawthorn-platform</module>
+    <module>hawthorn-starter-component</module>
+    <module>hawthorn-starter-platform</module>
   </modules>
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -13,10 +13,10 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>com.andyten</groupId>
-  <artifactId>hawthorn-parent</artifactId>
+  <artifactId>hawthorn-starter-parent</artifactId>
   <version>5.0-RELEASE</version>
   <packaging>pom</packaging>
-  <name>hawthorn-parent</name>
+  <name>hawthorn-starter-parent</name>
   <description>Hawthorn project for Parent</description>
 
   <properties>

@@ -53,7 +53,7 @@ import java.util.List;
   #set($classMapping = ${controllerDomain})
 #end
 /**
- * @Copyright: Copyright (c) 2020 andyten
+ * @Copyright: Copyright (c) 2020 ${author}
  * <p></p>
  * @remark: $!{table.comment} controller
  * @author: ${author}

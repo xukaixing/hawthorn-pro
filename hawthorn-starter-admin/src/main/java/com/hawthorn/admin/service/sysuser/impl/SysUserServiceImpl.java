@@ -9,7 +9,6 @@ import com.hawthorn.admin.repository.SysUserMapper;
 import com.hawthorn.admin.service.sysuser.SysUserService;
 import com.hawthorn.component.exception.BizCode;
 import com.hawthorn.component.utils.bean.QcBean;
-import com.hawthorn.platform.annotation.ExecTime;
 import com.hawthorn.platform.utils.iassert.AssertUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,6 @@ import java.util.Map;
  * @version v1.0.1
  */
 @Service
-@ExecTime
 @Slf4j
 public class SysUserServiceImpl implements SysUserService
 {

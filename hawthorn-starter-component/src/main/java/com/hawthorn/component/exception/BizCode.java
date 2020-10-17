@@ -23,6 +23,8 @@ public enum BizCode
   VARIABLE_IS_NULL(-10010, "变量值必须为null"),
   POPULATE_VALUE_BYMETHOD(-10011, "根据方法名字对对象进行赋值失败"),
   VERIFY_CODE_GEN_FAIL(-10012, "生成登录验证码失败"),
+  VERIFY_CODE_INVALID(-10013, "登录验证码无效"),
+  VERIFY_CODE_INCORRECT(-10014, "登录验证码输入错误"),
 
   DB_RESOURCE_NULL(-12001, "数据库中没有该资源"),
 
@@ -50,9 +52,14 @@ public enum BizCode
   MENU_PCODE_COINCIDENCE(-20001, "菜单编号和副编号不能一致"),
   MENU_EXISTED(-20002, "菜单编号重复，不能添加"),
 
-  AUTH_NO_PERMITION(-21001, "权限异常"),
+  AUTH_NO_PERMITION(-21001, "无权限"),
   AUTH_INVALID_KAPTCHA(-21002, "验证码不正确"),
   AUTH_TOKEN_INVALID(-21003, "token无效重新登录"),
+  AUTH_LOGINACCOUNT_NOTEMPTY(-21004, "登录账号不能为空"),
+  AUTH_LOGINPASSWROD_NOTEMPTY(-21005, "登录密码不能为空"),
+  AUTH_LOGINPASSWROD_INCORRECT(-21006, "登录密码不正确"),
+  AUTH_LOGINUSERNAME_INCORRECT(-21007, "没有此用户"),
+  AUTH_LOGINSMS_INCORRECT(-21007, "登录短信码不正确"),
 
   //用户
   USER_CANT_DELETE_ADMIN(-30001, "不能删除超级管理员"),
@@ -64,6 +71,7 @@ public enum BizCode
   USER_ACCOUNT_FREEZED(-30007, "账号被冻结"),
   USER_OLD_PWD_NOT_RIGHT(-30008, "原密码不正确"),
   USER_TWO_PWD_NOT_MATCH(-30009, "两次输入密码不一致"),
+  USER_MULTI_EXISTED(-300010, "该用户名检索出多个用户"),
 
   //字典
   DICT_EXISTED(-40001, "字典已经存在"),

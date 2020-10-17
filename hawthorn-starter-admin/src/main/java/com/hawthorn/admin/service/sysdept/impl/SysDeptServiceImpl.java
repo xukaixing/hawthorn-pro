@@ -29,7 +29,7 @@ public class SysDeptServiceImpl implements SysDeptService
   private SysDeptMapper sysDeptMapper;
 
   /**
-   * generator->带分页查询
+   * generator->不带分页查询
    */
   @Transactional(readOnly = true)
   public List<SysDeptDTO> select(Map<String, QcBean> qc)
@@ -38,7 +38,7 @@ public class SysDeptServiceImpl implements SysDeptService
   }
 
   /**
-   * generator->不带分页查询
+   * generator->带分页查询
    */
   @Transactional(readOnly = true)
   public IPage<SysDeptDTO> select(Page<SysDeptDTO> page, Map<String, QcBean> qc)

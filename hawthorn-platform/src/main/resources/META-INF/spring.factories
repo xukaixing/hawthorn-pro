@@ -1,3 +1,0 @@
-# autoconfiguration
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.hawthorn.platform.config.PlatformAutoConfigurationPackage

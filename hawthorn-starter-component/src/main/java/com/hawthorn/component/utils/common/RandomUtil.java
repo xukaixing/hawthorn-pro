@@ -11,7 +11,7 @@ import java.util.Random;
  * @date:2020/9/22 12:20 上午
  * @version v1.0.1
  */
-public class RandomUtils extends org.apache.commons.lang3.RandomUtils
+public class RandomUtil extends org.apache.commons.lang3.RandomUtils
 {
   private static final char[] CODE_SEQ = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J',
       'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',

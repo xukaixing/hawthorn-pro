@@ -2,8 +2,7 @@ package com.hawthorn.platform.aspect;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hawthorn.platform.config.ResponseAdviceConfig;
-import com.hawthorn.platform.ret.BaseResult;
-import com.hawthorn.platform.ret.ResultUtil;
+import com.hawthorn.platform.ret.RestResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.core.MethodParameter;
@@ -41,7 +40,7 @@ public class ResponseBodyAdviceImpl implements ResponseBodyAdvice<Object>
   public Object beforeBodyWrite(Object o, MethodParameter returnType, MediaType mediaType, Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest request, ServerHttpResponse response)
   {
     // 如果返回值是BaseResult类型，则直接返回
-    if (o instanceof BaseResult)
+    if (o instanceof RestResult)
     {
       return o;
     }
@@ -54,7 +53,7 @@ public class ResponseBodyAdviceImpl implements ResponseBodyAdvice<Object>
     // 方法返回值是"void"
     if ("void".equals(returnTypeName))
     {
-      return ResultUtil.success(new JSONObject());
+      return RestResult.success(new JSONObject());
     }
     // 屏蔽swagger接口api + Actuator监控路径请求
     if (request.getURI().toString().contains("/swagger") || request.getURI().toString().contains("/v2/api-docs") || request.getURI().toString().contains("/actuator"))
@@ -62,6 +61,6 @@ public class ResponseBodyAdviceImpl implements ResponseBodyAdvice<Object>
       return o;
     }
 
-    return ResultUtil.success(o);
+    return RestResult.success(o);
   }
 }

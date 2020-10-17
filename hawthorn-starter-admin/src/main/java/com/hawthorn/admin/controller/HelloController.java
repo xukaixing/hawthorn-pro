@@ -3,8 +3,7 @@ package com.hawthorn.admin.controller;
 import com.hawthorn.admin.model.po.SysUserPO;
 import com.hawthorn.admin.service.Hello;
 import com.hawthorn.platform.annotation.ExecTime;
-import com.hawthorn.platform.ret.BaseResult;
-import com.hawthorn.platform.ret.ResultUtil;
+import com.hawthorn.platform.ret.RestResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -45,12 +44,12 @@ public class HelloController
       @ApiImplicitParam(name = "username", value = "用户名", dataType = "string", paramType = "query", defaultValue = "andyten", required = false),
   })
   @GetMapping(value = "/findUser")
-  public BaseResult<SysUserPO> findUserByUserName(@RequestParam(value = "username", required = true) String username)
+  public RestResult findUserByUserName(@RequestParam(value = "username", required = true) String username)
   {
     SysUserPO su = new SysUserPO();
     su.setId(1L);
     su.setName(username);
-    return ResultUtil.success(su);
+    return RestResult.success(su);
   }
 
   /*
@@ -65,14 +64,14 @@ public class HelloController
   })
 
   @GetMapping(value = "sayHello")
-  public BaseResult<String> sayHello(String username, String name)
+  public RestResult sayHello(String username, String name)
   {
     String s = "Hello Hawthorn By " + username;
     //s = "a";
     //System.out.println("ss" + s.substring(111));
     // 测试异常
     hello.sayHello();
-    return ResultUtil.success(s);
+    return RestResult.success(s);
   }
 
   @Autowired

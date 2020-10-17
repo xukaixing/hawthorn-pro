@@ -33,7 +33,7 @@ import java.util.Map;
     #end
 #end
 /**
- * @Copyright: Copyright (c) 2020 andyten
+ * @Copyright: Copyright (c) 2020 ${author}
  * <p></p>
  * @remark: $!{table.comment} serviceImp 实现类
  * @author: ${author}

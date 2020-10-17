@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 
 
 /**
- * @copyright: Copyright (c) 2020 andyten
+ * @copyright: Copyright (c) 2020 ${author}
  * <p></p>
  * @remark: $!{table.comment}($!{table.name}) dto实体类
  * @author: ${author}

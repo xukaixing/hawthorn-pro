@@ -9,10 +9,10 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>hawthorn-component-starter</artifactId>
-  <version>1.0.6-SNAPSHOT</version>
+  <artifactId>hawthorn-starter-component</artifactId>
+  <version>1.0.7-SNAPSHOT</version>
   <packaging>jar</packaging>
-  <name>hawthorn-component-starter</name>
+  <name>hawthorn-starter-component</name>
   <description>Hawthorn project for Component</description>
   <build>
     <resources>
