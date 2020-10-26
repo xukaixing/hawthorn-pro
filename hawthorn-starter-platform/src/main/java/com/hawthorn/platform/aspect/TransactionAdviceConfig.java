@@ -71,6 +71,7 @@ public class TransactionAdviceConfig
     source.addTransactionalMethod("set*", txAttr_REQUIRED);
     source.addTransactionalMethod("get*", txAttr_REQUIRED_READONLY);
     source.addTransactionalMethod("query*", txAttr_REQUIRED_READONLY);
+    source.addTransactionalMethod("select*", txAttr_REQUIRED_READONLY);
     source.addTransactionalMethod("find*", txAttr_REQUIRED_READONLY);
     source.addTransactionalMethod("list*", txAttr_REQUIRED_READONLY);
     source.addTransactionalMethod("count*", txAttr_REQUIRED_READONLY);

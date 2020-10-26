@@ -115,6 +115,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
         // 登录验证码
         .antMatchers("/auth/verifyCode").permitAll()
         // 服务监控
+        .antMatchers("/instances").permitAll()
         .antMatchers("/actuator/**").permitAll()
         // 允许对于网站静态资源的无授权访问
         .antMatchers(

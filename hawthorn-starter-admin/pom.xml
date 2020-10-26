@@ -5,17 +5,18 @@
   <parent>
     <groupId>com.andyten</groupId>
     <artifactId>hawthorn-starter-parent</artifactId>
-    <version>5.0-RELEASE</version>
+    <version>HT5-RELEASE</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <artifactId>hawthorn-starter-admin</artifactId>
-  <version>1.0.7-SNAPSHOT</version>
+  <version>1.0.8-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>hawthorn-starter-admin</name>
   <description>Hawthorn project for Admin</description>
 
   <properties>
-    <hawthorn.platform.starter.version>1.0.7-SNAPSHOT</hawthorn.platform.starter.version>
+    <hawthorn.platform.starter.version>1.0.8-SNAPSHOT</hawthorn.platform.starter.version>
+    <spring.boot.admin.client>2.3.0</spring.boot.admin.client>
   </properties>
 
   <dependencies>
@@ -23,6 +24,18 @@
       <groupId>com.andyten</groupId>
       <artifactId>hawthorn-starter-platform</artifactId>
       <version>${hawthorn.platform.starter.version}</version>
+    </dependency>
+    <!--spring-boot-admin-client-->
+    <dependency>
+      <groupId>de.codecentric</groupId>
+      <artifactId>spring-boot-admin-starter-client</artifactId>
+      <version>${spring.boot.admin.client}</version>
+    </dependency>
+
+    <!--consul-->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-consul-discovery</artifactId>
     </dependency>
   </dependencies>
   <build>

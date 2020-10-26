@@ -32,6 +32,19 @@ import java.time.Duration;
 @Slf4j
 public class RedisConfig extends CachingConfigurerSupport
 {
+  /**
+   * @remark: 緩存管理器，不管用什么的缓存，都必须有缓存管理器
+   * @param: factory
+   * @return: org.springframework.cache.CacheManager
+   * <p></p>
+   * @author: andy.ten@tom.com
+   * @date: 2020/10/25 6:32 下午
+   * @version: 1.0.1
+   * Modification History:
+   * Date         Author          Version            Description
+   * -----------------------------------------------------------
+   * 2020/10/25    andy.ten        v1.0.1             init
+   */
   @Bean
   public CacheManager cacheManager(RedisConnectionFactory factory)
   {

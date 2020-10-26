@@ -5,12 +5,12 @@
   <parent>
     <artifactId>hawthorn-starter-parent</artifactId>
     <groupId>com.andyten</groupId>
-    <version>5.0-RELEASE</version>
+    <version>HT5-RELEASE</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>hawthorn-starter-component</artifactId>
-  <version>1.0.7-SNAPSHOT</version>
+  <version>1.0.8-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>hawthorn-starter-component</name>
   <description>Hawthorn project for Component</description>

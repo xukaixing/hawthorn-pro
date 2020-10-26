@@ -7,11 +7,12 @@
 # =====================================
 
 spring:
+  application:
+    name: hawthorn-admin
   #main:
   #allow-bean-definition-overriding: true
   profiles:
     active: dev
-
 # 自定义属性
 myprops:
   exectime:

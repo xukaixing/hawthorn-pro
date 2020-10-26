@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: mango-monitor
+  profiles:
+    active: dev
+# 开放健康检查接口
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

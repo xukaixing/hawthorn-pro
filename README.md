@@ -5,11 +5,17 @@
       xukaixing@hotmail.com
   
 ## 版本
+> v1.0.8 : 2020.10.26    
+>> 增加SpringBoot Admin监控    
+>> 增加注册中心consul       
+
+---
+
 > v1.0.7 : 2020.10.17    
 >> 重构包结构  
 >> 新增login工程      
->> 实现jwt认证和鉴权    
->> 增加redis配置
+>> 实现jwt认证和鉴权      
+>> 增加redis配置  
 
 ---
 
@@ -18,24 +24,13 @@
 >> 将工程拆分为多个子module    
 >> 将platform工程增加自动装载    
 >> admin工程增加Generator生成器类   
-
----
-
-> v1.0.5 : 2020.08.21  
->> 实现公共字段自动填充功能
->> 实现物理分页demo  
->> 实现结果集封装功能，controller直接对象    
->> 增加逻辑删除处理  
->> 增加全表删除、全表更新阻断  
->> 增加表乐观锁version处理  
->> 实现generator功能        
-
+       
 ## 环境
 
-- SpringBoot版本：2.3.1.RELEASE
+- SpringBoot版本：2.3.2.RELEASE
 - JDK版本：Jdk1.8+
 - Maven版本：3.5.0+
-- 数据库：mysql5.7，数据库用户名：sprbdemo
+- 数据库：mysql5.7，数据库用户名：hawthorn
 - 数据库开发工具：Navicat
 - Java开发工具：IntelliJ IDEA
 - 组件
@@ -48,6 +43,7 @@
   - `mybatis-plus`: 增加mybatis-plus依赖
   - `mybatis-plus generator`: 增加mybatis-plus generator插件
   - `fastjson`: 增加阿里json处理插件
+  - `consul`: 增加注册中心服务
 - 自定义工具
   - `Str2Util`: 增加处理字符串工具类
   - `Map2ObjectUtil`: 、mapper与obj互相转换工具类
@@ -66,57 +62,169 @@
 
 ``` 目录
 .
-├── db
-│   └── hawthorn.sql
-├── pom.xml
-└── src
-    ├── main
-    │   ├── java
-    │   │   ├── com
-    │   │   │   └── hawthorn
-    │   │   │       ├── BootApplication.java
-    │   │   │       ├── admin
-    │   │   │       │   ├── controller
-    │   │   │       │   ├── model
-    │   │   │       │   ├── repository
-    │   │   │       │   └── service
-    │   │   │       └── framework
-    │   │   │           ├── annotation
-    │   │   │           ├── aspect
-    │   │   │           ├── config
-    │   │   │           ├── controller
-    │   │   │           ├── exception
-    │   │   │           ├── generator
-    │   │   │           ├── model
-    │   │   │           ├── repository
-    │   │   │           ├── ret
-    │   │   │           ├── service
-    │   │   │           └── utils
-    │   │   └── template
-    │   └── resources
-    │       ├── META-INF
-    │       ├── application-dev.yml
-    │       ├── application-prod.yml
-    │       ├── application.yml
-    │       ├── banner.txt
-    │       ├── bootstrap.yml
-    │       ├── generator.yml
-    │       ├── logback-spring-dev.xml
-    │       ├── logback-spring-prod.xml
-    │       ├── mapper
-    │       │   └── SysUserMapper.xml
-    └── test
-        └── java
-            └── com
-                └── hawthorn
-                    ├── admin
-                    │   ├── controller
-                    │   ├── database
-                    │   └── repository
-                    └── framework
-                        └── generator
+├── hawthorn-starter-admin
+│   ├── db
+│   │   └── hawthorn.sql
+│   ├── pom.xml
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── com
+│       │   │       └── hawthorn
+│       │   │           └── admin
+│       │   │               ├── BootAdminApplication.java
+│       │   │               ├── config
+│       │   │               ├── controller
+│       │   │               ├── model
+│       │   │               ├── repository
+│       │   │               └── service
+│       │   └── resources
+│       │       ├── META-INF
+│       │       ├── application-dev.yml
+│       │       ├── application-prod.yml
+│       │       ├── application.yml
+│       │       ├── banner.txt
+│       │       ├── bootstrap.yml
+│       │       ├── generator.yml
+│       │       ├── logback-spring-dev.xml
+│       │       ├── logback-spring-prod.xml
+│       │       ├── mapper
+│       │       │   ├── SysDeptMapper.xml
+│       │       │   └── SysUserMapper.xml
+│       │       └── rebel.xml
+│       └── test
+│           └── java
+│               └── com
+│                   └── hawthorn
+│                       └── admin
+│                           ├── Generator.java
+│                           └── HawthornAdminApplicationTests.java
+├── hawthorn-starter-backup
+│   ├── pom.xml
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── com
+│       │   │       └── hawthorn
+│       │   │           └── backup
+│       │   │               ├── BootBackupApplication.java
+│       │   │               ├── config
+│       │   │               ├── constant
+│       │   │               ├── controller
+│       │   │               ├── service
+│       │   │               └── utils
+│       │   └── resources
+│       │       ├── application-dev.yml
+│       │       ├── application-prod.yml
+│       │       ├── application.yml
+│       │       ├── banner.txt
+│       │       ├── logback-spring-dev.xml
+│       │       ├── logback-spring-prod.xml
+│       │       └── rebel.xml
+│       └── test
+│           └── java
+├── hawthorn-starter-component
+│   ├── pom.xml
+│   └── src
+│       └── main
+│           ├── java
+│           │   └── com
+│           │       └── hawthorn
+│           │           └── component
+│           │               ├── constant
+│           │               ├── exception
+│           │               └── utils
+│           └── resources
+│               ├── rebel.xml
+│               └── template
+│                   ├── myController.java.vm
+│                   ├── myControllerTest.java.vm
+│                   ├── myDto.java.vm
+│                   ├── myEntity.java.vm
+│                   ├── myMapper.java.vm
+│                   ├── myMapper.xml.vm
+│                   ├── myService.java.vm
+│                   ├── myServiceImpl.java.vm
+│                   └── myServiceImplTest.java.vm
+├── hawthorn-starter-login
+│   ├── pom.xml
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── com
+│       │   │       └── hawthorn
+│       │   │           └── login
+│       │   │               ├── BootLoginApplication.java
+│       │   │               ├── config
+│       │   │               ├── controller
+│       │   │               ├── model
+│       │   │               ├── provider
+│       │   │               ├── repository
+│       │   │               ├── security
+│       │   │               ├── service
+│       │   │               └── utils
+│       │   └── resources
+│       │       ├── application-dev.yml
+│       │       ├── application-prod.yml
+│       │       ├── application.yml
+│       │       ├── banner.txt
+│       │       ├── bootstrap.yml
+│       │       ├── generator.yml
+│       │       ├── logback-spring-dev.xml
+│       │       ├── logback-spring-prod.xml
+│       │       ├── mapper
+│       │       │   ├── SysMenuMapper.xml
+│       │       │   └── SysUserMapper.xml
+│       │       └── rebel.xml
+│       └── test
+│           └── java
+├── hawthorn-starter-monitor
+│   ├── pom.xml
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── com
+│       │   │       └── hawthorn
+│       │   │           └── monitor
+│       │   │               └── BootMonitorApplication.java
+│       │   └── resources
+│       │       ├── application-dev.yml
+│       │       ├── application-prod.yml
+│       │       ├── application.yml
+│       │       ├── banner.txt
+│       │       ├── logback-spring-dev.xml
+│       │       ├── logback-spring-prod.xml
+│       │       └── rebel.xml
+│       └── test
+│           └── java
+├── hawthorn-starter-platform
+│   ├── pom.xml
+│   └── src
+│       └── main
+│           ├── java
+│           │   └── com
+│           │       └── hawthorn
+│           │           └── platform
+│           │               ├── PlatformAutoEnable.java
+│           │               ├── annotation
+│           │               ├── aspect
+│           │               ├── config
+│           │               ├── exception
+│           │               ├── generator
+│           │               ├── model
+│           │               ├── redis
+│           │               ├── repository
+│           │               ├── ret
+│           │               ├── service
+│           │               ├── utils
+│           │               └── validatecode
+│           └── resources
+│               ├── META-INF
+│               │   └── spring.factories
+│               └── rebel.xml
+└── pom.xml
 
-37 directories, 22 files
+98 directories, 63 files
 
 ```
 

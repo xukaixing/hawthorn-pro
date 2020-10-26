@@ -1,0 +1,43 @@
+# =====================================
+# @Desc: springboot工程配置文件，使用yml方式
+#        包括：server、datasource(druid)、jpa配置
+# @Auther: andy.ten@tom.com
+# @Date: 2020/08/08 9:39 上午
+# @Version: v1.0.1
+# =====================================
+
+spring:
+  application:
+    name: hawthorn-backup
+  #main:
+  #allow-bean-definition-overriding: true
+  # 监控配置
+  boot:
+    admin:
+      client:
+        url: http://localhost:8888
+        instance:
+          prefer-ip: true
+          service-url: http://localhost:8888
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        serviceName: ${spring.application.name}    # 注册到consul的服务名称
+  profiles:
+    active: dev
+# 开放健康检查接口
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+# 自定义属性
+myprops:
+  exectime:
+    errtime: 3000
+    warntime: 2000

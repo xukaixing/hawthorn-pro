@@ -49,7 +49,7 @@ public class AuthServiceImpl implements AuthService
   @Override
   public RestResult login(HttpServletRequest request, String loginAccount, String loginPassword)
   {
-    log.info("====== 登录系统认证开始 ======");
+    log.info("====== 登录系统认证 ======");
     JwtAuthenticationToken usernameAuthentication = new JwtAuthenticationToken(loginAccount, loginPassword);
     usernameAuthentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
     // 认证

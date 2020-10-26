@@ -6,7 +6,7 @@
 # =====================================
 # 启动端口号
 server:
-  port: 8000
+  port: 8001
 spring:
   #热部署devtools配置,实际使用效果不如JRebel插件
   #  devtools:

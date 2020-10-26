@@ -5,17 +5,17 @@
   <parent>
     <groupId>com.andyten</groupId>
     <artifactId>hawthorn-starter-parent</artifactId>
-    <version>5.0-RELEASE</version>
+    <version>HT5-RELEASE</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <artifactId>hawthorn-starter-login</artifactId>
-  <version>1.0.2-SNAPSHOT</version>
+  <version>1.0.3-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>hawthorn-starter-login</name>
   <description>Hawthorn project for Login</description>
 
   <properties>
-    <hawthorn.platform.starter.version>1.0.7-SNAPSHOT</hawthorn.platform.starter.version>
+    <hawthorn.platform.starter.version>1.0.8-SNAPSHOT</hawthorn.platform.starter.version>
     <jwt.version>0.9.1</jwt.version>
   </properties>
 

@@ -142,17 +142,17 @@ public class RedisClient
    * -----------------------------------------------------------
    * 2020/10/17    andy.ten        v1.0.1             init
    */
-  @SuppressWarnings("unchecked")
-  public void decrby(String key, long value)
-  {
-    try
-    {
-      valueOps.decrement(key, value);
-    } catch (CacheException e)
-    {
-      log.error("redis decrby error e={}", e.getMessage());
-    }
-  }
+  // @SuppressWarnings("unchecked")
+  // public void decrby(String key, long value)
+  // {
+  //   try
+  //   {
+  //     valueOps.decrement(key, value);
+  //   } catch (CacheException e)
+  //   {
+  //     log.error("redis decrby error e={}", e.getMessage());
+  //   }
+  // }
 
   /**
    * @remark: key获取

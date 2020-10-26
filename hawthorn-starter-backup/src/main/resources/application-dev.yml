@@ -1,0 +1,52 @@
+# =====================================
+# @Desc: springboot工程配置文件，使用yml方式
+# @Auther: andy.ten@tom.com
+# @Date: 2020/08/08 9:39 上午
+# @Version: v1.0.1
+# =====================================
+# 启动端口号
+server:
+  port: 8003
+spring:
+  redis:
+    host: 127.0.0.1
+    # Redis服务器连接端口
+    port: 6379
+    # Redis服务器连接密码（默认为空）
+    password: 123456
+    # lettuce:springboot2.0+使用；低版本使用：jedis
+    lettuce:
+      pool:
+        # 连接池最大连接数（使用负值表示没有限制）
+        max-active: 8
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池中的最小空闲连接
+        min-idle: 0
+    # 连接超时时间（毫秒）如果不设置，取默认值2000
+    timeout: 30000
+    # 连接的数据库
+    database: 0
+# 配置log
+logging:
+  config: classpath:logback-spring-dev.xml
+  level:
+    #io.swagger.models.parameters.AbstractSerializableParameter: error
+    com.hawthorn: debug
+    org.ibatis: debug
+    druid.sql: debug
+    org.springframework.jdbc: info
+    root: info
+
+# backup datasource
+hawthorn:
+  backup:
+    datasource:
+      host: localhost
+      userName: root
+      password: 123456
+      database: hawthorn
+
+

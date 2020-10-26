@@ -7,7 +7,7 @@
 
 # 启动端口号
 server:
-  port: 8003
+  port: 8002
 
 spring:
   #数据源配置
