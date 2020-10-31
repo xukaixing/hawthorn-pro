@@ -4,28 +4,75 @@
 # @Date: 2020/08/08 9:39 上午
 # @Version: v1.0.1
 # =====================================
-
-# 启动端口号
 server:
-  port: 8002
-
+  tomcat:
+    max-connections: 10000
+    accept-count: 1000
+    threads:
+      max: 800
+      min-spare: 100
 spring:
-  #数据源配置
+  # 监控配置
+  boot:
+    admin:
+      client:
+        url: http://localhost:8000
+        #instance:
+        # prefer-ip: true
+
+  # consul配置
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        serviceName: ${spring.application.name}    # 注册到consul的服务名称
+
+  # 数据源配置
   datasource:
     druid:
       url: jdbc:mysql://localhost:3306/hawthorn?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useOldAliasMetadataBehavior=true&useSSL=false
       username: root
       password: 123456
 
+  # redis配置
+  redis:
+    host: 127.0.0.1
+    # Redis服务器连接端口
+    port: 6379
+    # Redis服务器连接密码（默认为空）
+    password: 123456
+    # lettuce:springboot2.0+使用；低版本使用：jedis
+    lettuce:
+      pool:
+        # 连接池最大连接数（使用负值表示没有限制）
+        max-active: 8
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池中的最小空闲连接
+        min-idle: 0
+    # 连接超时时间（毫秒）如果不设置，取默认值2000
+    timeout: 30000
+    # 连接的数据库
+    database: 0
+# 开放健康检查接口
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
 # 配置log
 logging:
-  config: classpath:logback-spring-prod.xml
+  config: classpath:logback-spring-dev.xml
   level:
     #io.swagger.models.parameters.AbstractSerializableParameter: error
-    hawthorn: info
-    ibatis: info
-    druid: info
-    springjdbc: info
-    springweb: info
+    com.hawthorn: info
+    org.ibatis: info
+    druid.sql: info
+    org.springframework.jdbc: info
     root: info
-

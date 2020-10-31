@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @copyright: Copyright (c) 2020 andyten
  * <p></p>
- * @remark: 自定义redis-cli工具类，不包括处理有序集合类型
+ * @remark: 自定义redis-cli工具类
  * @author:andy.ten@tom.com
  * @date:2020/10/17 4:02 下午
  * @version v1.0.1

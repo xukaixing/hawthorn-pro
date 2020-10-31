@@ -4,10 +4,13 @@
 # @Date: 2020/08/08 9:39 上午
 # @Version: v1.0.1
 # =====================================
-# 启动端口号
 server:
-  port: 8888
-
+  tomcat:
+    max-connections: 10000
+    accept-count: 1000
+    threads:
+      max: 800
+      min-spare: 100
 spring:
   cloud:
     consul:

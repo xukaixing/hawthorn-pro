@@ -6,5 +6,5 @@
 \_| |_/\__,_| \_/\_/ \_/ |_| |_|\___/|_|  |_| |_| \_|  |_/\___/|_| |_|_|\__\___/|_|
 
 :: Spring Boot ::               (v2.3.2 RELEASE)
-=== HawThorn Cli Application | Version: 1.0.8 Releasze ===
+=== HawThorn Monitor Application | Version: 1.0.3 Releasze ===
 === Author | andy.ten@tom.com & xukaixing@hotmail.com  ===

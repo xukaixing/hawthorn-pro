@@ -5,10 +5,12 @@
   <modules>
     <module>hawthorn-starter-component</module>
     <module>hawthorn-starter-platform</module>
-    <module>hawthorn-starter-admin</module>
-    <module>hawthorn-starter-login</module>
     <module>hawthorn-starter-backup</module>
     <module>hawthorn-starter-monitor</module>
+    <module>hawthorn-starter-login</module>
+    <module>hawthorn-starter-admin</module>
+    <module>hawthorn-starter-claim</module>
+    <module>hawthorn-starter-part</module>
   </modules>
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -212,6 +214,7 @@
       <artifactId>commons-pool2</artifactId>
       <version>${redis.commons.pool2.version}</version>
     </dependency>
+
 
     <!-- others -->
     <dependency>

@@ -1,6 +1,6 @@
 package com.hawthorn.platform.validatecode;
 
-import cn.hutool.core.exceptions.ExceptionUtil;
+import com.hawthorn.component.exception.AppRuntimeException;
 import com.hawthorn.component.exception.BizCode;
 import com.hawthorn.component.utils.common.RandomUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ import java.util.Random;
 @Slf4j
 public class SimpleCharVerifyCodeGenImpl implements IVerifyCodeGen
 {
-  private static final String[] FONT_TYPES = {"\u5b8b\u4f53" , "\u65b0\u5b8b\u4f53" , "\u9ed1\u4f53" , "\u6977\u4f53" , "\u96b6\u4e66" };
+  private static final String[] FONT_TYPES = {"\u5b8b\u4f53", "\u65b0\u5b8b\u4f53", "\u9ed1\u4f53", "\u6977\u4f53", "\u96b6\u4e66"};
 
   private static final int VALICATE_CODE_LENGTH = 4;
 
@@ -75,7 +75,7 @@ public class SimpleCharVerifyCodeGenImpl implements IVerifyCodeGen
     createCharacter(graphics, randomStr);
     graphics.dispose();
     //设置JPEG格式
-    ImageIO.write(image, "JPEG" , os);
+    ImageIO.write(image, "JPEG", os);
     return randomStr;
   }
 
@@ -98,7 +98,7 @@ public class SimpleCharVerifyCodeGenImpl implements IVerifyCodeGen
       verifyCode.setImgBytes(baos.toByteArray());
     } catch (IOException e)
     {
-      log.error("生成验证码异常[" + BizCode.VERIFY_CODE_GEN_FAIL.getCode() + "] : " + ExceptionUtil.getRootCauseMessage(e));
+      log.error("生成验证码异常[" + BizCode.VERIFY_CODE_GEN_FAIL.getCode() + "] : " + AppRuntimeException.getRootCauseMessage(e));
       verifyCode = null;
     }
     return verifyCode;

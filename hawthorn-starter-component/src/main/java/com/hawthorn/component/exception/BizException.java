@@ -1,6 +1,5 @@
 package com.hawthorn.component.exception;
 
-import cn.hutool.core.exceptions.ExceptionUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -41,7 +40,7 @@ public class BizException extends RuntimeException
   {
     super(bizcode.getMsg());
     this.code = bizcode.getCode();
-    this.msg = bizcode.getMsg() + " : " + ExceptionUtil.getRootCauseMessage(re);
+    this.msg = bizcode.getMsg() + " : " + AppRuntimeException.getRootCauseMessage(re);
     this.status = "fail";
   }
 

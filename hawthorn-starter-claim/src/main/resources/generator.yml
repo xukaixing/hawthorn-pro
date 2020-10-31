@@ -1,0 +1,35 @@
+datasource:
+  driverName: com.mysql.cj.jdbc.Driver
+  url: jdbc:mysql://localhost:3306/hawthorn?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useOldAliasMetadataBehavior=true&useSSL=false
+  username: root
+  password: 123456
+
+table:
+  tablePrefix:  #生成的文件名称去除前缀
+
+output:
+  path: /Users/xukaixing/Downloads #输出目录
+  author: andy.ten@tom.com #注释作者
+  packageName: com.hawthorn.claim #主包路径
+  defineChildPackage:
+    controller: controller
+    controllerTest: controller
+    service: service
+    serviceImpl: impl
+    mapper: repository
+    mapperXml: mapper
+    entity: model.po
+    dto: model.dto
+  isGeneratePackage:
+    controller: true
+    service: true
+    serviceImpl: true
+    entity: true
+    dto: true
+    mapper: true
+    mapperXml: true
+    controllerTest: false
+    serviceTest: false
+  #moduleName: sysuser  #模块名称
+
+

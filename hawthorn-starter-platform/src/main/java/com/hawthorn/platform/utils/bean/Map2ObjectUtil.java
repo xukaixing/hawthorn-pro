@@ -469,6 +469,4 @@ public class Map2ObjectUtil extends MapUtils
       throw new BizException(BizCode.POPULATE_VALUE_BYMETHOD);
     }
   }
-
-
 }

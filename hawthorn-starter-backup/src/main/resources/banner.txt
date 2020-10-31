@@ -8,5 +8,5 @@
                                                                               |_|
 
 :: Spring Boot ::               (v2.3.2 RELEASE)
-=== HawThorn Cli Application | Version: 1.0.8 Releasze ===
+=== HawThorn Backup Application | Version: 1.0.3 Releasze ===
 === Author | andy.ten@tom.com & xukaixing@hotmail.com  ===

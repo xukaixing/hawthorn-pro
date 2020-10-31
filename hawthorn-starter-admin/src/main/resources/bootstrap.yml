@@ -1,7 +1,11 @@
 spring:
   #  profiles:
   #    active: dev
-  #数据源配置
+  config:
+    #关闭配置中心
+    enabled: false
+
+  # 数据源配置
   datasource:
     #druid连接池配置，在/druid/index.html可以查看监控页
     type: com.alibaba.druid.pool.DruidDataSource

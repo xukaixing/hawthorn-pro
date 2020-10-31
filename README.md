@@ -5,6 +5,13 @@
       xukaixing@hotmail.com
   
 ## 版本
+> v1.0.9 : 2020.10.31    
+>> 增加feign接口配置    
+>> 增加hystrix全局统一fallback配置              
+>> 升级JackUtil工具  
+
+---
+
 > v1.0.8 : 2020.10.26    
 >> 增加SpringBoot Admin监控    
 >> 增加注册中心consul       
@@ -16,14 +23,6 @@
 >> 新增login工程      
 >> 实现jwt认证和鉴权      
 >> 增加redis配置  
-
----
-
-> v1.0.6 : 2020.08.26    
->> 重构包结构  
->> 将工程拆分为多个子module    
->> 将platform工程增加自动装载    
->> admin工程增加Generator生成器类   
        
 ## 环境
 

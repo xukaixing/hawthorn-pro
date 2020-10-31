@@ -1,7 +1,7 @@
 package com.hawthorn.platform.exception;
 
 
-import cn.hutool.core.exceptions.ExceptionUtil;
+import com.hawthorn.component.exception.AppRuntimeException;
 import com.hawthorn.component.exception.BizCode;
 import com.hawthorn.component.exception.BizException;
 import com.hawthorn.platform.ret.RestResult;
@@ -59,8 +59,8 @@ public class GlobalExceptionHandler
   @ExceptionHandler(value = MethodArgumentNotValidException.class)
   public RestResult errorHandler(MethodArgumentNotValidException ex)
   {
-    log.error("方法参数无效异[" + BizCode.METHOD_ARGS_INVALID.getCode() + "] : " + ExceptionUtil.getRootCauseMessage(ex));
-    return RestResult.fail(BizCode.METHOD_ARGS_INVALID.getCode(), "方法参数无效异:" + BizCode.METHOD_ARGS_INVALID.getMsg(), ExceptionUtil.getRootCauseMessage(ex));
+    log.error("方法参数无效异[" + BizCode.METHOD_ARGS_INVALID.getCode() + "] : " + AppRuntimeException.getRootCauseMessage(ex));
+    return RestResult.fail(BizCode.METHOD_ARGS_INVALID.getCode(), "方法参数无效异:" + BizCode.METHOD_ARGS_INVALID.getMsg(), AppRuntimeException.getRootCauseMessage(ex));
   }
 
   /**
@@ -73,8 +73,8 @@ public class GlobalExceptionHandler
   @ExceptionHandler(value = NoSuchMethodException.class)
   public RestResult errorHandler(NoSuchMethodException ex)
   {
-    log.error("方法不存在异[" + BizCode.METHOD_NOT_FOUND.getCode() + "] : " + ExceptionUtil.getRootCauseMessage(ex));
-    return RestResult.fail(BizCode.METHOD_NOT_FOUND.getCode(), "方法不存在异:" + BizCode.METHOD_NOT_FOUND.getMsg(), ExceptionUtil.getRootCauseMessage(ex));
+    log.error("方法不存在异[" + BizCode.METHOD_NOT_FOUND.getCode() + "] : " + AppRuntimeException.getRootCauseMessage(ex));
+    return RestResult.fail(BizCode.METHOD_NOT_FOUND.getCode(), "方法不存在异:" + BizCode.METHOD_NOT_FOUND.getMsg(), AppRuntimeException.getRootCauseMessage(ex));
   }
 
   /**
@@ -87,8 +87,8 @@ public class GlobalExceptionHandler
   @ExceptionHandler(value = ClassNotFoundException.class)
   public RestResult errorHandler(ClassNotFoundException ex)
   {
-    log.error("未找到指定类异常[" + BizCode.CLASS_NOT_FOUND.getCode() + "] : " + ExceptionUtil.getRootCauseMessage(ex));
-    return RestResult.fail(BizCode.CLASS_NOT_FOUND.getCode(), "未找到指定类异常:" + BizCode.CLASS_NOT_FOUND.getMsg(), ExceptionUtil.getRootCauseMessage(ex));
+    log.error("未找到指定类异常[" + BizCode.CLASS_NOT_FOUND.getCode() + "] : " + AppRuntimeException.getRootCauseMessage(ex));
+    return RestResult.fail(BizCode.CLASS_NOT_FOUND.getCode(), "未找到指定类异常:" + BizCode.CLASS_NOT_FOUND.getMsg(), AppRuntimeException.getRootCauseMessage(ex));
   }
 
   /**
@@ -101,8 +101,8 @@ public class GlobalExceptionHandler
   @ExceptionHandler(value = NullPointerException.class)
   public RestResult errorHandler(NullPointerException ex)
   {
-    log.error("空指针异常[" + BizCode.NULL_POINTER.getCode() + "] : " + ExceptionUtil.getSimpleMessage(ex), ex);
-    return RestResult.fail(BizCode.NULL_POINTER.getCode(), "空指针异常:" + BizCode.NULL_POINTER.getMsg(), ExceptionUtil.getRootCauseMessage(ex));
+    log.error("空指针异常[" + BizCode.NULL_POINTER.getCode() + "] : " + AppRuntimeException.getSimpleMessage(ex), ex);
+    return RestResult.fail(BizCode.NULL_POINTER.getCode(), "空指针异常:" + BizCode.NULL_POINTER.getMsg(), AppRuntimeException.getRootCauseMessage(ex));
   }
 
   /**
@@ -115,8 +115,8 @@ public class GlobalExceptionHandler
   @ExceptionHandler(value = IndexOutOfBoundsException.class)
   public RestResult errorHandler(IndexOutOfBoundsException ex)
   {
-    log.error("角标越界异常常[" + BizCode.INDEX_OUTOF_BOUND.getCode() + "] : " + ExceptionUtil.getRootCauseMessage(ex));
-    return RestResult.fail(BizCode.INDEX_OUTOF_BOUND.getCode(), "角标越界异常:" + BizCode.INDEX_OUTOF_BOUND.getMsg(), ExceptionUtil.getRootCauseMessage(ex));
+    log.error("角标越界异常常[" + BizCode.INDEX_OUTOF_BOUND.getCode() + "] : " + AppRuntimeException.getRootCauseMessage(ex));
+    return RestResult.fail(BizCode.INDEX_OUTOF_BOUND.getCode(), "角标越界异常:" + BizCode.INDEX_OUTOF_BOUND.getMsg(), AppRuntimeException.getRootCauseMessage(ex));
   }
 
   /**
@@ -129,8 +129,8 @@ public class GlobalExceptionHandler
   @ExceptionHandler(value = NumberFormatException.class)
   public RestResult errorHandler(NumberFormatException ex)
   {
-    log.error("字符串转数字异常[" + BizCode.STR_FORMAT_NUM.getCode() + "] : " + ExceptionUtil.getRootCauseMessage(ex));
-    return RestResult.fail(BizCode.STR_FORMAT_NUM.getCode(), "字符串转数字异常:" + BizCode.STR_FORMAT_NUM.getMsg(), ExceptionUtil.getRootCauseMessage(ex));
+    log.error("字符串转数字异常[" + BizCode.STR_FORMAT_NUM.getCode() + "] : " + AppRuntimeException.getRootCauseMessage(ex));
+    return RestResult.fail(BizCode.STR_FORMAT_NUM.getCode(), "字符串转数字异常:" + BizCode.STR_FORMAT_NUM.getMsg(), AppRuntimeException.getRootCauseMessage(ex));
   }
 
   /**
@@ -143,8 +143,8 @@ public class GlobalExceptionHandler
   @ExceptionHandler(value = IOException.class)
   public RestResult errorHandler(IOException ex)
   {
-    log.error("IO异常[" + BizCode.FILE_OP_ERROR.getCode() + "] : " + ExceptionUtil.getRootCauseMessage(ex));
-    return RestResult.fail(BizCode.FILE_OP_ERROR.getCode(), "IO异常:" + BizCode.FILE_OP_ERROR.getMsg(), ExceptionUtil.getRootCauseMessage(ex));
+    log.error("IO异常[" + BizCode.FILE_OP_ERROR.getCode() + "] : " + AppRuntimeException.getRootCauseMessage(ex));
+    return RestResult.fail(BizCode.FILE_OP_ERROR.getCode(), "IO异常:" + BizCode.FILE_OP_ERROR.getMsg(), AppRuntimeException.getRootCauseMessage(ex));
   }
 
   /**
@@ -157,8 +157,8 @@ public class GlobalExceptionHandler
   @ExceptionHandler(value = DuplicateKeyException.class)
   public RestResult errorHandler(DuplicateKeyException ex)
   {
-    log.error("SQL异常[" + BizCode.SQL_DUPLICATE_KEY.getCode() + "] : " + ExceptionUtil.getRootCauseMessage(ex));
-    return RestResult.fail(BizCode.SQL_DUPLICATE_KEY.getCode(), "数据操作异常:" + BizCode.SQL_DUPLICATE_KEY.getMsg(), ExceptionUtil.getRootCauseMessage(ex));
+    log.error("SQL异常[" + BizCode.SQL_DUPLICATE_KEY.getCode() + "] : " + AppRuntimeException.getRootCauseMessage(ex));
+    return RestResult.fail(BizCode.SQL_DUPLICATE_KEY.getCode(), "数据操作异常:" + BizCode.SQL_DUPLICATE_KEY.getMsg(), AppRuntimeException.getRootCauseMessage(ex));
   }
 
   /**
@@ -171,8 +171,8 @@ public class GlobalExceptionHandler
   @ExceptionHandler(value = DataIntegrityViolationException.class)
   public RestResult errorHandler(DataIntegrityViolationException ex)
   {
-    log.error("SQL异常[" + BizCode.SQL_DATA_INTEGRITYVIOLATION.getCode() + "] : " + ExceptionUtil.getRootCauseMessage(ex));
-    return RestResult.fail(BizCode.SQL_DATA_INTEGRITYVIOLATION.getCode(), "数据操作异常:" + BizCode.SQL_DATA_INTEGRITYVIOLATION.getMsg(), ExceptionUtil.getRootCauseMessage(ex));
+    log.error("SQL异常[" + BizCode.SQL_DATA_INTEGRITYVIOLATION.getCode() + "] : " + AppRuntimeException.getRootCauseMessage(ex));
+    return RestResult.fail(BizCode.SQL_DATA_INTEGRITYVIOLATION.getCode(), "数据操作异常:" + BizCode.SQL_DATA_INTEGRITYVIOLATION.getMsg(), AppRuntimeException.getRootCauseMessage(ex));
   }
 
   /**
@@ -186,8 +186,8 @@ public class GlobalExceptionHandler
 
   public RestResult errorHandler(IllegalArgumentException ex)
   {
-    log.error("非法参数异常[" + BizCode.METHOD_ILLEGAL_ARGS.getCode() + "] : " + ExceptionUtil.getRootCauseMessage(ex));
-    return RestResult.fail(BizCode.METHOD_ILLEGAL_ARGS.getCode(), "非法参数异常:" + BizCode.METHOD_ILLEGAL_ARGS.getMsg(), ExceptionUtil.getRootCauseMessage(ex));
+    log.error("非法参数异常[" + BizCode.METHOD_ILLEGAL_ARGS.getCode() + "] : " + AppRuntimeException.getRootCauseMessage(ex));
+    return RestResult.fail(BizCode.METHOD_ILLEGAL_ARGS.getCode(), "非法参数异常:" + BizCode.METHOD_ILLEGAL_ARGS.getMsg(), AppRuntimeException.getRootCauseMessage(ex));
   }
 
   // /**
@@ -201,8 +201,8 @@ public class GlobalExceptionHandler
   // @ExceptionHandler(value = UncategorizedSQLException.class)
   // public BaseResult errorHandler(UncategorizedSQLException ex)
   // {
-  //   log.error("SQL异常[" + BizCode.SQL_WALL_UNCATEGORIZED.getCode() + "] : " + ExceptionUtil.getRootCauseMessage(ex));
-  //   return (BaseResult) RestResult.fail(BizCode.SQL_WALL_UNCATEGORIZED.getCode(), "数据操作异常:" + BizCode.SQL_WALL_UNCATEGORIZED.getMsg(), ExceptionUtil.getRootCauseMessage(ex));
+  //   log.error("SQL异常[" + BizCode.SQL_WALL_UNCATEGORIZED.getCode() + "] : " + AppRuntimeException.getRootCauseMessage(ex));
+  //   return (BaseResult) RestResult.fail(BizCode.SQL_WALL_UNCATEGORIZED.getCode(), "数据操作异常:" + BizCode.SQL_WALL_UNCATEGORIZED.getMsg(), AppRuntimeException.getRootCauseMessage(ex));
   // }
 
   /**
@@ -219,16 +219,16 @@ public class GlobalExceptionHandler
     // TypeException
     if (eMsg.contains("TypeException"))
     {
-      log.error("SQL异常[" + BizCode.SQL_MAPPING_TYPE.getCode() + "] : " + ExceptionUtil.getRootCauseMessage(ex));
-      return RestResult.fail(BizCode.SQL_MAPPING_TYPE.getCode(), "数据操作异常:" + BizCode.SQL_MAPPING_TYPE.getMsg(), ExceptionUtil.getRootCauseMessage(ex));
+      log.error("SQL异常[" + BizCode.SQL_MAPPING_TYPE.getCode() + "] : " + AppRuntimeException.getRootCauseMessage(ex));
+      return RestResult.fail(BizCode.SQL_MAPPING_TYPE.getCode(), "数据操作异常:" + BizCode.SQL_MAPPING_TYPE.getMsg(), AppRuntimeException.getRootCauseMessage(ex));
     } else if (eMsg.contains("ReflectionException"))
     {
       log.error("SQL异常[" + BizCode.SQL_MAPPING_TYPE.getCode() + "] : " + eMsg);
-      return RestResult.fail(BizCode.SQL_MAPPING_TYPE.getCode(), "数据操作异常:" + BizCode.SQL_MAPPING_TYPE.getMsg(), ExceptionUtil.getMessage(ex));
+      return RestResult.fail(BizCode.SQL_MAPPING_TYPE.getCode(), "数据操作异常:" + BizCode.SQL_MAPPING_TYPE.getMsg(), AppRuntimeException.getMessage(ex));
     } else
     {
-      log.error("SQL异常[" + BizCode.SQL_EXEC_BAD.getCode() + "] : " + ExceptionUtil.getRootCauseMessage(ex));
-      return RestResult.fail(BizCode.SQL_EXEC_BAD.getCode(), "数据操作异常:" + BizCode.SQL_EXEC_BAD.getMsg(), ExceptionUtil.getRootCauseMessage(ex));
+      log.error("SQL异常[" + BizCode.SQL_EXEC_BAD.getCode() + "] : " + AppRuntimeException.getRootCauseMessage(ex));
+      return RestResult.fail(BizCode.SQL_EXEC_BAD.getCode(), "数据操作异常:" + BizCode.SQL_EXEC_BAD.getMsg(), AppRuntimeException.getRootCauseMessage(ex));
     }
 
   }
@@ -243,8 +243,8 @@ public class GlobalExceptionHandler
   @ExceptionHandler(value = BadSqlGrammarException.class)
   public RestResult errorHandler(BadSqlGrammarException ex)
   {
-    log.error("SQL异常[" + BizCode.SQL_GRAMMAR_BAD.getCode() + "] : " + ExceptionUtil.getRootCauseMessage(ex));
-    return RestResult.fail(BizCode.SQL_GRAMMAR_BAD.getCode(), "数据操作异常:" + BizCode.SQL_GRAMMAR_BAD.getMsg(), ExceptionUtil.getRootCauseMessage(ex));
+    log.error("SQL异常[" + BizCode.SQL_GRAMMAR_BAD.getCode() + "] : " + AppRuntimeException.getRootCauseMessage(ex));
+    return RestResult.fail(BizCode.SQL_GRAMMAR_BAD.getCode(), "数据操作异常:" + BizCode.SQL_GRAMMAR_BAD.getMsg(), AppRuntimeException.getRootCauseMessage(ex));
   }
 
   /**
@@ -257,8 +257,8 @@ public class GlobalExceptionHandler
   @ExceptionHandler(value = TransactionTimedOutException.class)
   public RestResult errorHandler(TransactionTimedOutException ex)
   {
-    log.error("SQL异常[" + BizCode.SQL_TRANSACTION_TIMEOUT.getCode() + "] : " + ExceptionUtil.getRootCauseMessage(ex));
-    return RestResult.fail(BizCode.SQL_TRANSACTION_TIMEOUT.getCode(), "数据操作异常:" + BizCode.SQL_TRANSACTION_TIMEOUT.getMsg(), ExceptionUtil.getRootCauseMessage(ex));
+    log.error("SQL异常[" + BizCode.SQL_TRANSACTION_TIMEOUT.getCode() + "] : " + AppRuntimeException.getRootCauseMessage(ex));
+    return RestResult.fail(BizCode.SQL_TRANSACTION_TIMEOUT.getCode(), "数据操作异常:" + BizCode.SQL_TRANSACTION_TIMEOUT.getMsg(), AppRuntimeException.getRootCauseMessage(ex));
   }
 
   /**
@@ -274,8 +274,8 @@ public class GlobalExceptionHandler
     //获取request
     //ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
     //HttpServletRequest request = requestAttributes.getRequest();
-    log.error("未知错误异常[" + BizCode.UNKNOW_ERROR.getCode() + "] : " + ExceptionUtil.getRootCauseMessage(ex), ex);
-    return RestResult.fail(BizCode.UNKNOW_ERROR.getCode(), BizCode.UNKNOW_ERROR.getMsg(), ExceptionUtil.getRootCauseMessage(ex));
+    log.error("未知错误异常[" + BizCode.UNKNOW_ERROR.getCode() + "] : " + AppRuntimeException.getRootCauseMessage(ex), ex);
+    return RestResult.fail(BizCode.UNKNOW_ERROR.getCode(), BizCode.UNKNOW_ERROR.getMsg(), AppRuntimeException.getRootCauseMessage(ex));
     //return RestResult.fail(BizCode.ERROR_CREATE_DICT);
   }
 

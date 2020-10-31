@@ -5,26 +5,22 @@
 # @Date: 2020/08/08 9:39 上午
 # @Version: v1.0.1
 # =====================================
-
+# 启动端口号
+server:
+  port: 8003
 spring:
   application:
     name: hawthorn-backup
   #main:
+  # 后注入的bean是否是覆盖
   #allow-bean-definition-overriding: true
-  # 监控配置
-  boot:
-    admin:
-      client:
-        url: http://localhost:8888
-        instance:
-          prefer-ip: true
-          service-url: http://localhost:8888
-  cloud:
-    consul:
-      host: localhost
-      port: 8500
-      discovery:
-        serviceName: ${spring.application.name}    # 注册到consul的服务名称
+  # springboot2.0以后使用servlet，之前使用http:
+  servlet:
+    multipart:
+      # 单个文件大小
+      max-file-size: 5MB
+      # 总上传的数据大小
+      max-request-size: 25MB
   profiles:
     active: dev
 # 开放健康检查接口

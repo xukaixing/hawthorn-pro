@@ -1,6 +1,7 @@
 package com.hawthorn.platform.aspect;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hawthorn.component.utils.json.JacksonUtil;
 import com.hawthorn.platform.config.ResponseAdviceConfig;
 import com.hawthorn.platform.ret.RestResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+
+import java.util.Objects;
 
 /**
  * @Copyright: Copyright (c) 2020 andyten
@@ -29,6 +32,7 @@ public class ResponseBodyAdviceImpl implements ResponseBodyAdvice<Object>
   @Autowired(required = false)
   ResponseAdviceConfig responseAdviceConfig;
 
+  @SuppressWarnings("NullableProblems")
   @Override
   public boolean supports(MethodParameter methodParameter, Class<? extends HttpMessageConverter<?>> aClass)
   {
@@ -36,6 +40,7 @@ public class ResponseBodyAdviceImpl implements ResponseBodyAdvice<Object>
     return true;
   }
 
+  @SuppressWarnings("NullableProblems")
   @Override
   public Object beforeBodyWrite(Object o, MethodParameter returnType, MediaType mediaType, Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest request, ServerHttpResponse response)
   {
@@ -54,6 +59,11 @@ public class ResponseBodyAdviceImpl implements ResponseBodyAdvice<Object>
     if ("void".equals(returnTypeName))
     {
       return RestResult.success(new JSONObject());
+    }
+    // 方法返回值是"String"
+    if (Objects.requireNonNull(returnType.getMethod()).getReturnType().equals(String.class))
+    {
+      return JacksonUtil.object2Json(RestResult.success(o));
     }
     // 屏蔽swagger接口api + Actuator监控路径请求
     if (request.getURI().toString().contains("/swagger") || request.getURI().toString().contains("/v2/api-docs") || request.getURI().toString().contains("/actuator"))

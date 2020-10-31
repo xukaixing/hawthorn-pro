@@ -8,7 +8,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 //@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, DruidDataSourceAutoConfigure.class})
 @SpringBootApplication
 @EnableSwagger2
-@MapperScan("com.hawthorn.login.repository" )
+@MapperScan("com.hawthorn.login.repository")
 public class BootLoginApplication
 {
   public static void main(String[] args)

@@ -4,10 +4,28 @@
 # @Date: 2020/08/08 9:39 上午
 # @Version: v1.0.1
 # =====================================
-# 启动端口号
 server:
-  port: 8003
+  tomcat:
+    max-connections: 10000
+    accept-count: 1000
+    threads:
+      max: 800
+      min-spare: 100
 spring:
+  # 监控配置
+  boot:
+    admin:
+      client:
+        url: http://localhost:8000
+        instance:
+          prefer-ip: true
+          service-url: http://localhost:8000
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        serviceName: ${spring.application.name}    # 注册到consul的服务名称
   redis:
     host: 127.0.0.1
     # Redis服务器连接端口

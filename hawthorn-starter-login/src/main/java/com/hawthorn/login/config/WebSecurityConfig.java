@@ -34,7 +34,7 @@ import java.util.List;
  */
 @Configuration
 @EnableWebSecurity  // 开启Spring Security
-/**
+/*
  * Spring Security 配置类
  * @EnableGlobalMethodSecurity 开启注解的权限控制，默认是关闭的。
  * prePostEnabled：使用表达式实现方法级别的控制，如：@PreAuthorize("hasRole('ADMIN')")
