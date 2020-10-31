@@ -14,6 +14,9 @@
   <packaging>jar</packaging>
   <name>hawthorn-starter-component</name>
   <description>Hawthorn project for Component</description>
+  <dependencies>
+
+  </dependencies>
   <build>
     <resources>
       <!--java文件的路径-->

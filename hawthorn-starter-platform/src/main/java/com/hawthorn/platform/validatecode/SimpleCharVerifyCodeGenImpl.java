@@ -1,6 +1,6 @@
 package com.hawthorn.platform.validatecode;
 
-import com.hawthorn.component.exception.AppRuntimeException;
+import cn.hutool.core.exceptions.ExceptionUtil;
 import com.hawthorn.component.exception.BizCode;
 import com.hawthorn.component.utils.common.RandomUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -98,7 +98,7 @@ public class SimpleCharVerifyCodeGenImpl implements IVerifyCodeGen
       verifyCode.setImgBytes(baos.toByteArray());
     } catch (IOException e)
     {
-      log.error("生成验证码异常[" + BizCode.VERIFY_CODE_GEN_FAIL.getCode() + "] : " + AppRuntimeException.getRootCauseMessage(e));
+      log.error("生成验证码异常[" + BizCode.VERIFY_CODE_GEN_FAIL.getCode() + "] : " + ExceptionUtil.getRootCauseMessage(e));
       verifyCode = null;
     }
     return verifyCode;

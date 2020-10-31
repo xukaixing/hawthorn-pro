@@ -21,6 +21,10 @@ spring:
       max-file-size: 5MB
       # 总上传的数据大小
       max-request-size: 25MB
+  security:
+    user:
+      name: admin
+      password: admin
   profiles:
     active: dev
 

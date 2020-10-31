@@ -9,7 +9,7 @@ import com.hawthorn.admin.repository.SysUserMapper;
 import com.hawthorn.admin.service.sysuser.SysUserService;
 import com.hawthorn.component.exception.BizCode;
 import com.hawthorn.component.utils.bean.QcBean;
-import com.hawthorn.platform.utils.iassert.AssertUtil;
+import com.hawthorn.component.utils.iassert.AssertUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

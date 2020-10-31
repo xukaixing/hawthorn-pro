@@ -1,12 +1,12 @@
 package com.hawthorn.login.controller;
 
+import cn.hutool.core.exceptions.ExceptionUtil;
 import com.hawthorn.component.constant.SysConstant;
-import com.hawthorn.component.exception.AppRuntimeException;
 import com.hawthorn.component.exception.BizCode;
+import com.hawthorn.component.utils.iassert.AssertUtil;
 import com.hawthorn.login.model.pojo.AccessToken;
 import com.hawthorn.login.service.AuthService;
 import com.hawthorn.platform.ret.RestResult;
-import com.hawthorn.platform.utils.iassert.AssertUtil;
 import com.hawthorn.platform.validatecode.IVerifyCodeGen;
 import com.hawthorn.platform.validatecode.SimpleCharVerifyCodeGenImpl;
 import com.hawthorn.platform.validatecode.VerifyCode;
@@ -101,7 +101,7 @@ public class AuthController
       response.getOutputStream().flush();
     } catch (IOException e)
     {
-      log.error("生成验证码异常[" + BizCode.VERIFY_CODE_GEN_FAIL.getCode() + "] : " + AppRuntimeException.getRootCauseMessage(e));
+      log.error("生成验证码异常[" + BizCode.VERIFY_CODE_GEN_FAIL.getCode() + "] : " + ExceptionUtil.getRootCauseMessage(e));
     }
   }
 }

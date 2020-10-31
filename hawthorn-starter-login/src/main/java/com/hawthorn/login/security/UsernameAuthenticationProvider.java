@@ -2,9 +2,9 @@ package com.hawthorn.login.security;
 
 import com.hawthorn.component.exception.BizCode;
 import com.hawthorn.component.exception.BizException;
+import com.hawthorn.component.utils.iassert.AssertUtil;
 import com.hawthorn.login.model.pojo.JwtUserDetails;
 import com.hawthorn.login.utils.PasswordEncoder;
-import com.hawthorn.platform.utils.iassert.AssertUtil;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.userdetails.UserDetails;

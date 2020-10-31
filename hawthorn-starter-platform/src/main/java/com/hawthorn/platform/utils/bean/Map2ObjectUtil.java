@@ -3,7 +3,7 @@ package com.hawthorn.platform.utils.bean;
 import com.hawthorn.component.exception.BizCode;
 import com.hawthorn.component.exception.BizException;
 import com.hawthorn.component.utils.common.Str2Util;
-import com.hawthorn.platform.utils.iassert.AssertUtil;
+import com.hawthorn.component.utils.iassert.AssertUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.BeanWrapper;

@@ -143,5 +143,4 @@ public class AssertUtil extends Assert
       return text;
     }
   }
-
 }
