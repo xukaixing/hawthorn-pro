@@ -7,6 +7,7 @@
     <module>hawthorn-starter-platform</module>
     <module>hawthorn-starter-backup</module>
     <module>hawthorn-starter-monitor</module>
+    <module>hawthorn-starter-hystrixdashboard</module>
     <module>hawthorn-starter-login</module>
     <module>hawthorn-starter-admin</module>
     <module>hawthorn-starter-claim</module>
@@ -119,6 +120,24 @@
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
 
+    <!-- hystrix-dashboard -->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
+    </dependency>
+
+    <!-- turbine -->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-netflix-turbine</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.cloud</groupId>
+          <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
     <!-- swagger2 -->
     <dependency>
       <groupId>io.springfox</groupId>
@@ -222,6 +241,28 @@
       <version>${redis.commons.pool2.version}</version>
     </dependency>
 
+    <!--consul-->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-consul-discovery</artifactId>
+    </dependency>
+
+    <!--feign -->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-openfeign</artifactId>
+    </dependency>
+    <!--feign httpclient -->
+    <dependency>
+      <groupId>io.github.openfeign</groupId>
+      <artifactId>feign-httpclient</artifactId>
+    </dependency>
+
+    <!--feign okhttp -->
+    <dependency>
+      <groupId>io.github.openfeign</groupId>
+      <artifactId>feign-okhttp</artifactId>
+    </dependency>
 
     <!-- others -->
     <dependency>

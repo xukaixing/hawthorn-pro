@@ -5,6 +5,13 @@
       xukaixing@hotmail.com
   
 ## 版本
+> v1.1.0 : 2020.11.01    
+>> 增加hystrix监控  
+>> 增加turbine集群监控
+>> 增加hystrixdashboard工程  
+
+---
+
 > v1.0.9 : 2020.10.31    
 >> 增加feign接口配置    
 >> 增加hystrix全局统一fallback配置              

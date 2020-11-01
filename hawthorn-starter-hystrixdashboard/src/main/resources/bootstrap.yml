@@ -1,0 +1,6 @@
+spring:
+  #  profiles:
+  #    active: dev
+  config:
+    #关闭配置中心
+    enabled: false

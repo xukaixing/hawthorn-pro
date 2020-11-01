@@ -5,6 +5,13 @@
       xukaixing@hotmail.com
   
 ## 版本
+> v1.1.0 : 2020.11.01    
+>> 增加hystrix监控  
+>> 增加turbine集群监控
+>> 增加hystrixdashboard工程  
+
+---
+
 > v1.0.9 : 2020.10.31    
 >> 增加feign接口配置    
 >> 增加hystrix全局统一fallback配置              
@@ -16,14 +23,6 @@
 >> 增加SpringBoot Admin监控    
 >> 增加注册中心consul       
 
----
-
-> v1.0.7 : 2020.10.17    
->> 重构包结构  
->> 新增login工程      
->> 实现jwt认证和鉴权      
->> 增加redis配置  
-       
 ## 环境
 
 - SpringBoot版本：2.3.2.RELEASE
@@ -74,6 +73,7 @@
 │       │   │               ├── BootAdminApplication.java
 │       │   │               ├── config
 │       │   │               ├── controller
+│       │   │               ├── feign
 │       │   │               ├── model
 │       │   │               ├── repository
 │       │   │               └── service
@@ -122,6 +122,28 @@
 │       │       └── rebel.xml
 │       └── test
 │           └── java
+├── hawthorn-starter-claim
+│   ├── pom.xml
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── com
+│       │   │       └── hawthorn
+│       │   │           └── claim
+│       │   │               ├── BootClaimApplication.java
+│       │   │               └── controller
+│       │   └── resources
+│       │       ├── application-dev.yml
+│       │       ├── application-prod.yml
+│       │       ├── application.yml
+│       │       ├── banner.txt
+│       │       ├── bootstrap.yml
+│       │       ├── generator.yml
+│       │       ├── logback-spring-dev.xml
+│       │       ├── logback-spring-prod.xml
+│       │       └── rebel.xml
+│       └── test
+│           └── java
 ├── hawthorn-starter-component
 │   ├── pom.xml
 │   └── src
@@ -130,6 +152,7 @@
 │           │   └── com
 │           │       └── hawthorn
 │           │           └── component
+│           │               ├── boot
 │           │               ├── constant
 │           │               ├── exception
 │           │               └── utils
@@ -145,6 +168,25 @@
 │                   ├── myService.java.vm
 │                   ├── myServiceImpl.java.vm
 │                   └── myServiceImplTest.java.vm
+├── hawthorn-starter-hystrixdashboard
+│   ├── pom.xml
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── com
+│       │   │       └── hawthorn
+│       │   │           └── hystrixdashboard
+│       │   │               └── BootHystrixDashboardApplication.java
+│       │   └── resources
+│       │       ├── application-dev.yml
+│       │       ├── application-prod.yml
+│       │       ├── application.yml
+│       │       ├── banner.txt
+│       │       ├── bootstrap.yml
+│       │       ├── logback-spring-dev.xml
+│       │       └── logback-spring-prod.xml
+│       └── test
+│           └── java
 ├── hawthorn-starter-login
 │   ├── pom.xml
 │   └── src
@@ -191,6 +233,28 @@
 │       │       ├── application-prod.yml
 │       │       ├── application.yml
 │       │       ├── banner.txt
+│       │       ├── bootstrap.yml
+│       │       ├── logback-spring-dev.xml
+│       │       ├── logback-spring-prod.xml
+│       │       └── rebel.xml
+│       └── test
+│           └── java
+├── hawthorn-starter-part
+│   ├── pom.xml
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── com
+│       │   │       └── hawthorn
+│       │   │           └── part
+│       │   │               ├── BootPartApplication.java
+│       │   │               └── controller
+│       │   └── resources
+│       │       ├── application-dev.yml
+│       │       ├── application-prod.yml
+│       │       ├── application.yml
+│       │       ├── banner.txt
+│       │       ├── bootstrap.yml
 │       │       ├── logback-spring-dev.xml
 │       │       ├── logback-spring-prod.xml
 │       │       └── rebel.xml
@@ -201,29 +265,34 @@
 │   └── src
 │       └── main
 │           ├── java
-│           │   └── com
-│           │       └── hawthorn
-│           │           └── platform
-│           │               ├── PlatformAutoEnable.java
-│           │               ├── annotation
-│           │               ├── aspect
-│           │               ├── config
-│           │               ├── exception
-│           │               ├── generator
-│           │               ├── model
-│           │               ├── redis
-│           │               ├── repository
-│           │               ├── ret
-│           │               ├── service
-│           │               ├── utils
-│           │               └── validatecode
+│           │   ├── com
+│           │   │   └── hawthorn
+│           │   │       └── platform
+│           │   │           ├── PlatformAutoEnable.java
+│           │   │           ├── annotation
+│           │   │           ├── aspect
+│           │   │           ├── config
+│           │   │           ├── exception
+│           │   │           ├── generator
+│           │   │           ├── hystrix
+│           │   │           ├── model
+│           │   │           ├── redis
+│           │   │           ├── repository
+│           │   │           ├── ret
+│           │   │           ├── service
+│           │   │           ├── utils
+│           │   │           └── validatecode
+│           │   └── org
+│           │       └── springframework
+│           │           └── cloud
+│           │               └── openfeign
 │           └── resources
 │               ├── META-INF
 │               │   └── spring.factories
 │               └── rebel.xml
 └── pom.xml
 
-98 directories, 63 files
+137 directories, 94 files
 
 ```
 
