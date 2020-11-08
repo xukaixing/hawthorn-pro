@@ -1,0 +1,41 @@
+# 启动端口号
+server:
+  port: 1001
+spring:
+  application:
+    name: hawthorn-gateway
+  profiles:
+    active: dev
+  cloud:
+    # gateway配置
+    gateway:
+      discovery:
+        locator:
+          # 当新加服务的时候，不用去配置路由规则和重启网关;为所有服务都进行转发操作
+          enabled: true
+          # 支持小写的服务名称进行访问，开启小写服务名称后大写的服务名称就不能使用，两者只能选其一
+          lowerCaseServiceId: true
+      # 配置路由
+      routes:
+        - id: service-claim
+          uri: lb://hawthorn-claim  # lb 代表从注册中心获取服务
+          predicates: # 断言工厂，匹配谓词,多个谓词可以互相组合
+            - Path=/claim/** # 匹配所有请求路径以http://ip:port/claim/ ,如果配置多级路径，用**代替
+            #- Header=X-Request-Id, \d+ # 匹配请求头中存在符合条件“key为X-Request-Id，value为数字”的所有请求(value为正则表达式)
+            #- Cookie=chocolate, value # 匹配请求中存在cookiechocolate=value的所有请求(value是正则表达式)
+            #- Query=param1,value # 匹配所有含有请求参数param1且它的值符合正则表达式value的请求（value是正则表达式）
+            #- Host=**.somehost.org # 匹配请求中包含域名的
+            #- Method=Get # 匹配如get，post等请求的方法
+            #- RemoteAddr=192.168.1.1/24 # 匹配对应ip地址
+            #filters: # 过滤器工厂
+            #- AddRequestHeader=X-Request-Foo, Bar # 符合规则匹配成功的请求，将添加 X-Request-Foo：bar 请求头，将其传递到后端服务中，后方服务可以直接获取请求头信息
+            #- RemoveRequestHeader=X-Request-Foo # 移除请求头的过滤器工厂，可以在请求转发到后端服务之前进行 Header 的移除操作
+            #- SetStatus=401 # 接收单个状态，用于设置 Http 请求的响应码。它必须是有效的 Spring Httpstatus
+            #- RedirectTo=302, http://baidu.com # 重定向操作，比如我们需要重定向到百度。
+            #- StripPrefix=1 # 去除路径个数，如：/claim/**，去除后为/**
+        - id: service-part
+          uri: lb://hawthorn-part
+          predicates:
+            - Path=/part/**
+          #filters:
+          # - StripPrefix=1
