@@ -7,7 +7,8 @@
   -->
   <!-- 文件输出格式 -->
   <!--格式化输出：%d:表示日期    %thread:表示线程名     %-5level:级别从左显示5个字符宽度  %msg:日志消息    %n:是换行符-->
-  <property name="PATTERN" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%-5level userId:%X{user} [%thread] %c [%L] -| %msg%n"/>
+  <property name="PATTERN" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%-5level userId --- %X{user} [%thread] %c [%L] -| %msg%n"/>
+  <property name="PATTERN-CONSOLE" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%green(%-5level) %magenta(userId --- %X{user} [%thread]) %cyan(%c [%L]) -| %msg%n"/>
   <property name="ROLLINGSIZE" value="5MB"/>
   <!--日志文件输出路径 工程所在目录-->
   <property name="FILE_PATH" value="logs/"/>
@@ -28,7 +29,8 @@
   <!-- 控制台打印 -->
   <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
-      <pattern>${PATTERN}</pattern>
+      <pattern>${PATTERN-CONSOLE}</pattern>
+      <charset>UTF-8</charset>
     </encoder>
   </appender>
   <!-- 每天产生一个文件 -->
