@@ -10,34 +10,36 @@ package com.hawthorn.platform.config;
  */
 
 import com.hawthorn.component.utils.json.ObjectRequestParam2StringConverter;
-import com.hawthorn.component.utils.json.String2ObjectRequestParamConverter;
 import com.hawthorn.platform.hystrix.MyHystrixFallbackHandlerFactory;
 import feign.Feign;
 import feign.Logger;
 import feign.Request;
 import feign.codec.Encoder;
 import feign.form.spring.SpringFormEncoder;
-import okhttp3.ConnectionPool;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.impl.client.DefaultConnectionKeepAliveStrategy;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication.Type;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.cloud.openfeign.FeignFormatterRegistrar;
 import org.springframework.cloud.openfeign.HystrixFallbackConfiguration;
 import org.springframework.cloud.openfeign.HystrixFallbackFactory;
 import org.springframework.cloud.openfeign.support.SpringEncoder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Scope;
 import org.springframework.format.FormatterRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 // 可以添加在主类下，但是不用添加@Configuration。
@@ -46,6 +48,7 @@ import java.util.concurrent.TimeUnit;
 //@Configuration
 @ConditionalOnClass(Feign.class)
 @Import({HystrixFallbackConfiguration.class})
+@Slf4j
 //@AutoConfigureBefore(FeignAutoConfiguration.class)
 public class FeignGlobalConfig
 {
@@ -158,20 +161,66 @@ public class FeignGlobalConfig
   }
 
   @Bean
-  public okhttp3.OkHttpClient okHttpClient()
+  public HttpClient httpClient()
   {
-    return new okhttp3.OkHttpClient.Builder()
-        //设置连接超时
-        .connectTimeout(10, TimeUnit.SECONDS)
-        //设置读超时
-        .readTimeout(10, TimeUnit.SECONDS)
-        //设置写超时
-        .writeTimeout(10, TimeUnit.SECONDS)
-        //是否自动重连
-        .retryOnConnectionFailure(true)
-        .connectionPool(new ConnectionPool(10, 5L, TimeUnit.MINUTES))
-        .build();
+    log.info("====== Apache httpclient strating... ======");
+    log.info("====== Apache httpclient 初始化连接池开始 ======");
+    // 生成默认请求配置
+    RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
+    // 超时时间
+    requestConfigBuilder.setSocketTimeout(5 * 1000);
+    // 连接时间
+    requestConfigBuilder.setConnectTimeout(5 * 1000);
+    RequestConfig defaultRequestConfig = requestConfigBuilder.build();
+    // 连接池配置
+    // 长连接保持30秒
+    final PoolingHttpClientConnectionManager pollingConnectionManager = new PoolingHttpClientConnectionManager(30, TimeUnit.MILLISECONDS);
+    // 总连接数
+    pollingConnectionManager.setMaxTotal(1000);
+    // 同路由的并发数
+    pollingConnectionManager.setDefaultMaxPerRoute(100);
+
+    // httpclient 配置
+    HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+    // 保持长连接配置，需要在头添加Keep-Alive
+    httpClientBuilder.setKeepAliveStrategy(new DefaultConnectionKeepAliveStrategy());
+    httpClientBuilder.setConnectionManager(pollingConnectionManager);
+    httpClientBuilder.setDefaultRequestConfig(defaultRequestConfig);
+    HttpClient client = httpClientBuilder.build();
+
+    // 启动定时器，定时回收过期的连接
+    Timer timer = new Timer();
+    timer.schedule(new TimerTask()
+    {
+      @Override
+      public void run()
+      {
+        log.info("====== closeIdleConnections ======");
+        pollingConnectionManager.closeExpiredConnections();
+        pollingConnectionManager.closeIdleConnections(5, TimeUnit.SECONDS);
+      }
+    }, 10 * 1000, 5 * 1000); // 10秒后，每隔5秒调用
+    log.info("====== Apache httpclient 初始化连接池完毕 ======");
+
+    return client;
   }
+
+  // @Bean
+  // public okhttp3.OkHttpClient okHttpClient()
+  // {
+  //   log.info("====== Apache okhttp3 strating... ======");
+  //   return new okhttp3.OkHttpClient.Builder()
+  //       //设置连接超时
+  //       .connectTimeout(10, TimeUnit.SECONDS)
+  //       //设置读超时
+  //       .readTimeout(10, TimeUnit.SECONDS)
+  //       //设置写超时
+  //       .writeTimeout(10, TimeUnit.SECONDS)
+  //       //是否自动重连
+  //       .retryOnConnectionFailure(true)
+  //       .connectionPool(new ConnectionPool(10, 5L, TimeUnit.MINUTES))
+  //       .build();
+  // }
 
   /**
    * @remark: 默认的全局fallback工厂配置
@@ -228,28 +277,28 @@ public class FeignGlobalConfig
    * -----------------------------------------------------------
    * 2020/10/31    andy.ten        v1.0.1             init
    */
-  @Configuration
-  @ConditionalOnWebApplication(type = Type.SERVLET)
-  public static class DefaultFeignClientsWebMvcConfiguration implements WebMvcConfigurer
-  {
-
-    @Override
-    public void addFormatters(FormatterRegistry registry)
-    {
-      registry.addConverter(new String2ObjectRequestParamConverter());
-    }
-
-  }
+  // @Configuration
+  // @ConditionalOnWebApplication(type = Type.SERVLET)
+  // public static class DefaultFeignClientsWebMvcConfiguration implements WebMvcConfigurer
+  // {
+  //
+  //   @Override
+  //   public void addFormatters(FormatterRegistry registry)
+  //   {
+  //     registry.addConverter(new String2ObjectRequestParamConverter());
+  //   }
+  //
+  // }
 
   /**
    * 基于Webflux的服务provider端配置
    */
-  @Configuration
-  @ConditionalOnWebApplication(type = Type.REACTIVE)
-  public static class DefaultFeignClientsWebFluxConfiguration
-  {
-    //TODO
-  }
+  // @Configuration
+  // @ConditionalOnWebApplication(type = Type.REACTIVE)
+  // public static class DefaultFeignClientsWebFluxConfiguration
+  // {
+  //   //TODO
+  // }
 
   public static class DefaultFeignFormatterRegistrar implements FeignFormatterRegistrar
   {
