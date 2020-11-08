@@ -8,6 +8,8 @@
 # 启动端口号
 server:
   port: 5001
+    #servlet:
+  #context-path: /claim
 spring:
   application:
     name: hawthorn-claim

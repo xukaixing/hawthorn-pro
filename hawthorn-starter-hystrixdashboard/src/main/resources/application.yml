@@ -1,6 +1,6 @@
 # 启动端口号
 server:
-  port: 8001
+  port: 9001
 spring:
   application:
     name: hawthorn-hystrixdashboard
@@ -16,11 +16,11 @@ turbine:
   appConfig: hawthorn-admin    # 配置监控服务的列表，表明监控哪些服务多个使用","分割
   clusterNameExpression: new String("default")    # 指定集群名称,若为default则为默认集群，多个集群则通过此配置区分
   combine-host-port: true    # 此配置默认为false，则服务是以host进行区分，若设置为true则以host+port进行区分
-    # 如果被监控的服务中设置了context-path,指定 turbine.instanceUrlSuffix,如：/user/hystrix.stream
-    instanceUrlSuffix: /hystrix.stream    # 指定收集路径
-    # 如果有多个context-path，配置方式
-    #instanceUrlSuffix:
-    #  servername: /xx/hystrix.stream
+  # 如果被监控的服务中设置了context-path,指定 turbine.instanceUrlSuffix,如：/user/hystrix.stream
+  instanceUrlSuffix: /hystrix.stream    # 指定收集路径
+  # 如果有多个context-path，配置方式
+  #instanceUrlSuffix:
+  #  servername: /xx/hystrix.stream
 # 开放健康检查接口
 management:
   endpoints:

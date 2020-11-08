@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Api(tags = {"demo-hello-controller"})
 @RestController
-@RequestMapping("/hello")
+@RequestMapping("/feign")
 public class HelloController
 {
   @Autowired
@@ -31,10 +31,10 @@ public class HelloController
    * @date: 2020/10/28 4:04 下午
    * @version: 1.0.1
    */
-  @ApiOperation(value = "feign->hello->sayHello", notes = "feign接口调用demo")
+  @ApiOperation(value = "feign->/claim/hello->sayHello", notes = "feign接口调用demo")
   @ApiImplicitParams({
   })
-  @GetMapping(value = "/feign/sayHello")
+  @GetMapping(value = "/claim/hello/sayHello")
   public RestResult sayHello()
   {
     return helloFeignService.sayHello();

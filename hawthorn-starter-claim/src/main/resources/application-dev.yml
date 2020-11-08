@@ -23,10 +23,19 @@ spring:
   # consul配置
   cloud:
     consul:
+      enabled: true
       host: localhost
       port: 8500
       discovery:
-        serviceName: ${spring.application.name}    # 注册到consul的服务名称
+        enabled: true
+        register: true # 是否将自身服务注册到consul中
+        hostname: 127.0.0.1
+        healthCheckPath: /actuator/health  #服务健康检查地址,如果带上下文，则：${server.servlet.context-path}/，否则去掉
+        healthCheckInterval: 15s
+        serviceName: ${spring.application.name} # 注册到consul的服务名称
+        # 默认的id为：${spring.application.name}-${server.port}
+        # 默认id配置的问题是：某个微服务即使有多个实例，只要端口相同，那么Consul上依然只会保留1条数据！要想解决这个问题，只需要让不同实例，拥有不同的InstanceId即可。
+        instanceId: ${spring.application.name}-${spring.cloud.client.ip-address}-${server.port}  # 服务id
 
   # 数据源配置
   datasource:

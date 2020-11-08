@@ -8,6 +8,8 @@
 # 启动端口号
 server:
   port: 7001
+    #servlet:
+  # context-path: /admin
 spring:
   application:
     name: hawthorn-admin
@@ -33,10 +35,6 @@ feign:
   httpclient:
     # 让feign使用Apache HTTPClient做请求，而不是默认的urlConnection
     enabled: true
-    # feign最大连接数
-    max-connections: 200
-    # feign单个路径的最大连接数
-    max-connections-per-route: 50
   okhttp:
     # 让feign使用Apache okhttp做请求，而不是默认的urlConnection
     # okhttp模式不支持压缩配置
@@ -51,9 +49,34 @@ feign:
       min-request-size: 2048
     response:
       enabled: true
-  # 开启熔断器
+  # 在feign中开启hystrix功能，默认情况下feign不开启hystrix功能
   hystrix:
     enabled: true
+
+# 配置hystrix的参数
+hystrix:
+  threadpool:
+    # default: 默认参数，作用的所有的hystrix的客户端,如果需要对某个具体的接口，可以写接口+方法名称
+    default:
+      coreSize: 500
+      maxQueueSize: 1000
+  command:
+    default:
+      fallback:
+        # 是否开启回退方法
+        enabled: true
+      execution:
+        isolation:
+          thread:
+            #断路器的超时时间ms,默认1000
+            timeoutInMilliseconds: 30000
+      circuitBreaker:
+        # 当在配置时间窗口内达到此数量的失败后，进行短路
+        requestVolumeThreshold: 50
+        # 出错百分比阈值，当达到此阈值后，开始短路。默认50%）
+        errorThresholdPercentage: 50%
+        # 短路多久以后开始尝试是否恢复，默认5s）-单位ms
+        sleepWindowInMilliseconds: 500
 # 自定义属性
 myprops:
   exectime:

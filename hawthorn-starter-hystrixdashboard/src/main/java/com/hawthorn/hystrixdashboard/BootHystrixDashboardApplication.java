@@ -10,8 +10,9 @@ import org.springframework.cloud.netflix.turbine.EnableTurbine;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+// 启动turbine监控
 @EnableTurbine
-// 启动hystrix监控
+// 启动hystrix dashboard监控
 @EnableHystrixDashboard
 @EnableDiscoveryClient
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, DruidDataSourceAutoConfigure.class})

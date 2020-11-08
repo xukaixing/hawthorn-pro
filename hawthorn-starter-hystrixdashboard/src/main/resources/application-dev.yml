@@ -12,12 +12,50 @@ server:
       max: 800
       min-spare: 100
 spring:
+  # 监控配置
+  boot:
+    admin:
+      client:
+        url: http://localhost:8000
+  # consul配置
   cloud:
     consul:
+      enabled: true
       host: localhost
       port: 8500
       discovery:
-        serviceName: ${spring.application.name}    # 注册到consul的服务名称
+        enabled: true
+        register: true # 是否将自身服务注册到consul中
+        hostname: 127.0.0.1
+        healthCheckPath: /actuator/health  #服务健康检查地址
+        healthCheckInterval: 15s
+        serviceName: ${spring.application.name} # 注册到consul的服务名称
+        # 默认的id为：${spring.application.name}-${server.port}
+        # 默认id配置的问题是：某个微服务即使有多个实例，只要端口相同，那么Consul上依然只会保留1条数据！要想解决这个问题，只需要让不同实例，拥有不同的InstanceId即可。
+        instanceId: ${spring.application.name}-${spring.cloud.client.ip-address}-${server.port}  # 服务id
+
+  # redis配置
+  redis:
+    host: 127.0.0.1
+    # Redis服务器连接端口
+    port: 6379
+    # Redis服务器连接密码（默认为空）
+    password: 123456
+    # lettuce:springboot2.0+使用；低版本使用：jedis
+    lettuce:
+      pool:
+        # 连接池最大连接数（使用负值表示没有限制）
+        max-active: 8
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池中的最小空闲连接
+        min-idle: 0
+    # 连接超时时间（毫秒）如果不设置，取默认值2000
+    timeout: 30000
+    # 连接的数据库
+    database: 0
 # 配置log
 logging:
   config: classpath:logback-spring-dev.xml

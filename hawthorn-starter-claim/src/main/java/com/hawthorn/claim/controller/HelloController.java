@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Api(tags = {"claim-hello"})
 @RestController
-@RequestMapping("/hello")
+@RequestMapping("/claim/hello")
 public class HelloController
 {
   /**

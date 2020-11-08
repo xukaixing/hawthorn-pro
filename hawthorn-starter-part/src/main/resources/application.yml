@@ -8,9 +8,11 @@
 # 启动端口号
 server:
   port: 6001
+    #servlet:
+  # context-path: /part
 spring:
   application:
-    name: hawthorn-claim
+    name: hawthorn-part
   #main:
   # 后注入的bean是否是覆盖
   #allow-bean-definition-overriding: true
