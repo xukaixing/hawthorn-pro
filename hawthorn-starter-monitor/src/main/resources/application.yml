@@ -8,6 +8,21 @@ spring:
     active: dev
 # 开放健康检查接口
 management:
+  security:
+    enabled: false
+  health:
+    #    db:
+    #      enabled: false
+    #    mail:
+    #      enabled: false
+    #    mongo:
+    #      enabled: false
+    #    redis:
+    #      enabled: false
+    consul:
+      enabled: true
+    binders:
+      enabled: false
   endpoints:
     web:
       exposure:
