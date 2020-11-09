@@ -5,6 +5,7 @@ import cn.hutool.core.exceptions.ExceptionUtil;
 import com.hawthorn.component.exception.BizCode;
 import com.hawthorn.component.exception.BizException;
 import com.hawthorn.platform.ret.RestResult;
+import com.netflix.hystrix.exception.HystrixTimeoutException;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -259,6 +260,24 @@ public class GlobalExceptionHandler
   {
     log.error("SQL异常[" + BizCode.SQL_TRANSACTION_TIMEOUT.getCode() + "] : " + ExceptionUtil.getRootCauseMessage(ex));
     return RestResult.fail(BizCode.SQL_TRANSACTION_TIMEOUT.getCode(), "数据操作异常:" + BizCode.SQL_TRANSACTION_TIMEOUT.getMsg(), ExceptionUtil.getRootCauseMessage(ex));
+  }
+
+  /**
+   * HystrixTimeoutException捕捉处理
+   *
+   * @param ex
+   * @return
+   */
+  @ResponseBody
+  @ExceptionHandler(value = HystrixTimeoutException.class)
+  public RestResult errorHandler(HystrixTimeoutException ex)
+  {
+    //获取request
+    //ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+    //HttpServletRequest request = requestAttributes.getRequest();
+    log.error("未知错误异常[" + BizCode.CALL_FUNC_TIMEOUT.getCode() + "] : " + ExceptionUtil.getRootCauseMessage(ex), ex);
+    return RestResult.fail(BizCode.CALL_FUNC_TIMEOUT.getCode(), BizCode.CALL_FUNC_TIMEOUT.getMsg(), ExceptionUtil.getRootCauseMessage(ex));
+    //return RestResult.fail(BizCode.ERROR_CREATE_DICT);
   }
 
   /**
