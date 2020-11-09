@@ -12,13 +12,18 @@ server:
       max: 800
       min-spare: 100
 spring:
-  # 监控配置
-  boot:
-    admin:
-      client:
-        url: http://localhost:8000
-        #instance:
-        # prefer-ip: true
+  config:
+    #关闭配置中心
+    enabled: false
+    #boot:
+    # 监控配置 使用注册中心，不需要单独增加client监控
+    #admin:
+    #client:
+    #  url: http://localhost:8000
+    #instance:
+    # prefer-ip: true
+    #discovery:
+    #  ignored-services: consul
 
   # consul配置
   cloud:
@@ -67,6 +72,21 @@ spring:
     database: 0
 # 开放健康检查接口
 management:
+  security:
+    enabled: false
+  health:
+    #    db:
+    #      enabled: false
+    #    mail:
+    #      enabled: false
+    #    mongo:
+    #      enabled: false
+    #    redis:
+    #      enabled: false
+    consul:
+      enabled: true
+    binders:
+      enabled: false
   endpoints:
     web:
       exposure:
@@ -74,6 +94,7 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+
 # 配置log
 logging:
   config: classpath:logback-spring-dev.xml
