@@ -167,11 +167,17 @@ public class FeignGlobalConfig
     log.info("====== Apache httpclient 初始化连接池开始 ======");
     // 生成默认请求配置
     RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
-    // 超时时间
-    requestConfigBuilder.setSocketTimeout(5 * 1000);
-    // 连接时间
+    // 从连接池获取连接超时时间
+    requestConfigBuilder.setConnectionRequestTimeout(5 * 1000);
+    // 连接目标超时
+    // 指的是连接目标url的连接超时时间，即客服端发送请求到与目标url建立起连接的最大时间
     requestConfigBuilder.setConnectTimeout(5 * 1000);
+    // 等待响应超时（读取数据超时）
+    // 连接上一个url后，获取response的返回等待时间 ，即在与目标url建立连接后，等待返回response的最大时间
+    requestConfigBuilder.setSocketTimeout(15 * 1000);
+
     RequestConfig defaultRequestConfig = requestConfigBuilder.build();
+
     // 连接池配置
     // 长连接保持30秒
     final PoolingHttpClientConnectionManager pollingConnectionManager = new PoolingHttpClientConnectionManager(30, TimeUnit.MILLISECONDS);
