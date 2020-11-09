@@ -13,6 +13,8 @@ import org.springframework.util.Assert;
  * @date: 2020/10/30 5:04 下午
  * @version v1.0.1
  */
+// 每次获得bean都会生成一个新的对象
+// 如果在spring配置文件内未指定scope属性，默认为singleton（表示在spring容器中的单例，通过spring容器获得该bean时总是返回唯一的实例）
 @Scope("prototype")
 public class HystrixFallbackFactory implements FallbackFactory<FeignFallback>
 {

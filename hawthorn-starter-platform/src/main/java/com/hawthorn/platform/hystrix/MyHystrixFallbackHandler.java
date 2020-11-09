@@ -1,5 +1,6 @@
 package com.hawthorn.platform.hystrix;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.HystrixFallbackHandler;
 import org.springframework.cloud.openfeign.HystrixFallbackResults;
 
@@ -13,6 +14,7 @@ import java.lang.reflect.Method;
  * @date: 2020/10/31 2:22 下午
  * @version v1.0.1
  */
+@Slf4j
 public class MyHystrixFallbackHandler extends HystrixFallbackHandler
 {
   public MyHystrixFallbackHandler(Class<?> feignClientClass, Throwable cause)
@@ -21,10 +23,10 @@ public class MyHystrixFallbackHandler extends HystrixFallbackHandler
   }
 
   @Override
-  protected Object handle(Object proxy, Method method, Object[] args) throws Throwable
+  protected Object handle(Object proxy, Method method, Object[] args)
   {
     Class<?> returnType = method.getReturnType();
 
-    return HystrixFallbackResults.defaultFallbackResult();
+    return HystrixFallbackResults.defaultFallbackResult(super.getFeignClientClass(), method, super.getCause());
   }
 }
