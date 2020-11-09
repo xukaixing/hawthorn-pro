@@ -46,6 +46,9 @@ public enum BizCode
   PROPERTY_LOAD_FAIL(-16002, "property文件加载失败"),
   PROPERTY_FILE_NOTFOUND(-16003, "property文件未找到"),
 
+  // interface
+  CALL_FUNC_TIMEOUT(-17001, "调用方法超时"),
+
   UNKNOW_ERROR(-19999, "未知错误异常"),
 
   //菜单 + 权限

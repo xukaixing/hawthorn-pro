@@ -32,6 +32,7 @@ public class HelloController
   @GetMapping(value = "/sayHello")
   public RestResult sayHello()
   {
+
     return RestResult.success("hello claim ! ");
   }
 }

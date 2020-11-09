@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Api(tags = {"part-hello"})
 @RestController
-@RequestMapping("/hello")
+@RequestMapping("/part/hello")
 public class HelloController
 {
   /**
