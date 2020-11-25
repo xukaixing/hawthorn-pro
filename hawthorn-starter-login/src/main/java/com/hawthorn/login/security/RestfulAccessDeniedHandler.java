@@ -1,11 +1,10 @@
 package com.hawthorn.login.security;
 
 import com.hawthorn.component.exception.BizCode;
-import com.hawthorn.platform.ret.RestResult;
+import com.hawthorn.component.ret.RestResult;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -26,7 +25,7 @@ public class RestfulAccessDeniedHandler implements AccessDeniedHandler
   @Override
   public void handle(HttpServletRequest request,
                      HttpServletResponse response,
-                     AccessDeniedException e) throws IOException, ServletException
+                     AccessDeniedException e) throws IOException
   {
 
     response.setHeader("Cache-Control", "no-cache");

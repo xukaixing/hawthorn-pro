@@ -1,7 +1,7 @@
 package com.hawthorn.admin.controller;
 
 import com.hawthorn.admin.feign.HelloFeignService;
-import com.hawthorn.platform.ret.RestResult;
+import com.hawthorn.component.ret.RestResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -31,10 +31,10 @@ public class HelloController
    * @date: 2020/10/28 4:04 下午
    * @version: 1.0.1
    */
-  @ApiOperation(value = "feign->/claim/hello->sayHello", notes = "feign接口调用demo")
+  @ApiOperation(value = "feign->/hello->sayHello", notes = "feign接口调用demo")
   @ApiImplicitParams({
   })
-  @GetMapping(value = "/claim/hello/sayHello")
+  @GetMapping(value = "/hello/sayHello")
   public RestResult sayHello()
   {
     return helloFeignService.sayHello();

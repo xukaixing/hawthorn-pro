@@ -15,12 +15,18 @@
   <description>Hawthorn project for Monitor</description>
 
   <properties>
-    <hawthorn.platform.starter.version>1.1.0-SNAPSHOT</hawthorn.platform.starter.version>
+    <hawthorn.platform.starter.version>1.1.2-SNAPSHOT</hawthorn.platform.starter.version>
+    <spring.boot.admin.starter.version>2.3.0</spring.boot.admin.starter.version>
     <spring.boot.admin.server.version>2.3.0</spring.boot.admin.server.version>
     <spring.boot.admin.server.ui.version>2.3.0</spring.boot.admin.server.ui.version>
   </properties>
-
   <dependencies>
+    <!--spring-boot-admin 引入该依赖，能够从consul中获取服务，无须在client增加配置；否则无法读取服务-->
+    <dependency>
+      <groupId>de.codecentric</groupId>
+      <artifactId>spring-boot-admin-starter-server</artifactId>
+      <version>${spring.boot.admin.starter.version}</version>
+    </dependency>
     <!--spring-boot-admin-->
     <dependency>
       <groupId>de.codecentric</groupId>

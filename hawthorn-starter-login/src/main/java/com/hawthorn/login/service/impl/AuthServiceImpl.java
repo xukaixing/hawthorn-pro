@@ -1,6 +1,7 @@
 package com.hawthorn.login.service.impl;
 
-import com.hawthorn.component.constant.SysConstant;
+import com.hawthorn.component.constant.AdminConstant;
+import com.hawthorn.component.ret.RestResult;
 import com.hawthorn.component.utils.common.Str2Util;
 import com.hawthorn.login.model.pojo.AccessToken;
 import com.hawthorn.login.model.pojo.JwtUserDetails;
@@ -10,7 +11,6 @@ import com.hawthorn.login.security.JwtAuthenticationToken;
 import com.hawthorn.login.service.AuthService;
 import com.hawthorn.login.service.SysUserService;
 import com.hawthorn.platform.redis.RedisClient;
-import com.hawthorn.platform.ret.RestResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -68,8 +68,8 @@ public class AuthServiceImpl implements AuthService
     userDetails.setAuthorities(grantedAuthorities);
 
     // 将令牌放入redis
-    String sysJwt = Str2Util.placeHolder(SysConstant.JWT, "login", userDetails.getUserInfo().getId());
-    redisClient.set(sysJwt, accessToken.getToken(), SysConstant.EXPIRE_TIME_ONE_HOUR);
+    String sysJwt = Str2Util.placeHolder(AdminConstant.JWT, "login", userDetails.getUserInfo().getId());
+    redisClient.set(sysJwt, accessToken.getToken(), AdminConstant.EXPIRE_TIME_ONE_HOUR);
     return RestResult.success(accessToken);
   }
 

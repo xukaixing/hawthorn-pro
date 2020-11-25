@@ -83,5 +83,5 @@ public class GlobalConstant
   /**
    * 全局应用配置
    */
-  public static final SysConfig GLOBAL_APP_CONFIG = new SysConfig();
+  public static final SysConstant GLOBAL_APP_CONFIG = new SysConstant();
 }

@@ -26,7 +26,7 @@ import java.util.List;
  */
 @Api(tags = {"admin-sysdept"})
 @RestController
-@RequestMapping("/admin/sysdept/sysDept")
+@RequestMapping("/sysdept")
 public class SysDeptController
 {
   @Resource

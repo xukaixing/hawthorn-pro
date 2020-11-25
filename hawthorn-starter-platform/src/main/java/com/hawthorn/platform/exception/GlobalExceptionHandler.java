@@ -4,7 +4,7 @@ package com.hawthorn.platform.exception;
 import cn.hutool.core.exceptions.ExceptionUtil;
 import com.hawthorn.component.exception.BizCode;
 import com.hawthorn.component.exception.BizException;
-import com.hawthorn.platform.ret.RestResult;
+import com.hawthorn.component.ret.RestResult;
 import com.netflix.hystrix.exception.HystrixTimeoutException;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.MyBatisSystemException;

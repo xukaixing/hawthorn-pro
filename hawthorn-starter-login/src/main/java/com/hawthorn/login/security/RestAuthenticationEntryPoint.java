@@ -1,11 +1,10 @@
 package com.hawthorn.login.security;
 
-import com.hawthorn.platform.ret.RestResult;
+import com.hawthorn.component.ret.RestResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -24,7 +23,7 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint
 {
 
   @Override
-  public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException
+  public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException
   {
     response.setHeader("Cache-Control", "no-cache");
     response.setCharacterEncoding("UTF-8");

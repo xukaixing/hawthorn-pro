@@ -7,8 +7,8 @@
 # =====================================
 # 启动端口号
 server:
-  port: 6001
-    #servlet:
+  port: 4601
+  #servlet:
   # context-path: /part
 spring:
   application:

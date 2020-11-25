@@ -1,6 +1,6 @@
 package com.hawthorn.login.service;
 
-import com.hawthorn.platform.ret.RestResult;
+import com.hawthorn.component.ret.RestResult;
 
 import javax.servlet.http.HttpServletRequest;
 

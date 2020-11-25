@@ -1,11 +1,18 @@
 # 说明
 
   `hawthorn-pro` hawthorn微服务框架平台   
-  作者:徐开兴 ｜
+  作者: 徐开兴 ｜
       andy.ten@tom.com ｜
       xukaixing@hotmail.com
   
 ## 版本
+> v1.1.2 : 2020.11.25      
+>> 增加gateway的限流处理  
+>> 增加gateway的熔断处理
+>> 增加gateway的统一异常处理
+
+---
+
 > v1.1.1 : 2020.11.08      
 >> 增加gateway工程  
 >> 修改logback，输出console带颜色处理  
@@ -14,17 +21,10 @@
 
 ---
 
-> v1.1.0 : 2020.11.01    
->> 增加hystrix监控  
->> 增加turbine集群监控
+> v1.1.0 : 2020.11.01      
+>> 增加hystrix监控    
+>> 增加turbine集群监控  
 >> 增加hystrixdashboard工程  
-
----
-
-> v1.0.9 : 2020.10.31    
->> 增加feign接口配置    
->> 增加hystrix全局统一fallback配置              
->> 升级JackUtil工具    
       
 ## 环境
 

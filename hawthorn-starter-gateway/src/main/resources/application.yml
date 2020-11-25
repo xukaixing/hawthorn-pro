@@ -1,7 +1,10 @@
 # 启动端口号
 server:
-  port: 1001
+  address: 127.0.0.1
+  port: 4001
 spring:
+  main:
+    allow-bean-definition-overriding: true
   application:
     name: hawthorn-gateway
   profiles:
@@ -9,6 +12,13 @@ spring:
   cloud:
     # gateway配置
     gateway:
+      # gateway 默认使用 netty httpClient 实现。
+      httpclient:
+        connect-timeout: 2000 #连接超时时间 ，动态
+        response-timeout: 10s #请求读取超时时间，动态
+      # discovery.filters： 只有从注册中心建立的路由的才会附加（lb)
+      # default-filters： 所有的路由都会增加
+      # discovery.filters 不支持el 表达式配置
       discovery:
         locator:
           # 当新加服务的时候，不用去配置路由规则和重启网关;为所有服务都进行转发操作
@@ -17,25 +27,112 @@ spring:
           lowerCaseServiceId: true
       # 配置路由
       routes:
+        - id: service-admin
+          uri: lb://hawthorn-admin
+          predicates:
+            - Path=/admin/**
+          filters:
+            - StripPrefix=1
+            # 限流过滤器，使用gateway内置令牌算法，redis失效时间：(burstCapacity/replenishRate )*2
+            - name: RequestRateLimiter
+              args:
+                # 令牌桶每秒填充平均速率,即行等价于允许用户每秒处理多少个请求，吞吐率？每秒补充20个
+                redis-rate-limiter.replenishRate: 20
+                # 令牌桶的容量，允许在一秒钟内完成的最大请求数
+                redis-rate-limiter.burstCapacity: 1000
+                #rate-limiter: “#{@redisRateLimiter}”
+                # 用于限流的键的解析器的 Bean 对象的名字。它使用 SpEL 表达式根据#{@beanName}从 Spring 容器中获取 Bean 对象。
+                key-resolver: "#{@apiKeyResolver}"
+            # 服务降级  触发调用 HystrixFallbackHandler GatewayFallbackConfig
+            # Hystrix 配置在Retry在前：
+            #    不管重试几次，都只会按照Hystrix超时时间为准。
+            #    如果Hystrix超时了，也就不会重试了
+            # Retry在前，Hystrix超时了也会重试
+            - name: Hystrix
+              args:
+                name: default
+                fallbackUri: 'forward:/defaultfallback'
+            # 重试
+            - name: Retry
+              args:
+                # 重试次数，默认值是3次
+                retries: 3
+                # 状态码配置（分段），符合的某段状态码才会进行重试逻辑，默认值是SERVER_ERROR，值是5，也就是5XX(5开头的状态码)，共有5个值：
+                # INFORMATIONAL(1),
+                # SUCCESSFUL(2),
+                # REDIRECTION(3),
+                # CLIENT_ERROR(4),
+                # RVER_ERROR(5);
+                series:
+                  - SERVER_ERROR
+                # 状态码配置，和series不同的是这边是具体状态码的配置,取值来自：org.springframework.http.HttpStatus
+                #statuses:
+                #  - BAD_GATEWAY,GATEWAY_TIMEOUT,SERVICE_UNAVAILABLE
+                # 指定哪些方法的请求需要进行重试逻辑，默认值是GET方法（GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS, TRACE;）
+                methods:
+                  - GET
+                  - POST
+                # 指定哪些异常需要进行重试逻辑，默认值是java.io.IOException
+                exceptions:
+                  - java.io.IOException
         - id: service-claim
           uri: lb://hawthorn-claim  # lb 代表从注册中心获取服务
           predicates: # 断言工厂，匹配谓词,多个谓词可以互相组合
             - Path=/claim/** # 匹配所有请求路径以http://ip:port/claim/ ,如果配置多级路径，用**代替
             #- Header=X-Request-Id, \d+ # 匹配请求头中存在符合条件“key为X-Request-Id，value为数字”的所有请求(value为正则表达式)
             #- Cookie=chocolate, value # 匹配请求中存在cookiechocolate=value的所有请求(value是正则表达式)
-            #- Query=param1,value # 匹配所有含有请求参数param1且它的值符合正则表达式value的请求（value是正则表达式）
+            #- Query=param1,value # 匹配所有含有请求参数param1且它的值符合正则表达式value的请求（value是正则表达式），value可省略：表示只要包含param1这个参数就匹配
             #- Host=**.somehost.org # 匹配请求中包含域名的
             #- Method=Get # 匹配如get，post等请求的方法
             #- RemoteAddr=192.168.1.1/24 # 匹配对应ip地址
-            #filters: # 过滤器工厂
+          filters: # 过滤器工厂
             #- AddRequestHeader=X-Request-Foo, Bar # 符合规则匹配成功的请求，将添加 X-Request-Foo：bar 请求头，将其传递到后端服务中，后方服务可以直接获取请求头信息
             #- RemoveRequestHeader=X-Request-Foo # 移除请求头的过滤器工厂，可以在请求转发到后端服务之前进行 Header 的移除操作
             #- SetStatus=401 # 接收单个状态，用于设置 Http 请求的响应码。它必须是有效的 Spring Httpstatus
             #- RedirectTo=302, http://baidu.com # 重定向操作，比如我们需要重定向到百度。
-            #- StripPrefix=1 # 去除路径个数，如：/claim/**，去除后为/**
+            - StripPrefix=1 # 去掉请求路径的最前面n个部分截取掉，如：/claim/**，去除后为/**
+            # 限流过滤器，使用gateway内置令牌算法
+            - name: RequestRateLimiter
+              args:
+                # 令牌桶每秒填充平均速率,即行等价于允许用户每秒处理多少个请求，吞吐率？
+                redis-rate-limiter.replenishRate: 20
+                # 令牌桶的容量，允许在一秒钟内完成的最大请求数
+                redis-rate-limiter.burstCapacity: 500
+                # 用于限流的键的解析器的 Bean 对象的名字。它使用 SpEL 表达式根据#{@beanName}从 Spring 容器中获取 Bean 对象。
+                key-resolver: "#{@apiKeyResolver}"
         - id: service-part
           uri: lb://hawthorn-part
           predicates:
             - Path=/part/**
           #filters:
           # - StripPrefix=1
+
+# 开放健康检查接口
+management:
+  security:
+    enabled: false
+  health:
+    #    db:
+    #      enabled: false
+    #    mail:
+    #      enabled: false
+    #    mongo:
+    #      enabled: false
+    #    redis:
+    #      enabled: false
+    consul:
+      enabled: true
+    binders:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      # 自定义监控路径 admin
+      # 默认值：http://localhost:7001/actuator/*
+      # 配置后：http://localhost:7001/admin/*
+      #base-path: /admin
+  endpoint:
+    health:
+      show-details: ALWAYS
+

@@ -1,6 +1,7 @@
 # 启动端口号
 server:
-  port: 8000
+  address: 127.0.0.1
+  port: 4000
 spring:
   application:
     name: hawthorn-monitor

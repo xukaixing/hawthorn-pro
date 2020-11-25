@@ -5,6 +5,13 @@
       xukaixing@hotmail.com
   
 ## 版本
+> v1.1.1 : 2020.11.08      
+>> 增加gateway工程  
+>> 修改logback，输出console带颜色处理  
+>> 增加gateway配置方式    
+
+---
+
 > v1.1.0 : 2020.11.01    
 >> 增加hystrix监控  
 >> 增加turbine集群监控

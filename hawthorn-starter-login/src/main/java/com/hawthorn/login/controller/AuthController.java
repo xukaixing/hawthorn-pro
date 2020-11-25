@@ -1,12 +1,12 @@
 package com.hawthorn.login.controller;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
-import com.hawthorn.component.constant.SysConstant;
+import com.hawthorn.component.constant.AdminConstant;
 import com.hawthorn.component.exception.BizCode;
+import com.hawthorn.component.ret.RestResult;
 import com.hawthorn.component.utils.iassert.AssertUtil;
 import com.hawthorn.login.model.pojo.AccessToken;
 import com.hawthorn.login.service.AuthService;
-import com.hawthorn.platform.ret.RestResult;
 import com.hawthorn.platform.validatecode.IVerifyCodeGen;
 import com.hawthorn.platform.validatecode.SimpleCharVerifyCodeGenImpl;
 import com.hawthorn.platform.validatecode.VerifyCode;
@@ -58,7 +58,7 @@ public class AuthController
     AssertUtil.notEmpty(loginPassword, BizCode.AUTH_LOGINPASSWROD_NOTEMPTY);
     String verifyCode = loginInfoDTO.getVerifyCode();
     // 从session中获取之前保存的验证码跟前台传来的验证码进行匹配
-    Object verifyCodeObj = request.getSession().getAttribute(SysConstant.SESSION_VERIFYCODE);
+    Object verifyCodeObj = request.getSession().getAttribute(AdminConstant.SESSION_VERIFYCODE);
     // if (verifyCodeObj == null)
     // {
     //   return RestResult.fail(BizCode.VERIFY_CODE_INVALID);
@@ -88,7 +88,7 @@ public class AuthController
       VerifyCode verifyCode = iVerifyCodeGen.generate(80, 28);
       String code = verifyCode.getCode();
       //将VerifyCode绑定session
-      request.getSession().setAttribute(SysConstant.SESSION_VERIFYCODE, code);
+      request.getSession().setAttribute(AdminConstant.SESSION_VERIFYCODE, code);
       //设置响应头
       response.setHeader("Pragma", "no-cache");
       //设置响应头

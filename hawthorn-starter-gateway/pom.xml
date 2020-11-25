@@ -9,7 +9,7 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <artifactId>hawthorn-starter-gateway</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.3-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>hawthorn-starter-gateway</name>
   <description>Hawthorn project for Gateway</description>
@@ -19,9 +19,19 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <!-- 版本清单 -->
+    <hawthorn.component.version>1.1.1-SNAPSHOT</hawthorn.component.version>
     <java.version>8</java.version>
     <maven.build.timestamp.format>yyyy_MM_dd_HH_mm_ss</maven.build.timestamp.format>
     <project.build.date>${maven.build.timestamp}</project.build.date>
+    <spring.icloud.version>Hoxton.RELEASE</spring.icloud.version>
+    <redis.commons.pool2.version>2.7.0</redis.commons.pool2.version>
+    <swagger2.version>2.9.2</swagger2.version>
+    <!-- swagger的annotations 、models 版本升级为1.5.22.默认为1.5.20,解决刷新swagger页面，会报java.lang.NumberFormatException: For input string: "" 错误-->
+    <swagger2.annotations.version>1.5.22</swagger2.annotations.version>
+    <swagger2.models.version>1.5.22</swagger2.models.version>
+    <swagger.ui.version>2.9.2</swagger.ui.version>
+    <swagger.bootstrap.ui.version>1.9.2</swagger.bootstrap.ui.version>
+    <alibaba.fastjson.version>1.2.73</alibaba.fastjson.version>
   </properties>
 
   <!-- 配置Spring Icloud -->
@@ -30,7 +40,7 @@
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies</artifactId>
-        <version>Hoxton.RELEASE</version>
+        <version>${spring.icloud.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -71,6 +81,47 @@
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
 
+    <!-- 配置lombok -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <!-- swagger2 -->
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger2</artifactId>
+      <version>${swagger2.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.swagger</groupId>
+      <artifactId>swagger-annotations</artifactId>
+      <version>${swagger2.annotations.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.swagger</groupId>
+      <artifactId>swagger-models</artifactId>
+      <version>${swagger2.models.version}</version>X
+    </dependency>
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger-ui</artifactId>
+      <version>${swagger.ui.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.xiaoymin</groupId>
+      <artifactId>swagger-bootstrap-ui</artifactId>
+      <version>${swagger.bootstrap.ui.version}</version>
+    </dependency>
+
+    <!-- alibaba fastjson工具类 -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>${alibaba.fastjson.version}</version>
+    </dependency>
+
     <!--consul-->
     <dependency>
       <groupId>org.springframework.cloud</groupId>
@@ -88,6 +139,30 @@
         </exclusion>
       </exclusions>
     </dependency>
+
+    <!-- Lettuce Redis依赖-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-redis</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-pool2</artifactId>
+      <version>${redis.commons.pool2.version}</version>
+    </dependency>
+
+    <!--RequestRateLimiter限流-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+    </dependency>
+
+    <!-- hystrix 熔断 -->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+    </dependency>
+
   </dependencies>
 
   <build>

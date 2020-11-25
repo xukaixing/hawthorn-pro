@@ -57,12 +57,12 @@ public class JwtProvider
   {
     // 当前时间
     final Date now = new Date();
-    // 过期时间
+    // 过期时间 getTime():返回一个long型的毫秒数
     final Date expirationDate = new Date(now.getTime() + jwtTokenConfig.getExpirationTime() * 1000);
 
     String token = jwtTokenConfig.getTokenPrefix() + Jwts.builder()
         //.setClaims(claims) // 设置用户的授予权限信息（角色信息）
-        .setSubject(subject) // 设置主题
+        .setSubject(subject) // 设置主题JwtUserDetails
         .setIssuedAt(now) // 设置令牌签发日期
         .setExpiration(expirationDate) // 设置令牌过期时间
         .signWith(SignatureAlgorithm.HS512, jwtTokenConfig.getApiSecretKey()) // 设置token签名的加密算法以及追加的密钥

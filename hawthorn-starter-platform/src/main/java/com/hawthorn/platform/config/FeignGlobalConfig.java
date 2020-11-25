@@ -201,7 +201,7 @@ public class FeignGlobalConfig
       @Override
       public void run()
       {
-        log.info("====== closeIdleConnections ======");
+        log.debug("====== closeIdleConnections ======");
         pollingConnectionManager.closeExpiredConnections();
         pollingConnectionManager.closeIdleConnections(5, TimeUnit.SECONDS);
       }
@@ -222,8 +222,8 @@ public class FeignGlobalConfig
   //       .readTimeout(10, TimeUnit.SECONDS)
   //       //设置写超时
   //       .writeTimeout(10, TimeUnit.SECONDS)
-  //       //是否自动重连
-  //       .retryOnConnectionFailure(true)
+  //       //是否自动重连 默认为false Feign的重试机制默认关闭的，因为Ribbon的重试机制和Fiegn原来的重试机制冲突
+  //       .retryOnConnectionFailure(false)
   //       .connectionPool(new ConnectionPool(10, 5L, TimeUnit.MINUTES))
   //       .build();
   // }

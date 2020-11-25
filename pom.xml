@@ -34,6 +34,7 @@
     <java.version>8</java.version>
     <maven.build.timestamp.format>yyyy_MM_dd_HH_mm_ss</maven.build.timestamp.format>
     <project.build.date>${maven.build.timestamp}</project.build.date>
+    <spring.icloud.version>Hoxton.RELEASE</spring.icloud.version>
     <swagger2.version>2.9.2</swagger2.version>
     <!-- swagger的annotations 、models 版本升级为1.5.22.默认为1.5.20,解决刷新swagger页面，会报java.lang.NumberFormatException: For input string: "" 错误-->
     <swagger2.annotations.version>1.5.22</swagger2.annotations.version>
@@ -65,7 +66,7 @@
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies</artifactId>
-        <version>Hoxton.RELEASE</version>
+        <version>${spring.icloud.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

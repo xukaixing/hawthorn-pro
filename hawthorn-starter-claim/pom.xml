@@ -9,13 +9,13 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <artifactId>hawthorn-starter-claim</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.4-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>hawthorn-starter-claim</name>
   <description>Hawthorn project for Claim</description>
 
   <properties>
-    <hawthorn.platform.starter.version>1.1.0-SNAPSHOT</hawthorn.platform.starter.version>
+    <hawthorn.platform.starter.version>1.1.2-SNAPSHOT</hawthorn.platform.starter.version>
     <spring.boot.admin.client>2.3.0</spring.boot.admin.client>
   </properties>
 

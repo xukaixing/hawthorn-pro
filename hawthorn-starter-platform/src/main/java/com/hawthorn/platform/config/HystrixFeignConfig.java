@@ -73,7 +73,8 @@ public class HystrixFeignConfig
                     // 是否开启回退方法
                     .withFallbackEnabled(true)
                     // 该配置用于 HystrixCommand 执行的超时时间设置，当 HystrixCommand 执行的时间超过了该配置所设置的数值后就会进入服务降级处理，单位是毫秒，默认值为 1000。
-                    .withExecutionTimeoutInMilliseconds(30 * 1000)
+                    // 根据Ribbon的yml超时配置， hystrix的参考超时时间的计算：(1 + MaxAutoRetries ）*（1+ MaxAutoRetriesNextServer) *（ReadTimeout +ConnectTimeout） 。
+                    .withExecutionTimeoutInMilliseconds(120 * 1000)
                     // ****** circuitBreaker ******
                     // 当在配置时间窗口内达到此数量的失败后，进行短路。默认20个;
                     .withCircuitBreakerRequestVolumeThreshold(50)

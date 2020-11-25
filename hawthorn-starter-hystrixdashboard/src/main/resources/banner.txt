@@ -7,5 +7,5 @@
                                                           __/ |
                                                          |___/
 :: Spring Boot ::               (v2.3.2 RELEASE)
-=== HawThorn HystrixDashboard Application | Version: 1.0.2 Releasze ===
+=== HawThorn HystrixDashboard Application | Version: 1.0.3 Releasze ===
 === Author | andy.ten@tom.com & xukaixing@hotmail.com  ===

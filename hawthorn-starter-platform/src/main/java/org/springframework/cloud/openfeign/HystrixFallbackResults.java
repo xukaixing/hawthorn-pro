@@ -1,8 +1,8 @@
 package org.springframework.cloud.openfeign;
 
 import com.hawthorn.component.constant.HttpStatusConstant;
+import com.hawthorn.component.ret.RestResult;
 import com.hawthorn.component.utils.common.Str2Util;
-import com.hawthorn.platform.ret.RestResult;
 import com.netflix.hystrix.exception.HystrixTimeoutException;
 import feign.RetryableException;
 

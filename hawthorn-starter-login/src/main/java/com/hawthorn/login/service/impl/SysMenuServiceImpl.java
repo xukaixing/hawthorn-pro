@@ -2,7 +2,7 @@ package com.hawthorn.login.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.hawthorn.component.constant.SysConstant;
+import com.hawthorn.component.constant.AdminConstant;
 import com.hawthorn.component.utils.bean.QcBean;
 import com.hawthorn.login.model.dto.sysmenu.SysMenuDTO;
 import com.hawthorn.login.model.po.SysMenuPO;
@@ -112,7 +112,7 @@ public class SysMenuServiceImpl implements SysMenuService
    */
   public List<SysMenuDTO> findByUserName(String userName)
   {
-    if (userName == null || "".equals(userName) || SysConstant.ADMIN.equalsIgnoreCase(userName))
+    if (userName == null || "".equals(userName) || AdminConstant.ADMIN.equalsIgnoreCase(userName))
     {
       Map<String, QcBean> qc = null;
       return sysMenuMapper.select(null);

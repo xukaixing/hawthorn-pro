@@ -1,6 +1,6 @@
 package com.hawthorn.claim.controller;
 
-import com.hawthorn.platform.ret.RestResult;
+import com.hawthorn.component.ret.RestResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Api(tags = {"claim-hello"})
 @RestController
-@RequestMapping("/claim/hello")
+@RequestMapping("/hello")
 public class HelloController
 {
   /**

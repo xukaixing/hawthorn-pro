@@ -1,6 +1,7 @@
 # 启动端口号
 server:
-  port: 9001
+  address: 127.0.0.1
+  port: 4901
 spring:
   application:
     name: hawthorn-hystrixdashboard
@@ -18,15 +19,37 @@ turbine:
   combine-host-port: true    # 此配置默认为false，则服务是以host进行区分，若设置为true则以host+port进行区分
   # 如果被监控的服务中设置了context-path,指定 turbine.instanceUrlSuffix,如：/user/hystrix.stream
   instanceUrlSuffix: /hystrix.stream    # 指定收集路径
-  # 如果有多个context-path，配置方式
+    # 如果有多个context-path，配置方式
   #instanceUrlSuffix:
-  #  servername: /xx/hystrix.stream
+  #claim: /claim/hystrix.stream
+  #part: /part/hystrix.stream
+  #admin: /admin/hystrix.stream
+
 # 开放健康检查接口
 management:
+  security:
+    enabled: false
+  health:
+    #    db:
+    #      enabled: false
+    #    mail:
+    #      enabled: false
+    #    mongo:
+    #      enabled: false
+    #    redis:
+    #      enabled: false
+    consul:
+      enabled: true
+    binders:
+      enabled: false
   endpoints:
     web:
       exposure:
         include: "*"
+      # 自定义监控路径 admin
+      # 默认值：http://localhost:7001/actuator/*
+      # 配置后：http://localhost:7001/admin/*
+      #base-path: /admin
   endpoint:
     health:
       show-details: ALWAYS

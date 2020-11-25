@@ -7,7 +7,7 @@
 # =====================================
 # 启动端口号
 server:
-  port: 8001
+  port: 4702
 spring:
   application:
     name: hawthorn-login
