@@ -1,4 +1,4 @@
-package com.hawthorn.platform.ret;
+package com.hawthorn.component.ret;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hawthorn.component.exception.BizCode;

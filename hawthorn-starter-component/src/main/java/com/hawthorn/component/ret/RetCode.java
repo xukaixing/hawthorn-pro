@@ -1,4 +1,4 @@
-package com.hawthorn.platform.ret;
+package com.hawthorn.component.ret;
 
 import com.hawthorn.component.utils.http.HttpStatusUtil;
 
