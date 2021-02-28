@@ -1,9 +1,10 @@
 spring:
   #  profiles:
   #    active: dev
-  config:
-    #关闭配置中心
-    enabled: false
+  cloud:
+    # 关闭从cloud获取配置
+    config:
+      enabled: false
 
   #数据源配置
   datasource:
