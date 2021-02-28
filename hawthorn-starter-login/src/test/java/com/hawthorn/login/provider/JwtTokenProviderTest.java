@@ -23,18 +23,18 @@ import org.springframework.test.context.junit4.SpringRunner;
 @Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {BootLoginApplication.class})
-class JwtProviderTest
+class JwtTokenProviderTest
 {
   @Autowired
   private JwtTokenConfig jwtTokenConfig;
   @Autowired
-  private JwtProvider jwtProvider;
+  private JwtTokenProvider jwtTokenProvider;
 
   @Test
   void createToken()
   {
 
-    AccessToken at = jwtProvider.createToken("admin");
+    AccessToken at = jwtTokenProvider.createToken("admin");
     log.info(JacksonMyUtil.object2Json(at));
   }
 }

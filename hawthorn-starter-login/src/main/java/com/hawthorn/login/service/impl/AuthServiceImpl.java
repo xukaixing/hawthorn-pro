@@ -5,7 +5,7 @@ import com.hawthorn.component.ret.RestResult;
 import com.hawthorn.component.utils.common.StringMyUtil;
 import com.hawthorn.login.model.pojo.AccessToken;
 import com.hawthorn.login.model.pojo.JwtUserDetails;
-import com.hawthorn.login.provider.JwtProvider;
+import com.hawthorn.login.provider.JwtTokenProvider;
 import com.hawthorn.login.security.GrantedAuthorityImpl;
 import com.hawthorn.login.security.JwtAuthenticationToken;
 import com.hawthorn.login.service.AuthService;
@@ -40,7 +40,7 @@ public class AuthServiceImpl implements AuthService
   @Autowired
   private AuthenticationManager authenticationManager;
   @Autowired
-  private JwtProvider jwtProvider;
+  private JwtTokenProvider jwtTokenProvider;
   @Autowired
   private SysUserService sysUserService;
   @Autowired
@@ -58,7 +58,7 @@ public class AuthServiceImpl implements AuthService
     SecurityContextHolder.getContext().setAuthentication(authentication);
     // 生成自定义令牌并返回给客户端
     JwtUserDetails userDetails = (JwtUserDetails) authentication.getPrincipal();
-    AccessToken accessToken = jwtProvider.createToken(userDetails);
+    AccessToken accessToken = jwtTokenProvider.createToken(userDetails);
 
     // 授予权限
     // 用户名和密码通过后，添加用户授权信息

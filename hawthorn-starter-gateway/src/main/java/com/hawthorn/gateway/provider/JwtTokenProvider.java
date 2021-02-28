@@ -35,7 +35,7 @@ import java.util.Map;
  */
 @Slf4j
 @Component
-public class JwtProvider
+public class JwtTokenProvider
 {
   private final Base64 base64 = new Base64();
   @Autowired

@@ -1,9 +1,10 @@
 package com.hawthorn.gateway.filter;
 
+import com.hawthorn.gateway.config.CustomGateWayFilterConfig;
 import com.hawthorn.gateway.config.JwtTokenConfig;
 import com.hawthorn.gateway.constant.AdminConstant;
 import com.hawthorn.gateway.exception.BizCode;
-import com.hawthorn.gateway.provider.JwtProvider;
+import com.hawthorn.gateway.provider.JwtTokenProvider;
 import com.hawthorn.gateway.redis.RedisMyClient;
 import com.hawthorn.gateway.ret.RestResult;
 import com.hawthorn.gateway.utils.StringMyUtil;
@@ -41,15 +42,15 @@ public class TokenGlobalFilter implements GlobalFilter, Ordered
   @Autowired
   private JwtTokenConfig jwtTokenConfig;
   @Autowired
-  private JwtProvider jwtProvider;
+  private JwtTokenProvider jwtTokenProvider;
   @Autowired
   private RedisMyClient redisMyClient;
 
   /**
-   * 不进行token校验的请求地址 可配置在配置文件中
+   * 不进行token校验的请求地址(白名单)
    */
-  //@Value("#{'${ignoreUrlList}'.split(',')}")
-  public List<String> ignoreUrlList;
+  @Autowired
+  private CustomGateWayFilterConfig customGateWayFilterConfig;
 
 
   /**
@@ -87,8 +88,9 @@ public class TokenGlobalFilter implements GlobalFilter, Ordered
     if (!ignoreToken)
     {
       // todo 不进行token校验的请求地址,白名单
-      if (ignoreUrlList != null)
-        ignoreToken = !(ignoreUrlList.parallelStream().filter(requestUrl::contains).count() == 0);
+      if (customGateWayFilterConfig.getAllowPaths() != null)
+        //ignoreToken = !(ignoreUrlList.parallelStream().filter(requestUrl::contains).count() == 0);
+        ignoreToken = isAllowPath(request.getPath().toString());
     }
     if (ignoreToken)
     {
@@ -96,7 +98,7 @@ public class TokenGlobalFilter implements GlobalFilter, Ordered
     }
 
     // 获取Authorization请求头内的信息
-    String authToken = jwtProvider.getToken(request);
+    String authToken = jwtTokenProvider.getToken(request);
 
     // todo 验证token是空的情况
     if (StringMyUtil.isBlank(authToken))
@@ -118,7 +120,7 @@ public class TokenGlobalFilter implements GlobalFilter, Ordered
     Claims claims = null;
     try
     {
-      claims = jwtProvider.verifyToken(authToken, "");
+      claims = jwtTokenProvider.verifyToken(authToken, "");
     } catch (Exception ex)
     {
       return getVoidMono(response, BizCode.UNKNOW_ERROR);
@@ -177,4 +179,20 @@ public class TokenGlobalFilter implements GlobalFilter, Ordered
   {
     return -200;
   }
+
+  private boolean isAllowPath(String path)
+  {
+    List<String> allowPaths = customGateWayFilterConfig.getAllowPaths();
+    //遍历白名单
+    for (String allowPath : allowPaths)
+    {
+      //判断是否允许
+      if (path.startsWith(allowPath))
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
 }

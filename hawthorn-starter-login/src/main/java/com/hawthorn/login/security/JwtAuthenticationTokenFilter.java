@@ -2,7 +2,7 @@ package com.hawthorn.login.security;
 
 import cn.hutool.core.util.StrUtil;
 import com.hawthorn.login.model.pojo.JwtUserDetails;
-import com.hawthorn.login.provider.JwtProvider;
+import com.hawthorn.login.provider.JwtTokenProvider;
 import com.hawthorn.platform.config.JwtTokenConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class JwtAuthenticationTokenFilter extends BasicAuthenticationFilter
   }
 
   @Autowired
-  private JwtProvider jwtProvider;
+  private JwtTokenProvider jwtTokenProvider;
   @Autowired
   private JwtTokenConfig jwtTokenConfig;
 
@@ -46,7 +46,7 @@ public class JwtAuthenticationTokenFilter extends BasicAuthenticationFilter
                                   FilterChain chain) throws ServletException, IOException
   {
     // 拿到Authorization请求头内的信息
-    String authToken = jwtProvider.getToken(request);
+    String authToken = jwtTokenProvider.getToken(request);
 
     // 判断一下内容是否为空
     if (StrUtil.isNotEmpty(authToken) && authToken.startsWith(jwtTokenConfig.getTokenPrefix()))
@@ -55,7 +55,7 @@ public class JwtAuthenticationTokenFilter extends BasicAuthenticationFilter
       authToken = authToken.substring(jwtTokenConfig.getTokenPrefix().length());
 
       // 拿到token里面的登录账号
-      String loginAccount = jwtProvider.getSubjectFromToken(authToken);
+      String loginAccount = jwtTokenProvider.getSubjectFromToken(authToken);
 
       if (StrUtil.isNotEmpty(loginAccount) && SecurityContextHolder.getContext().getAuthentication() == null)
       {
@@ -63,7 +63,7 @@ public class JwtAuthenticationTokenFilter extends BasicAuthenticationFilter
         JwtUserDetails userDetails = null;
 
         // 拿到用户信息后验证用户信息与token
-        if (userDetails != null && jwtProvider.verifyToken(authToken, userDetails))
+        if (userDetails != null && jwtTokenProvider.verifyToken(authToken, userDetails))
         {
 
           // 组装authentication对象，构造参数是Principal Credentials 与 Authorities

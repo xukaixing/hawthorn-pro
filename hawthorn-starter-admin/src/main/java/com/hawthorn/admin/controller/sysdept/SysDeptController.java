@@ -51,7 +51,7 @@ public class SysDeptController
     Page<SysDeptDTO> page = new Page<>(pageNum, pageSize);
     QcBean qc = new QcBean();
     HashMap<String, QcBean> hm = new HashMap<>();
-    //throw new RuntimeException("testing gateway exception");
+    //throw new RuntimeException("testing gateway exception for retry count");
     return sysDeptService.select(page, hm);
   }
 

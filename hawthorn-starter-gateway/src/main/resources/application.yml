@@ -70,7 +70,7 @@ spring:
                   - GATEWAY_TIMEOUT
                   - SERVICE_UNAVAILABLE
                   # 可以使用状态 ok进行验证重试机制（admin服务报错，但是返回状态是ok）
-                  - OK
+                  #- OK
                 # 指定哪些方法的请求需要进行重试逻辑，默认值是GET方法（GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS, TRACE;）
                 methods:
                   - GET
@@ -115,6 +115,16 @@ spring:
             - Path=/part/**
           #filters:
           # - StripPrefix=1
+# 配置网关自定义参数
+mygateway:
+  key-cloak: #自定义的属性和值
+    public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwBYsPYcrsjNx5dnk1DHytrayMrLfJTMikix/I020HcM5mxkZSe7Iro7Kxd3Uo20he2JqpWK0q72thth3/tLh17v2QfmR/cxY9N/tK43P5BsnC+7Dx6+z0MA2/FsxKoOy8bEwwr13LRtqL+kOONxKTrjubhRLQZDNE60AB4KEs+WHRt0fRc4pnsoFmImVi8rpeae6Am9oND5jlJ+Qcat2V1YIEC92OLiqN5jF3NKwQZqz5F1I2hpDuadeZpbirXHBQXpUN0O+vBJNoD9MN1UC9kuZDPAZ48Z7ic6BQo415QfD+M3IuJaexMWUyPYAiX45i1a6uzn1tQYej0cMdLirUwIDAQAB
+    #生public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmUi99bU8R277DseSxBjtHJpLWOu0+g1Er4MiRHGWwbXfqfb6T4/n889qIl0fTfBz6QRNzBldMwCVJCYU9WRVDCASl8K/eL1uA5P3HoDhTnNSLFziOpRQ6MbNCmFFCixEmlvTg4Psb4+cDNlyes5ImNT0TeFgz7chyTWmZ+Ho2kZKOfTCS9P5HtzzOp8tR7jUvwtzcKCkEh2mp0Bo3KNGEISUnmV2gFAhm5ZX7q1YiljzNukh4g3OqziBiqxzRDvgIgdcTZ/2pYzNOAvLWnCpMZrwo3wfeCL8eKRuID2ygTSdVje8ltOjiUa7cLUGf6H3uOuOzMmZo2nvATIpkQdN5wIDAQAB
+    scope: hawthorn-admin
+  filter: # 白名单
+    allowPaths:
+      - /admin/sysdept/select
+      - /admin/sysdept/selectNoPage
 hystrix:
   command:
     default:
