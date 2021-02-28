@@ -20,7 +20,8 @@ import java.util.ArrayList;
  * @version v1.0.1
  */
 @Component("corsResponseHeaderFilter")
-public class CorsResponseHeaderFilter implements GlobalFilter, Ordered
+public class CorsResponseHeaderFilter
+    implements GlobalFilter, Ordered
 {
   //将请求头中有多个值的去掉 这是该版本的一个bug 否则一直报错跨域设置重复了
   @Override

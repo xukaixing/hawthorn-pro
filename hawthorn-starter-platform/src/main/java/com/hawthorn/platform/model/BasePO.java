@@ -72,7 +72,6 @@ public abstract class BasePO extends BaseModel
    * @remark: 将po<BasePO>转换为dto
    * @param: dtoClass
    * @return: T
-
    * @author: andy.ten@tom.com
    * @date: 2020/8/18 12:08 下午
    * @version: 1.0.1

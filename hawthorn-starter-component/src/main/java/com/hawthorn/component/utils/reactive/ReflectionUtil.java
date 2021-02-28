@@ -1,6 +1,6 @@
 package com.hawthorn.component.utils.reactive;
 
-import com.hawthorn.component.utils.iassert.AssertUtil;
+import com.hawthorn.component.utils.iassert.AssertMyUtil;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
@@ -37,8 +37,8 @@ public class ReflectionUtil extends org.springframework.util.ReflectionUtils
   @SuppressWarnings("rawtypes")
   public static Class getClassGenricType(final Class clazz, final int index)
   {
-    AssertUtil.notNull(clazz, "Parameter 'clazz' must be not null!");
-    AssertUtil.state(index > -1, "Parameter 'index' must be > -1!");
+    AssertMyUtil.notNull(clazz, "Parameter 'clazz' must be not null!");
+    AssertMyUtil.state(index > -1, "Parameter 'index' must be > -1!");
     Type genType = clazz.getGenericSuperclass();
     if (!(genType instanceof ParameterizedType))
     {
@@ -64,8 +64,8 @@ public class ReflectionUtil extends org.springframework.util.ReflectionUtils
   @SuppressWarnings("rawtypes")
   public static Class getFieldGenricType(final Field field, final int index)
   {
-    AssertUtil.notNull(field, "Parameter 'field' must be not null!");
-    AssertUtil.state(index > -1, "Parameter 'index' must be > -1!");
+    AssertMyUtil.notNull(field, "Parameter 'field' must be not null!");
+    AssertMyUtil.state(index > -1, "Parameter 'index' must be > -1!");
     Type type = field.getGenericType();
     if (type instanceof ParameterizedType)
     {
@@ -91,7 +91,7 @@ public class ReflectionUtil extends org.springframework.util.ReflectionUtils
    */
   public static Set<Field> getAllFields(Class<?> targetClass)
   {
-    AssertUtil.notNull(targetClass, "Parameter 'targetClass' must be not null!");
+    AssertMyUtil.notNull(targetClass, "Parameter 'targetClass' must be not null!");
     Set<Field> allFields = new LinkedHashSet<>();
     Class<?> searchType = targetClass;
     while (searchType != null && !Object.class.equals(searchType))
@@ -112,7 +112,7 @@ public class ReflectionUtil extends org.springframework.util.ReflectionUtils
    */
   public static Field findField(Class<?> targetClass, String fieldName)
   {
-    AssertUtil.notNull(targetClass, "Parameter 'targetClass' must be not null!");
+    AssertMyUtil.notNull(targetClass, "Parameter 'targetClass' must be not null!");
     Assert.hasText(fieldName, "Parameter 'fieldName' must be not empty!");
     Class<?> searchType = targetClass;
     while (!Object.class.equals(searchType) && searchType != null)
@@ -239,7 +239,7 @@ public class ReflectionUtil extends org.springframework.util.ReflectionUtils
    */
   public static Method findMethod(Class<?> targetClass, String methodName, Class<?>... paramTypes)
   {
-    AssertUtil.notNull(targetClass, "Parameter 'targetClass' can not be null!");
+    AssertMyUtil.notNull(targetClass, "Parameter 'targetClass' can not be null!");
     Assert.hasText(methodName, "Parameter 'methodName' can not be empty!");
     Class<?> searchType = targetClass;
     while (searchType != null)

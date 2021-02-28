@@ -1,6 +1,6 @@
 package com.hawthorn.platform.hystrix;
 
-import com.hawthorn.component.utils.common.SpringWebMvcUtil;
+import com.hawthorn.component.utils.common.SpringWebMvcMyUtil;
 import com.netflix.hystrix.strategy.concurrency.HystrixConcurrencyStrategy;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,8 +31,8 @@ public class ServletDefaultHystrixConcurrencyStrategy extends AbstractHystrixCon
     }
 
     //请求上下文
-    context.put(HttpServletRequest.class.getName(), SpringWebMvcUtil.getCurrentHttpServletRequest());
-    context.put(HttpServletResponse.class.getName(), SpringWebMvcUtil.getCurrentHttpServletResponse());
+    context.put(HttpServletRequest.class.getName(), SpringWebMvcMyUtil.getCurrentHttpServletRequest());
+    context.put(HttpServletResponse.class.getName(), SpringWebMvcMyUtil.getCurrentHttpServletResponse());
     return context;
   }
 }

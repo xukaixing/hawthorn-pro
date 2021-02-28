@@ -40,9 +40,9 @@ public class String2ObjectRequestParamConverter implements ConditionalGenericCon
   @Override
   public Object convert(Object source, TypeDescriptor sourceType, TypeDescriptor targetType)
   {
-    if (source != null && JacksonUtil.isJsonObject(source.toString()))
+    if (source != null && JacksonMyUtil.isJsonObject(source.toString()))
     {
-      return JacksonUtil.json2Object(source.toString(), targetType.getObjectType());
+      return JacksonMyUtil.json2Object(source.toString(), targetType.getObjectType());
     }
     return null;
   }

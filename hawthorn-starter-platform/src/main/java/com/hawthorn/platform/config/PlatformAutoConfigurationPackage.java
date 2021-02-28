@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @version v1.0.1
  */
 @Configuration
+// 使用注解 @EnableTransactionManagement 开启事务支持后，然后在访问数据库的Service方法上添加注解 @Transactional 便可
 @EnableTransactionManagement
 @ConditionalOnClass(PlatformProperties.class)
 @EnableConfigurationProperties(PlatformProperties.class)//开启使用映射实体对象

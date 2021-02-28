@@ -1,6 +1,6 @@
 package com.hawthorn.platform.hystrix;
 
-import com.hawthorn.component.utils.iassert.AssertUtil;
+import com.hawthorn.component.utils.iassert.AssertMyUtil;
 
 import java.util.concurrent.Callable;
 
@@ -21,8 +21,8 @@ public class DelegatingCallable<V> implements Callable<V>
   public DelegatingCallable(Callable<V> delegate, HystrixConcurrencyContext context)
   {
     super();
-    AssertUtil.notNull(delegate, "Parameter 'delegate' can not be null!");
-    AssertUtil.notNull(context, "Parameter 'context' can not be null!");
+    AssertMyUtil.notNull(delegate, "Parameter 'delegate' can not be null!");
+    AssertMyUtil.notNull(context, "Parameter 'context' can not be null!");
     this.delegate = delegate;
     this.context = context;
   }

@@ -69,4 +69,10 @@ public class PasswordUtils
   {
     return UUID.randomUUID().toString().replaceAll("-", "").substring(0, 20);
   }
+
+  // test
+  public static void main(String[] args)
+  {
+    System.out.println(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 20));
+  }
 }

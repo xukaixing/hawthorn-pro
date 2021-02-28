@@ -12,6 +12,8 @@
     <module>hawthorn-starter-admin</module>
     <module>hawthorn-starter-claim</module>
     <module>hawthorn-starter-part</module>
+    <module>hawthorn-starter-mqprovider</module>
+    <module>hawthorn-starter-mqconsumer</module>
   </modules>
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -73,11 +75,12 @@
     </dependencies>
   </dependencyManagement>
   <dependencies>
+    <!--
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-
+    -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>

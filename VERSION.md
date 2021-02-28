@@ -5,6 +5,23 @@
       xukaixing@hotmail.com
   
 ## 版本
+> v1.1.3 : 2021.02.28        
+>> 增加rabbitmq的配置  
+>> 增加rabbitmq的生产者工程  
+>> 增加rabbitmq的消费者工程  
+>> gateway工程增加token校验拦截器  
+>> 优化utils工具命名规范  
+>> jwt工具类升级  
+
+---
+
+> v1.1.2 : 2020.11.25      
+>> 增加gateway的限流处理  
+>> 增加gateway的熔断处理
+>> 增加gateway的统一异常处理
+
+---
+
 > v1.1.1 : 2020.11.08      
 >> 增加gateway工程  
 >> 修改logback，输出console带颜色处理  

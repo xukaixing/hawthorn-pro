@@ -41,13 +41,17 @@ public class SysDeptController
   @ApiImplicitParams({
   })
   @GetMapping(value = "/select")
-  public IPage<SysDeptDTO> select()
+  public IPage<SysDeptDTO> select() throws Exception
   {
+    System.err.println("hello");
+    // 测试网关请求服务超时
+    //Thread.sleep(20000);
     int pageNum = 1;
     int pageSize = 2;
     Page<SysDeptDTO> page = new Page<>(pageNum, pageSize);
     QcBean qc = new QcBean();
     HashMap<String, QcBean> hm = new HashMap<>();
+    //throw new RuntimeException("testing gateway exception");
     return sysDeptService.select(page, hm);
   }
 

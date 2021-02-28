@@ -8,8 +8,8 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.hawthorn.component.exception.BizCode;
 import com.hawthorn.component.exception.BizException;
-import com.hawthorn.component.utils.common.Str2Util;
-import com.hawthorn.component.utils.iassert.AssertUtil;
+import com.hawthorn.component.utils.common.StringMyUtil;
+import com.hawthorn.component.utils.iassert.AssertMyUtil;
 import com.hawthorn.component.utils.resource.YmlUtil;
 import com.mysql.cj.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -61,14 +61,14 @@ public class MPCodeGenerator
     if (scanner.hasNext())
     {
       String ipt = scanner.next();
-      return AssertUtil.notEmpty(ipt, BizCode.CONSOLE_INPUT_TIP, "tip");
+      return AssertMyUtil.notEmpty(ipt, BizCode.CONSOLE_INPUT_TIP, "tip");
 
       // if (StrUtil.isNotEmpty(ipt))
       // {
       //   return ipt;
       // }
     }
-    throw new BizException(BizCode.CONSOLE_INPUT_TIP.getCode(), Str2Util.placeHolder(BizCode.CONSOLE_INPUT_TIP.getMsg(), tip));
+    throw new BizException(BizCode.CONSOLE_INPUT_TIP.getCode(), StringMyUtil.placeHolder(BizCode.CONSOLE_INPUT_TIP.getMsg(), tip));
   }
 
   /**
@@ -98,16 +98,16 @@ public class MPCodeGenerator
     // 输出目录的一级包名，例如：com.**.admin
     String packageName = properties.getProperty(OUTPUT_PACKAGE_NAME);
     // 输出一级包下的controller层子包，例如：com.**.admin.controller
-    String controllerPackage = Str2Util.emptyToDefault(properties.getProperty(OUTPUT_DEFINE_CHILDPACKAGE_CONTROLLER), "controller");
+    String controllerPackage = StringMyUtil.emptyToDefault(properties.getProperty(OUTPUT_DEFINE_CHILDPACKAGE_CONTROLLER), "controller");
     // 输出一级包下的mapper层子包，例如：com.**.admin.repository
-    String mapperPackage = Str2Util.emptyToDefault(properties.getProperty(OUTPUT_DEFINE_CHILDPACKAGE_MAPPER), "repository");
+    String mapperPackage = StringMyUtil.emptyToDefault(properties.getProperty(OUTPUT_DEFINE_CHILDPACKAGE_MAPPER), "repository");
     // 输出一级包下的model层po子包，例如：com.**.admin.model
-    String entityPackage = Str2Util.emptyToDefault(properties.getProperty(OUTPUT_DEFINE_CHILDPACKAGE_ENTITY), "entity");
-    String dtoPackage = Str2Util.emptyToDefault(properties.getProperty(OUTPUT_DEFINE_CHILDPACKAGE_DTO), "dto");
+    String entityPackage = StringMyUtil.emptyToDefault(properties.getProperty(OUTPUT_DEFINE_CHILDPACKAGE_ENTITY), "entity");
+    String dtoPackage = StringMyUtil.emptyToDefault(properties.getProperty(OUTPUT_DEFINE_CHILDPACKAGE_DTO), "dto");
     // 输出一级包下的service层子包，例如：com.**.admin.service
-    String servicePackage = Str2Util.emptyToDefault(properties.getProperty(OUTPUT_DEFINE_CHILDPACKAGE_SERVICE), "service");
+    String servicePackage = StringMyUtil.emptyToDefault(properties.getProperty(OUTPUT_DEFINE_CHILDPACKAGE_SERVICE), "service");
     // 输出一级包下的serviceImpl层子包，例如：com.**.admin.service.impl
-    String serviceImplPackage = Str2Util.emptyToDefault(properties.getProperty(OUTPUT_DEFINE_CHILDPACKAGE_SERVICEIMPL), "impl");
+    String serviceImplPackage = StringMyUtil.emptyToDefault(properties.getProperty(OUTPUT_DEFINE_CHILDPACKAGE_SERVICEIMPL), "impl");
 
     //策略配置
     CustomStrategyConfig customConfig = new CustomStrategyConfig();
@@ -289,14 +289,14 @@ public class MPCodeGenerator
 
     // 自定义模板配置，模板可以参考源码 /mybatis-plus/src/main/resources/template 使用 copy
     // 至您项目 src/main/resources/template 目录下，模板名称也可自定义如下配置：
-    if (Str2Util.isEmpty(isControllerGenerate) || isControllerGenerate.equals("true"))
+    if (StringMyUtil.isEmpty(isControllerGenerate) || isControllerGenerate.equals("true"))
     {
       templateConfig.setController("/template/myController.java.vm");
     } else
     {
       templateConfig.setController(null);
     }
-    if (Str2Util.isEmpty(isEntityGenerate) || isEntityGenerate.equals("true"))
+    if (StringMyUtil.isEmpty(isEntityGenerate) || isEntityGenerate.equals("true"))
     {
       templateConfig.setEntity(null);
       // 关闭默认的entity生成
@@ -305,21 +305,21 @@ public class MPCodeGenerator
     {
       templateConfig.setEntity(null);
     }
-    if (Str2Util.isEmpty(isServiceGenerate) || isServiceGenerate.equals("true"))
+    if (StringMyUtil.isEmpty(isServiceGenerate) || isServiceGenerate.equals("true"))
     {
       templateConfig.setService("/template/myService.java.vm");
     } else
     {
       templateConfig.setService(null);
     }
-    if (Str2Util.isEmpty(isServiceImplGenerate) || isServiceImplGenerate.equals("true"))
+    if (StringMyUtil.isEmpty(isServiceImplGenerate) || isServiceImplGenerate.equals("true"))
     {
       templateConfig.setServiceImpl("/template/myServiceImpl.java.vm");
     } else
     {
       templateConfig.setServiceImpl(null);
     }
-    if (Str2Util.isEmpty(isMapperGenerate) || isMapperGenerate.equals("true"))
+    if (StringMyUtil.isEmpty(isMapperGenerate) || isMapperGenerate.equals("true"))
     {
       templateConfig.setMapper("/template/myMapper.java.vm");
     } else

@@ -19,11 +19,11 @@ turbine:
   combine-host-port: true    # 此配置默认为false，则服务是以host进行区分，若设置为true则以host+port进行区分
   # 如果被监控的服务中设置了context-path,指定 turbine.instanceUrlSuffix,如：/user/hystrix.stream
   instanceUrlSuffix: /hystrix.stream    # 指定收集路径
-    # 如果有多个context-path，配置方式
-  #instanceUrlSuffix:
-  #claim: /claim/hystrix.stream
-  #part: /part/hystrix.stream
-  #admin: /admin/hystrix.stream
+  # 如果有多个context-path，配置方式
+#    instanceUrlSuffix:
+#    claim: /claim/hystrix.stream
+#    part: /part/hystrix.stream
+#    admin: /admin/hystrix.stream
 
 # 开放健康检查接口
 management:

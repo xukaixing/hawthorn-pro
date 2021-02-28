@@ -1,6 +1,6 @@
 package com.hawthorn.component.utils.thread;
 
-import com.hawthorn.component.utils.iassert.AssertUtil;
+import com.hawthorn.component.utils.iassert.AssertMyUtil;
 
 import java.util.concurrent.*;
 import java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy;
@@ -67,7 +67,7 @@ public class ThreadPoolUtil
    */
   public static ExecutorService newFixedThreadPool(int nThreads)
   {
-    AssertUtil.isTrue(nThreads > 0, "Parameter 'nThreads' must be > 0");
+    AssertMyUtil.isTrue(nThreads > 0, "Parameter 'nThreads' must be > 0");
     return new ThreadPoolExecutor(nThreads, nThreads, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(DEFAULT_CONCURRENTCY_CAPACITY), new CallerRunsPolicy());
   }
 
@@ -79,7 +79,7 @@ public class ThreadPoolUtil
    */
   public static ExecutorService newFixedThreadPool(int nThreads, ThreadFactory threadFactory)
   {
-    AssertUtil.isTrue(nThreads > 0, "Parameter 'nThreads' must be > 0");
+    AssertMyUtil.isTrue(nThreads > 0, "Parameter 'nThreads' must be > 0");
     return new ThreadPoolExecutor(nThreads, nThreads, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(DEFAULT_CONCURRENTCY_CAPACITY), threadFactory, new CallerRunsPolicy());
   }
 }

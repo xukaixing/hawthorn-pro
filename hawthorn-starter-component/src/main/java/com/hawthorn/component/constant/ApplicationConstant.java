@@ -1,6 +1,6 @@
 package com.hawthorn.component.constant;
 
-import com.hawthorn.component.utils.common.SpringBeanUtil;
+import com.hawthorn.component.utils.common.SpringBeanMyUtil;
 import com.hawthorn.component.utils.thread.NamedThreadFactory;
 import com.hawthorn.component.utils.thread.ThreadPoolUtil;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
@@ -39,12 +39,12 @@ public class ApplicationConstant
   /**
    * Spring的ROOT上下文,由#ContextLoaderListener加载出来的spring上下文
    */
-  public static final Supplier<ApplicationContext> APPLICATION_CONTEXT = SpringBeanUtil::getApplicationContext;
+  public static final Supplier<ApplicationContext> APPLICATION_CONTEXT = SpringBeanMyUtil::getApplicationContext;
 
   /**
    * Spring的环境变量上下文
    */
-  public static final Supplier<Environment> ENVIRONMENT = SpringBeanUtil::getEnvironment;
+  public static final Supplier<Environment> ENVIRONMENT = SpringBeanMyUtil::getEnvironment;
 
   /**
    * Spring管理的资源文件访问器

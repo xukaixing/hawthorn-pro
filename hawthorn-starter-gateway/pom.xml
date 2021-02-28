@@ -9,7 +9,7 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <artifactId>hawthorn-starter-gateway</artifactId>
-  <version>1.0.3-SNAPSHOT</version>
+  <version>1.0.4-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>hawthorn-starter-gateway</name>
   <description>Hawthorn project for Gateway</description>
@@ -19,7 +19,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <!-- 版本清单 -->
-    <hawthorn.component.version>1.1.1-SNAPSHOT</hawthorn.component.version>
+    <hawthorn.component.version>1.1.2-SNAPSHOT</hawthorn.component.version>
     <java.version>8</java.version>
     <maven.build.timestamp.format>yyyy_MM_dd_HH_mm_ss</maven.build.timestamp.format>
     <project.build.date>${maven.build.timestamp}</project.build.date>
@@ -31,7 +31,16 @@
     <swagger2.models.version>1.5.22</swagger2.models.version>
     <swagger.ui.version>2.9.2</swagger.ui.version>
     <swagger.bootstrap.ui.version>1.9.2</swagger.bootstrap.ui.version>
+
     <alibaba.fastjson.version>1.2.73</alibaba.fastjson.version>
+    <hutool.version>5.3.9</hutool.version>
+
+    <jwt.version>0.9.1</jwt.version>
+
+    <apache.common.lang3.version>3.7</apache.common.lang3.version>
+    <apache.httpclient.version>4.5.9</apache.httpclient.version>
+    <common.collection.version>3.2.2</common.collection.version>
+    <common.beanutils.version>1.9.4</common.beanutils.version>
   </properties>
 
   <!-- 配置Spring Icloud -->
@@ -47,6 +56,13 @@
     </dependencies>
   </dependencyManagement>
   <dependencies>
+    <!--
+    <dependency>
+      <groupId>com.andyten</groupId>
+      <artifactId>hawthorn-starter-component</artifactId>
+      <version>${hawthorn.component.version}</version>
+    </dependency>
+    -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
@@ -88,6 +104,13 @@
       <optional>true</optional>
     </dependency>
 
+    <!-- 配置hutool-->
+    <dependency>
+      <groupId>cn.hutool</groupId>
+      <artifactId>hutool-all</artifactId>
+      <version>${hutool.version}</version>
+    </dependency>
+
     <!-- swagger2 -->
     <dependency>
       <groupId>io.springfox</groupId>
@@ -102,7 +125,7 @@
     <dependency>
       <groupId>io.swagger</groupId>
       <artifactId>swagger-models</artifactId>
-      <version>${swagger2.models.version}</version>X
+      <version>${swagger2.models.version}</version>
     </dependency>
     <dependency>
       <groupId>io.springfox</groupId>
@@ -161,6 +184,37 @@
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+    </dependency>
+
+    <!--jwt token -->
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt</artifactId>
+      <version>${jwt.version}</version>
+    </dependency>
+
+    <!-- others -->
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>${apache.httpclient.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+      <version>${common.collection.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils</artifactId>
+      <version>${common.beanutils.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${apache.common.lang3.version}</version>
     </dependency>
 
   </dependencies>

@@ -1,9 +1,9 @@
 package com.hawthorn.login.security;
 
 import cn.hutool.core.util.StrUtil;
-import com.hawthorn.login.config.JwtTokenConfig;
 import com.hawthorn.login.model.pojo.JwtUserDetails;
 import com.hawthorn.login.provider.JwtProvider;
+import com.hawthorn.platform.config.JwtTokenConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -63,7 +63,7 @@ public class JwtAuthenticationTokenFilter extends BasicAuthenticationFilter
         JwtUserDetails userDetails = null;
 
         // 拿到用户信息后验证用户信息与token
-        if (userDetails != null && jwtProvider.validateToken(authToken, userDetails))
+        if (userDetails != null && jwtProvider.verifyToken(authToken, userDetails))
         {
 
           // 组装authentication对象，构造参数是Principal Credentials 与 Authorities

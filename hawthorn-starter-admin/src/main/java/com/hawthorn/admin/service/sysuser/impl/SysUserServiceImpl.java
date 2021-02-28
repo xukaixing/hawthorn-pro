@@ -9,7 +9,7 @@ import com.hawthorn.admin.repository.SysUserMapper;
 import com.hawthorn.admin.service.sysuser.SysUserService;
 import com.hawthorn.component.exception.BizCode;
 import com.hawthorn.component.utils.bean.QcBean;
-import com.hawthorn.component.utils.iassert.AssertUtil;
+import com.hawthorn.component.utils.iassert.AssertMyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -79,13 +79,13 @@ public class SysUserServiceImpl implements SysUserService
 
   public List<SysUserDTO> selectAllByStatus(Byte status)
   {
-    AssertUtil.notNull(status, BizCode.METHOD_ARGS_NOTNULL, "status");
+    AssertMyUtil.notNull(status, BizCode.METHOD_ARGS_NOTNULL, "status");
     return sysUserMapper.selectAllByStatus(status);
   }
 
   public List<SysUserDTO> selectAllByField(String fieldName, String fieldValue)
   {
-    AssertUtil.notNull(fieldName, BizCode.METHOD_ARGS_NOTNULL, "fieldName");
+    AssertMyUtil.notNull(fieldName, BizCode.METHOD_ARGS_NOTNULL, "fieldName");
     return sysUserMapper.selectAllByField(fieldName, fieldValue);
   }
 

@@ -15,7 +15,7 @@ spring:
       # gateway 默认使用 netty httpClient 实现。
       httpclient:
         connect-timeout: 2000 #连接超时时间 ，动态
-        response-timeout: 10s #请求读取超时时间，动态
+        response-timeout: 20s #请求读取超时时间，动态
       # discovery.filters： 只有从注册中心建立的路由的才会附加（lb)
       # default-filters： 所有的路由都会增加
       # discovery.filters 不支持el 表达式配置
@@ -43,20 +43,19 @@ spring:
                 #rate-limiter: “#{@redisRateLimiter}”
                 # 用于限流的键的解析器的 Bean 对象的名字。它使用 SpEL 表达式根据#{@beanName}从 Spring 容器中获取 Bean 对象。
                 key-resolver: "#{@apiKeyResolver}"
-            # 服务降级  触发调用 HystrixFallbackHandler GatewayFallbackConfig
+            # 服务降级  触发调用 HystrixFallbackHandler GatewayFallbackConfig 无须配置hystrix，通过全局异常处理即可；配置后，无法响应全局异常处理；
             # Hystrix 配置在Retry在前：
-            #    不管重试几次，都只会按照Hystrix超时时间为准。
-            #    如果Hystrix超时了，也就不会重试了
-            # Retry在前，Hystrix超时了也会重试
-            - name: Hystrix
-              args:
-                name: default
-                fallbackUri: 'forward:/defaultfallback'
+            #   不管重试几次，都只会按照Hystrix超时时间为准。
+            #   如果Hystrix超时了，也就不会重试了
+            #- name: Hystrix
+            #  args:
+            #    name: default
+            #    fallbackUri: 'forward:/defaultfallback'
             # 重试
             - name: Retry
               args:
-                # 重试次数，默认值是3次
-                retries: 3
+                # 重试次数，默认值是3次（不算第一次调用，再重试次数）
+                retries: 2
                 # 状态码配置（分段），符合的某段状态码才会进行重试逻辑，默认值是SERVER_ERROR，值是5，也就是5XX(5开头的状态码)，共有5个值：
                 # INFORMATIONAL(1),
                 # SUCCESSFUL(2),
@@ -65,13 +64,23 @@ spring:
                 # RVER_ERROR(5);
                 series:
                   - SERVER_ERROR
-                # 状态码配置，和series不同的是这边是具体状态码的配置,取值来自：org.springframework.http.HttpStatus
-                #statuses:
-                #  - BAD_GATEWAY,GATEWAY_TIMEOUT,SERVICE_UNAVAILABLE
+                  # 状态码配置，和series不同的是这边是具体状态码的配置,取值来自：org.springframework.http.HttpStatus
+                statuses:
+                  - BAD_GATEWAY
+                  - GATEWAY_TIMEOUT
+                  - SERVICE_UNAVAILABLE
+                  # 可以使用状态 ok进行验证重试机制（admin服务报错，但是返回状态是ok）
+                  - OK
                 # 指定哪些方法的请求需要进行重试逻辑，默认值是GET方法（GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS, TRACE;）
                 methods:
                   - GET
                   - POST
+                # 重试的策略和间隔 会按照公式firstBackoff * (factor ^ n) 其中n为迭代
+                backoff:
+                  firstBackoff: 1000ms # 隔多少秒后进行第一次重试，第二次重试时间为firstBackoff * (factor ^ n)
+                  maxBackoff: 3000ms # 重试最大间隔时间
+                  factor: 2
+                  basedOnPreviousValue: false
                 # 指定哪些异常需要进行重试逻辑，默认值是java.io.IOException
                 exceptions:
                   - java.io.IOException
@@ -106,7 +115,13 @@ spring:
             - Path=/part/**
           #filters:
           # - StripPrefix=1
-
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000 # hystrix 信号量隔离 10秒后自动超时
 # 开放健康检查接口
 management:
   security:

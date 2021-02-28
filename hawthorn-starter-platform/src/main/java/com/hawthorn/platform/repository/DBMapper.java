@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.*;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
-import com.hawthorn.component.utils.common.Str2Util;
+import com.hawthorn.component.utils.common.StringMyUtil;
 import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionUtils;
@@ -227,7 +227,7 @@ public interface DBMapper<T> extends BaseMapper<T>
           cls = anEntityList.getClass();
           tableInfo = TableInfoHelper.getTableInfo(cls);
         }
-        if (null != tableInfo && Str2Util.isEmpty(tableInfo.getKeyProperty()))
+        if (null != tableInfo && StringMyUtil.isEmpty(tableInfo.getKeyProperty()))
         {
           Object idVal = ReflectionKit.getMethodValue(cls, anEntityList, tableInfo.getKeyProperty());
           if (StringUtils.checkValNull(idVal))

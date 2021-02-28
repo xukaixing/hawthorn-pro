@@ -2,7 +2,7 @@ package org.springframework.cloud.openfeign;
 
 import com.hawthorn.component.constant.HttpStatusConstant;
 import com.hawthorn.component.ret.RestResult;
-import com.hawthorn.component.utils.common.Str2Util;
+import com.hawthorn.component.utils.common.StringMyUtil;
 import com.netflix.hystrix.exception.HystrixTimeoutException;
 import feign.RetryableException;
 
@@ -25,15 +25,15 @@ public class HystrixFallbackResults
   public static RestResult defaultFallbackResult(Class<?> feignClientClass, Method method, Throwable cause)
   {
     if (cause instanceof HystrixTimeoutException)
-      return RestResult.fail(TIMEOUT_FALLBACK_STATUS.value(), TIMEOUT_FALLBACK_STATUS.getReasonPhrase(), Str2Util.format("feign service call error: [{}.{}]| {}", feignClientClass.getName(), method.getName(), "timeout"));
+      return RestResult.fail(TIMEOUT_FALLBACK_STATUS.value(), TIMEOUT_FALLBACK_STATUS.getReasonPhrase(), StringMyUtil.format("feign service call error: [{}.{}]| {}", feignClientClass.getName(), method.getName(), "timeout"));
     if (cause instanceof RetryableException)
-      return RestResult.fail(SERVICE_RETRYABLE_ONEC.value(), SERVICE_RETRYABLE_ONEC.getReasonPhrase(), Str2Util.format("feign service call error: [{}.{}]| {}", feignClientClass.getName(), method.getName(), cause.getMessage()));
+      return RestResult.fail(SERVICE_RETRYABLE_ONEC.value(), SERVICE_RETRYABLE_ONEC.getReasonPhrase(), StringMyUtil.format("feign service call error: [{}.{}]| {}", feignClientClass.getName(), method.getName(), cause.getMessage()));
     String msg = cause.getMessage();
     if (msg.contains("available server"))
-      return RestResult.fail(DEFAULT_FALLBACK_STATUS.value(), DEFAULT_FALLBACK_STATUS.getReasonPhrase(), Str2Util.format("feign service call error: [{}.{}]| {}", feignClientClass.getName(), method.getName(), cause.getMessage()));
+      return RestResult.fail(DEFAULT_FALLBACK_STATUS.value(), DEFAULT_FALLBACK_STATUS.getReasonPhrase(), StringMyUtil.format("feign service call error: [{}.{}]| {}", feignClientClass.getName(), method.getName(), cause.getMessage()));
     else if (msg.contains("timeout"))
-      return RestResult.fail(TIMEOUT_FALLBACK_STATUS.value(), TIMEOUT_FALLBACK_STATUS.getReasonPhrase(), Str2Util.format("feign service call error: [{}.{}]| {}", feignClientClass.getName(), method.getName(), cause.getMessage()));
+      return RestResult.fail(TIMEOUT_FALLBACK_STATUS.value(), TIMEOUT_FALLBACK_STATUS.getReasonPhrase(), StringMyUtil.format("feign service call error: [{}.{}]| {}", feignClientClass.getName(), method.getName(), cause.getMessage()));
     else
-      return RestResult.fail(DEFAULT_FALLBACK_STATUS.value(), DEFAULT_FALLBACK_STATUS.getReasonPhrase(), Str2Util.format("feign service call error: [{}.{}]| {}", feignClientClass.getName(), method.getName(), cause.getMessage()));
+      return RestResult.fail(DEFAULT_FALLBACK_STATUS.value(), DEFAULT_FALLBACK_STATUS.getReasonPhrase(), StringMyUtil.format("feign service call error: [{}.{}]| {}", feignClientClass.getName(), method.getName(), cause.getMessage()));
   }
 }

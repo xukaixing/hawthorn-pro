@@ -1,6 +1,6 @@
 package com.hawthorn.platform.hystrix;
 
-import com.hawthorn.component.utils.common.SpringWebFluxUtil;
+import com.hawthorn.component.utils.common.SpringWebFluxMyUtil;
 import com.netflix.hystrix.strategy.concurrency.HystrixConcurrencyStrategy;
 import org.springframework.web.server.ServerWebExchange;
 
@@ -29,7 +29,7 @@ public class ReactiveDefaultHystrixConcurrencyStrategy extends AbstractHystrixCo
     }
 
     //请求上下文
-    context.put(ServerWebExchange.class.getName(), SpringWebFluxUtil.getCurrentServerWebExchange());
+    context.put(ServerWebExchange.class.getName(), SpringWebFluxMyUtil.getCurrentServerWebExchange());
     return context;
   }
 }

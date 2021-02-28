@@ -2,7 +2,7 @@ package com.hawthorn.login.service.impl;
 
 import com.hawthorn.component.constant.AdminConstant;
 import com.hawthorn.component.ret.RestResult;
-import com.hawthorn.component.utils.common.Str2Util;
+import com.hawthorn.component.utils.common.StringMyUtil;
 import com.hawthorn.login.model.pojo.AccessToken;
 import com.hawthorn.login.model.pojo.JwtUserDetails;
 import com.hawthorn.login.provider.JwtProvider;
@@ -10,7 +10,7 @@ import com.hawthorn.login.security.GrantedAuthorityImpl;
 import com.hawthorn.login.security.JwtAuthenticationToken;
 import com.hawthorn.login.service.AuthService;
 import com.hawthorn.login.service.SysUserService;
-import com.hawthorn.platform.redis.RedisClient;
+import com.hawthorn.platform.redis.RedisMyClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -44,7 +44,7 @@ public class AuthServiceImpl implements AuthService
   @Autowired
   private SysUserService sysUserService;
   @Autowired
-  private RedisClient redisClient;
+  private RedisMyClient redisMyClient;
 
   @Override
   public RestResult login(HttpServletRequest request, String loginAccount, String loginPassword)
@@ -67,9 +67,15 @@ public class AuthServiceImpl implements AuthService
     List<GrantedAuthority> grantedAuthorities = permissions.stream().map(GrantedAuthorityImpl::new).collect(Collectors.toList());
     userDetails.setAuthorities(grantedAuthorities);
 
-    // 将令牌放入redis
-    String sysJwt = Str2Util.placeHolder(AdminConstant.JWT, "login", userDetails.getUserInfo().getId());
-    redisClient.set(sysJwt, accessToken.getToken(), AdminConstant.EXPIRE_TIME_ONE_HOUR);
+    // 将令牌放入redis key为token值
+    String sysJwt = StringMyUtil.placeHolder(AdminConstant.JWT, "login", accessToken.getToken());
+    redisMyClient.set(sysJwt, accessToken.getToken(), AdminConstant.EXPIRE_TIME_ONE_HOUR);
+    // 将令牌放入redis key为userid
+    String sysJwtUserId = StringMyUtil.placeHolder(AdminConstant.JWT, "login", userDetails.getUserInfo().getId());
+    redisMyClient.set(sysJwtUserId, accessToken.getToken(), AdminConstant.EXPIRE_TIME_ONE_HOUR);
+    // 将令牌放入redis key为username
+    String sysJwtUserName = StringMyUtil.placeHolder(AdminConstant.JWT, "login", userDetails.getUsername());
+    redisMyClient.set(sysJwtUserName, accessToken.getToken(), AdminConstant.EXPIRE_TIME_ONE_HOUR);
     return RestResult.success(accessToken);
   }
 

@@ -2,8 +2,8 @@ package com.hawthorn.platform.utils.bean;
 
 import com.hawthorn.component.exception.BizCode;
 import com.hawthorn.component.exception.BizException;
-import com.hawthorn.component.utils.common.Str2Util;
-import com.hawthorn.component.utils.iassert.AssertUtil;
+import com.hawthorn.component.utils.common.StringMyUtil;
+import com.hawthorn.component.utils.iassert.AssertMyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.BeanWrapper;
@@ -42,7 +42,7 @@ public class Map2ObjectUtil extends MapUtils
    */
   public static <T> T copyProperties(Object orig, Class<T> clazz)
   {
-    AssertUtil.notNull(orig, BizCode.METHOD_ARGS_NOTNULL, "orig");
+    AssertMyUtil.notNull(orig, BizCode.METHOD_ARGS_NOTNULL, "orig");
     T t = null;
     try
     {
@@ -51,7 +51,7 @@ public class Map2ObjectUtil extends MapUtils
     {
       //log.error(e.getMessage(), e);
     }
-    AssertUtil.notNull(t, BizCode.CLASS_NOT_FOUND);
+    AssertMyUtil.notNull(t, BizCode.CLASS_NOT_FOUND);
     org.springframework.beans.BeanUtils.copyProperties(orig, t);
     return t;
   }
@@ -294,7 +294,7 @@ public class Map2ObjectUtil extends MapUtils
   {
     try
     {
-      AssertUtil.notNull(obj, BizCode.METHOD_ARGS_NOTNULL, "obj");
+      AssertMyUtil.notNull(obj, BizCode.METHOD_ARGS_NOTNULL, "obj");
       Map<String, Object> map = new HashMap<>();
       BeanInfo beanInfo = Introspector.getBeanInfo(obj.getClass());
       PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
@@ -386,7 +386,7 @@ public class Map2ObjectUtil extends MapUtils
     Map<String, V> newMap = new HashMap<>();
     for (Map.Entry<String, V> entry : map.entrySet())
     {
-      safeAddToMap(newMap, Str2Util.toCamelCase(entry.getKey()), entry.getValue());
+      safeAddToMap(newMap, StringMyUtil.toCamelCase(entry.getKey()), entry.getValue());
     }
     return newMap;
   }
@@ -409,7 +409,7 @@ public class Map2ObjectUtil extends MapUtils
     Map<String, V> newMap = new HashMap<>();
     for (Map.Entry<String, V> entry : map.entrySet())
     {
-      newMap.put(Str2Util.toUnderline(entry.getKey()), entry.getValue());
+      newMap.put(StringMyUtil.toUnderline(entry.getKey()), entry.getValue());
     }
     return newMap;
   }
@@ -462,7 +462,7 @@ public class Map2ObjectUtil extends MapUtils
     Method method = org.springframework.beans.BeanUtils.findMethodWithMinimalParameters(object.getClass(), methodName);
     try
     {
-      AssertUtil.notNull(method, BizCode.CLASS_NOT_NULL, "method");
+      AssertMyUtil.notNull(method, BizCode.CLASS_NOT_NULL, "method");
       method.invoke(object, value);
     } catch (Exception e)
     {

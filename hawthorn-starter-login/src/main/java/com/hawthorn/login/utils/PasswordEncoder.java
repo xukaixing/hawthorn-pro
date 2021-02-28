@@ -13,8 +13,8 @@ import java.security.MessageDigest;
  */
 public class PasswordEncoder
 {
-  private final static String[] hexDigits = {"0" , "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9" , "a" , "b" , "c" , "d" ,
-      "e" , "f" };
+  private final static String[] hexDigits = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d",
+      "e", "f"};
 
   private final static String MD5 = "MD5";
   private final static String SHA = "SHA";
@@ -157,18 +157,20 @@ public class PasswordEncoder
     return hexDigits[d1] + hexDigits[d2];
   }
 
+  // tests
   public static void main(String[] args)
   {
-    String salt = "helloworld";
-    PasswordEncoder encoderMd5 = new PasswordEncoder(salt, "MD5" );
-    String encode = encoderMd5.encode("test" );
-    System.out.println(encode);
+    // 数据库中保存的加密盐
+    String salt = "YzcmCZNvbXocrsz9dm8e";
+    PasswordEncoder encoderMd5 = new PasswordEncoder(salt, "MD5");
+    String encode = encoderMd5.encode("123"); // 默认密码123，admin默认密码admin
+    System.out.println("MD5-->" + encode);
     //boolean passwordValid = encoderMd5.validPassword("1bd98ed329aebc7b2f89424b5a38926e" , "test" );
     //System.out.println(passwordValid);
 
-    PasswordEncoder encoderSha = new PasswordEncoder(salt, "SHA" );
-    String pass2 = encoderSha.encode("test" );
-    System.out.println(pass2);
+    PasswordEncoder encoderSha = new PasswordEncoder(salt, "SHA");
+    String pass2 = encoderSha.encode("123");
+    System.out.println("SHA-->" + pass2);
     //boolean passwordValid2 = encoderSha.validPassword("1bd98ed329aebc7b2f89424b5a38926e" , "test" );
     //System.out.println(passwordValid2);
   }

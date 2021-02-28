@@ -2,7 +2,7 @@ package com.hawthorn.login.security;
 
 import com.hawthorn.component.exception.BizCode;
 import com.hawthorn.component.exception.BizException;
-import com.hawthorn.component.utils.iassert.AssertUtil;
+import com.hawthorn.component.utils.iassert.AssertMyUtil;
 import com.hawthorn.login.model.pojo.JwtUserDetails;
 import com.hawthorn.login.utils.PasswordEncoder;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * @copyright: Copyright (c) 2020 andyten
  * <p></p>
  * @remark: 自定义身份验证Provider
+ * <p>参数有username,password的，走UsernamePasswordAuthenticationFilter</p>
  * <p>UsernamePasswordAuthenticationToken的默认Provider是DaoAuthenticationProvider</p>
  * <p>该方法主要验证2点：1.通过账号是否能获取用户,即用户名是否正确；2.验证获取用户的密码是否匹配</p>
  * @author:andy.ten@tom.com
@@ -37,12 +38,13 @@ public class UsernameAuthenticationProvider extends DaoAuthenticationProvider
   {
     String loginUsername = authentication.getName();
     String loginPassword = (String) authentication.getCredentials();
-    AssertUtil.notEmpty(loginUsername, BizCode.AUTH_LOGINACCOUNT_NOTEMPTY);
-    AssertUtil.notEmpty(loginPassword, BizCode.AUTH_LOGINPASSWROD_NOTEMPTY);
+    AssertMyUtil.notEmpty(loginUsername, BizCode.AUTH_LOGINACCOUNT_NOTEMPTY);
+    AssertMyUtil.notEmpty(loginPassword, BizCode.AUTH_LOGINPASSWROD_NOTEMPTY);
 
     if (userDetails == null)
       throw new BizException(BizCode.AUTH_LOGINUSERNAME_INCORRECT);
     // 比较前端传入的密码(明文)和加密的密码是否相等,明文密码会和加密盐一起merge加密
+    // 数据库中的password内容是原密码+盐后加密的
     String salt = ((JwtUserDetails) userDetails).getSalt();
     if (!new PasswordEncoder(salt).matches(userDetails.getPassword(), loginPassword))
       throw new BizException(BizCode.AUTH_LOGINPASSWROD_INCORRECT);

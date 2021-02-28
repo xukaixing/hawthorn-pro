@@ -45,7 +45,7 @@ public class HystrixFallbackHandler implements HandlerFunction<ServerResponse>
     return ServerResponse
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .contentType(MediaType.APPLICATION_JSON)
-        .body(BodyInserters.fromValue(RestResult.fail(HttpStatus.INTERNAL_SERVER_ERROR.value(), "网关执行请求失败,hystrix服务降级处理", originalUrl)));
+        .body(BodyInserters.fromValue(RestResult.fail(HttpStatus.SERVICE_UNAVAILABLE.value(), "网关执行请求失败,hystrix服务降级处理", originalUrl)));
   }
 }
 

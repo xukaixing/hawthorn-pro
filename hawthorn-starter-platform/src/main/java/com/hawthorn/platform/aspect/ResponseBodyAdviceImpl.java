@@ -2,7 +2,7 @@ package com.hawthorn.platform.aspect;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hawthorn.component.ret.RestResult;
-import com.hawthorn.component.utils.json.JacksonUtil;
+import com.hawthorn.component.utils.json.JacksonMyUtil;
 import com.hawthorn.platform.config.ResponseAdviceConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -63,7 +63,8 @@ public class ResponseBodyAdviceImpl implements ResponseBodyAdvice<Object>
     // 方法返回值是"String"
     if (Objects.requireNonNull(returnType.getMethod()).getReturnType().equals(String.class))
     {
-      return JacksonUtil.object2Json(RestResult.success(o));
+      return JacksonMyUtil.object2Json(RestResult.success(o));
+      //return RestResult.success(o);
     }
     // 屏蔽swagger接口api + Actuator监控路径请求
     if (request.getURI().toString().contains("/swagger") || request.getURI().toString().contains("/v2/api-docs") || request.getURI().toString().contains("/actuator"))

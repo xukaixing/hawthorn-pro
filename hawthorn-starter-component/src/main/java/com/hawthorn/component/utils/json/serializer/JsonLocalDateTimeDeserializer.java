@@ -3,7 +3,7 @@ package com.hawthorn.component.utils.json.serializer;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.hawthorn.component.utils.common.Str2Util;
+import com.hawthorn.component.utils.common.StringMyUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -28,7 +28,7 @@ public class JsonLocalDateTimeDeserializer extends JsonDeserializer<LocalDateTim
     String date = p.getText();
     try
     {
-      if (Str2Util.isEmpty(date))
+      if (StringMyUtil.isEmpty(date))
       {
         return null;
       } else

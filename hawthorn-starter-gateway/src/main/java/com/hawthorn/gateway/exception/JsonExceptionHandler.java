@@ -1,13 +1,16 @@
 package com.hawthorn.gateway.exception;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.DefaultErrorWebExceptionHandler;
+import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.reactive.error.ErrorAttributes;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.reactive.function.server.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +18,7 @@ import java.util.Map;
 /**
  * @copyright: Copyright (c) 2020 andyten
  * <p></p>
- * @remark: gateway自定义全局异常处理
+ * @remark: gateway自定义全局异常处理, 主要捕获访问服务的503、504等错误；
  * @author: andy.ten@tom.com
  * @date: 2020/11/23 下午10:26
  * @version v1.0.1
@@ -45,11 +48,21 @@ public class JsonExceptionHandler extends DefaultErrorWebExceptionHandler
    * 2020/11/23    andy.ten        v1.0.1             init
    */
   @Override
-  protected Map<String, Object> getErrorAttributes(ServerRequest request, boolean includeStackTrace)
+  protected Map<String, Object> getErrorAttributes(ServerRequest webRequest, ErrorAttributeOptions options)
   {
     int code = HttpStatus.INTERNAL_SERVER_ERROR.value();
-    Throwable error = super.getError(request);
-    return response(code, this.buildMessage(request, error));
+    Throwable error = super.getError(webRequest);
+
+    if (error instanceof org.springframework.cloud.gateway.support.NotFoundException)
+    {
+      code = 503;
+    } else if (error instanceof org.springframework.cloud.gateway.support.TimeoutException)
+      code = 504;
+    assert error instanceof ResponseStatusException;
+    ResponseStatusException err2 = (ResponseStatusException) error;
+    HttpStatus c = err2.getStatus();
+    code = c.value();
+    return response(code, this.buildMessage(webRequest, error));
   }
 
   /**
@@ -65,6 +78,7 @@ public class JsonExceptionHandler extends DefaultErrorWebExceptionHandler
    * -----------------------------------------------------------
    * 2020/11/23    andy.ten        v1.0.1             init
    */
+  @SuppressWarnings("NullableProblems")
   @Override
   protected RouterFunction<ServerResponse> getRoutingFunction(ErrorAttributes errorAttributes)
   {
@@ -114,7 +128,7 @@ public class JsonExceptionHandler extends DefaultErrorWebExceptionHandler
    */
   private String buildMessage(ServerRequest request, Throwable ex)
   {
-    StringBuilder message = new StringBuilder("Failed to handle request [");
+    StringBuilder message = new StringBuilder("Failed [");
     message.append(request.methodName());
     message.append(" ");
     message.append(request.uri());
@@ -147,7 +161,7 @@ public class JsonExceptionHandler extends DefaultErrorWebExceptionHandler
     map.put("code", status);
     map.put("status", "fail");
     map.put("message", errorMessage);
-    map.put("data", null);
+    map.put("data", new JSONObject());
     return map;
   }
 }

@@ -1,8 +1,8 @@
 package com.hawthorn.login.provider;
 
 import cn.hutool.core.date.DateUtil;
-import com.hawthorn.login.config.JwtTokenConfig;
 import com.hawthorn.login.model.pojo.AccessToken;
+import com.hawthorn.platform.config.JwtTokenConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -50,8 +50,17 @@ public class JwtProvider
   }
 
   /**
-   * 生成token
-   * 参数是我们想放入token中的字符串（同样是用户登录账号）
+   * @remark: 生成token
+   * @param: subject: 用户登录账号
+   * @return: com.hawthorn.login.model.pojo.AccessToken
+   * <p></p>
+   * @author: andy.ten@tom.com
+   * @date: 2/27/21 3:38 PM
+   * @version: 1.0.1
+   * Modification History:
+   * Date         Author          Version            Description
+   * -----------------------------------------------------------
+   * 2/27/21    andy.ten        v1.0.1             init
    */
   public AccessToken createToken(String subject)
   {
@@ -62,10 +71,12 @@ public class JwtProvider
 
     String token = jwtTokenConfig.getTokenPrefix() + Jwts.builder()
         //.setClaims(claims) // 设置用户的授予权限信息（角色信息）
-        .setSubject(subject) // 设置主题JwtUserDetails
+        .setIssuer(jwtTokenConfig.getIssuer()) // 设置签发者
+        .setSubject(subject) // 设置主题JwtUserDetails的userAccount
         .setIssuedAt(now) // 设置令牌签发日期
         .setExpiration(expirationDate) // 设置令牌过期时间
-        .signWith(SignatureAlgorithm.HS512, jwtTokenConfig.getApiSecretKey()) // 设置token签名的加密算法以及追加的密钥
+        .setAudience("hawthorn-admin,hawthorn-claim") // 设置签收范围
+        .signWith(SignatureAlgorithm.HS256, jwtTokenConfig.getApiSecretKey()) // 设置token签名的加密算法以及追加的密钥
         .compact();
     return AccessToken.builder().loginAccount(subject).token(token).expirationTime(expirationDate).build();
   }
@@ -78,7 +89,7 @@ public class JwtProvider
    * @param token       客户端传入的token
    * @param userDetails 从数据库中查询出来的用户信息
    */
-  public boolean validateToken(String token, UserDetails userDetails)
+  public boolean verifyToken(String token, UserDetails userDetails)
   {
     Claims claims = getClaimsFromToken(token);
     return claims.getSubject().equals(userDetails.getUsername()) && !isTokenExpired(claims);
@@ -165,6 +176,5 @@ public class JwtProvider
   {
     return claims.getExpiration().before(new Date());
   }
-
 
 }

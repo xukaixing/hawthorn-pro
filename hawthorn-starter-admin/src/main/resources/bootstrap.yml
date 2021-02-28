@@ -1,6 +1,11 @@
 spring:
   #  profiles:
   #    active: dev
+  cloud:
+    # 关闭从cloud获取配置
+    config:
+      enabled: false
+
   # 数据源配置
   datasource:
     #druid连接池配置，在/druid/index.html可以查看监控页

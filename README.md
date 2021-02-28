@@ -6,6 +6,16 @@
       xukaixing@hotmail.com
   
 ## 版本
+> v1.1.3 : 2021.02.28        
+>> 增加rabbitmq的配置  
+>> 增加rabbitmq的生产者工程  
+>> 增加rabbitmq的消费者工程  
+>> gateway工程增加token校验拦截器  
+>> 优化utils工具命名规范  
+>> jwt工具类升级  
+
+---
+
 > v1.1.2 : 2020.11.25      
 >> 增加gateway的限流处理  
 >> 增加gateway的熔断处理
@@ -18,13 +28,6 @@
 >> 修改logback，输出console带颜色处理  
 >> 增加gateway配置方式  
 >> 增加Hystrix熔断配置  
-
----
-
-> v1.1.0 : 2020.11.01      
->> 增加hystrix监控    
->> 增加turbine集群监控  
->> 增加hystrixdashboard工程  
       
 ## 环境
 
@@ -61,6 +64,7 @@
   - `Feign Httpclient`: feign连接池组件
   - `Turbine`: 可视化turbine多服务监控组件
   - `Redis`: redis缓存组件
+  - `Amqp`: rabbit mq消息组件
 - 自定义工具
   - `Exectime`: aop的执行时间工具
   - `Str2Util`: 处理字符串工具类
@@ -80,6 +84,7 @@
   - `MPCodeGenerator`: 代码生成工具类
   - `HystrixFallbackFactory`: 熔断fallback工具类
   - `RandomUtil`: 生成随机数工具类
+  - `JwtProvider`: jwt工具类
   
 ## 运行
 

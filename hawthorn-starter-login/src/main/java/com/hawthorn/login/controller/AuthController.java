@@ -4,7 +4,7 @@ import cn.hutool.core.exceptions.ExceptionUtil;
 import com.hawthorn.component.constant.AdminConstant;
 import com.hawthorn.component.exception.BizCode;
 import com.hawthorn.component.ret.RestResult;
-import com.hawthorn.component.utils.iassert.AssertUtil;
+import com.hawthorn.component.utils.iassert.AssertMyUtil;
 import com.hawthorn.login.model.pojo.AccessToken;
 import com.hawthorn.login.service.AuthService;
 import com.hawthorn.platform.validatecode.IVerifyCodeGen;
@@ -54,8 +54,8 @@ public class AuthController
   {
     String loginAccount = loginInfoDTO.getLoginAccount();
     String loginPassword = loginInfoDTO.getPassword();
-    AssertUtil.notEmpty(loginAccount, BizCode.AUTH_LOGINACCOUNT_NOTEMPTY);
-    AssertUtil.notEmpty(loginPassword, BizCode.AUTH_LOGINPASSWROD_NOTEMPTY);
+    AssertMyUtil.notEmpty(loginAccount, BizCode.AUTH_LOGINACCOUNT_NOTEMPTY);
+    AssertMyUtil.notEmpty(loginPassword, BizCode.AUTH_LOGINPASSWROD_NOTEMPTY);
     String verifyCode = loginInfoDTO.getVerifyCode();
     // 从session中获取之前保存的验证码跟前台传来的验证码进行匹配
     Object verifyCodeObj = request.getSession().getAttribute(AdminConstant.SESSION_VERIFYCODE);

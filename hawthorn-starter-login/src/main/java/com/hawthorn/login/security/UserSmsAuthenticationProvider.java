@@ -2,7 +2,7 @@ package com.hawthorn.login.security;
 
 import com.hawthorn.component.exception.BizCode;
 import com.hawthorn.component.exception.BizException;
-import com.hawthorn.component.utils.iassert.AssertUtil;
+import com.hawthorn.component.utils.iassert.AssertMyUtil;
 import com.hawthorn.login.model.pojo.JwtUserDetails;
 import com.hawthorn.login.utils.PasswordEncoder;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -47,8 +47,8 @@ public class UserSmsAuthenticationProvider implements AuthenticationProvider
   {
     String loginUsername = authentication.getName();
     String smscode = (String) authentication.getCredentials();
-    AssertUtil.notEmpty(loginUsername, BizCode.AUTH_LOGINACCOUNT_NOTEMPTY);
-    AssertUtil.notEmpty(smscode, BizCode.AUTH_LOGINPASSWROD_NOTEMPTY);
+    AssertMyUtil.notEmpty(loginUsername, BizCode.AUTH_LOGINACCOUNT_NOTEMPTY);
+    AssertMyUtil.notEmpty(smscode, BizCode.AUTH_LOGINPASSWROD_NOTEMPTY);
 
     // 获取用户信息
     UserDetails loadedUser = userDetailsService.loadUserByUsername(loginUsername);

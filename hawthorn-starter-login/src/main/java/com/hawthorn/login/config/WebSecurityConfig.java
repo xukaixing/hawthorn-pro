@@ -133,6 +133,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
         .and()
 
         // 开启form表单认证方式 即UsernamePasswordAuthenticationFilter
+        // 参数有username,password的，走UsernamePasswordAuthenticationFilter
         .formLogin()
         .and()
 

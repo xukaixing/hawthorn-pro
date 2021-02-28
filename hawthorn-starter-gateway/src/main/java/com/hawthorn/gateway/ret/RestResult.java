@@ -1,6 +1,8 @@
 package com.hawthorn.gateway.ret;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hawthorn.gateway.exception.BizCode;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
@@ -11,6 +13,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @date:2020/8/11 5:26 下午
  * @version v1.0.1
  */
+@ApiModel(value = "结果返回类", description = "通用结果返回类对象")
 public class RestResult
 {
   @ApiModelProperty(value = "代码", name = "code")

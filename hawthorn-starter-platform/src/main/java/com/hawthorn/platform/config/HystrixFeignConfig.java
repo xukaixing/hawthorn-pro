@@ -32,6 +32,7 @@ public class HystrixFeignConfig
   @ConditionalOnProperty(name = "feign.hystrix.enabled") // 仅当feign的hystrix启用时有效
   public Feign.Builder feignHystrixBuilder()
   {
+
     // 使用自定义的默认配置
     return HystrixFeign.builder().setterFactory(new MyDefault());
   }

@@ -34,7 +34,7 @@ public class ObjectRequestParam2StringConverter implements ConditionalGenericCon
   public ObjectRequestParam2StringConverter()
   {
     super();
-    this.objectMapper = JacksonUtil.createDefaultObjectMapper();
+    this.objectMapper = JacksonMyUtil.createDefaultObjectMapper();
     this.objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
   }
 
