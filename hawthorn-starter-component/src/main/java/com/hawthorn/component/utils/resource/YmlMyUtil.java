@@ -18,9 +18,9 @@ import java.util.Properties;
  * @version v1.0.1
  */
 @Slf4j
-public class YmlUtil
+public class YmlMyUtil
 {
-  private YmlUtil()
+  private YmlMyUtil()
   {
   }
 

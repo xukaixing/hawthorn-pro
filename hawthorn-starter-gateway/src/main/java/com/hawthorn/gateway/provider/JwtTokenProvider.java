@@ -16,10 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @copyright: Copyright (c) 2020 andyten
@@ -56,21 +53,28 @@ public class JwtTokenProvider
   {
     Claims claims = null;
     //if (claims == null)
-    claims = getClaimsFromToken(token);
-    if (claims != null)
+    Map<String, Object> claimsMap = getClaimsFromToken(token);
+    String status = (String) claimsMap.get("status");
+    if ("ok".equals(status))
     {
-      return claims.getSubject();
+      claims = (Claims) claimsMap.get("claim");
+      if (claims != null)
+      {
+        return claims.getSubject();
+      } else
+      {
+        return null;
+      }
     } else
-    {
       return null;
-    }
   }
 
   /**
    * 从token中拿到负载信息
    */
-  private Claims getClaimsFromToken(String token)
+  private Map<String, Object> getClaimsFromToken(String token)
   {
+    Map<String, Object> claimsMap = new HashMap<>();
     Claims claims = null;
     try
     {
@@ -78,14 +82,20 @@ public class JwtTokenProvider
           .setSigningKey(jwtTokenConfig.getApiSecretKey())
           .parseClaimsJws(token)
           .getBody();
+      claimsMap.put("status", "ok");
+      claimsMap.put("claims", claims);
     } catch (ExpiredJwtException e)
     {
       log.error("token认证失败,token过期: {}", token);
+      claimsMap.put("status", "fail");
+      claimsMap.put("claims", "timeout");
     } catch (Exception e)
     {
       log.error("token认证失败: {}", token);
+      claimsMap.put("status", "fail");
+      claimsMap.put("claims", "no");
     }
-    return claims;
+    return claimsMap;
   }
 
 
@@ -244,23 +254,25 @@ public class JwtTokenProvider
    * -----------------------------------------------------------
    * 2/28/21    andy.ten        v1.0.1             init
    */
-  public Claims verifyToken(String token, String audience)
+  public Map<String, Object> verifyToken(String token, String audience)
   {
     Claims claims = null;
-    // if (claims == null)
-    claims = getClaimsFromToken(token);
+    Map<String, Object> map = getClaimsFromToken(token);
 
-    if (claims == null) // 验证失败
+    String status = (String) map.get("status");
+    if ("ok".equals(status))
     {
-      return null;
-    } else if (isTokenExpired(claims)) // 过期
-    {
-      return null;
-    }
-    //else if (!claims.getAudience().contains(audience))
-    //  return false;
-    else
-      return claims;
+      claims = (Claims) map.get("claims");
+      if (isTokenExpired(claims))
+      {
+        Map<String, Object> map2 = new HashMap<>();
+        map2.put("status", "fail");
+        map2.put("claims", "timeout");
+        return map2;
+      }
+      return map;
+    } else
+      return map;
   }
 
 }

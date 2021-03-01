@@ -1,6 +1,6 @@
 package com.hawthorn.platform.aspect;
 
-import com.hawthorn.component.utils.http.HttpContextUtil;
+import com.hawthorn.component.utils.http.HttpContextMyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -78,7 +78,7 @@ public class ExecTimeAspect<T>
     // }
 
 
-    HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
+    HttpServletRequest request = HttpContextMyUtil.getHttpServletRequest();
     String url = "";
     String method = "";
     String remoteIp = "";
@@ -88,7 +88,7 @@ public class ExecTimeAspect<T>
     remoteIp = request.getRemoteAddr();
     //args = Arrays.toString(joinPoint.getArgs());
     Map<String, String[]> args1 = request.getParameterMap();
-    //遍历请求的参数
+    // todo 遍历请求的参数
     for (Entry<String, String[]> element : args1.entrySet())
     {
       //key值
@@ -108,9 +108,9 @@ public class ExecTimeAspect<T>
     log.info("====== 开始执行 {}.{} ======",
         joinPoint.getTarget().getClass(),
         joinPoint.getSignature().getName());
-    // 记录开始时间
+    // todo 记录开始时间
     long begin = System.currentTimeMillis();
-    // 执行目标 service
+    // todo 执行目标 service
     Object result = null;
 
     //exec 切入点方法执行
@@ -126,7 +126,7 @@ public class ExecTimeAspect<T>
     //}
 
     //@AfterReturning
-    // 记录结束时间
+    // todo 记录结束时间
     long end = System.currentTimeMillis();
     long takeTime = end - begin;
     if (takeTime > errtime)

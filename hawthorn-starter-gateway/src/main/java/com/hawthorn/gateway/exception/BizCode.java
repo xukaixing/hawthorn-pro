@@ -69,7 +69,9 @@ public enum BizCode
   AUTH_TOKEN_NOREDIS(-23004, "token校验失败：redis中不存在"),
   AUTH_TOKEN_ACCOUNT_ISBLANK(-23005, "token校验失败：token获取用户账号为空"),
 
-  AUTH_LOGINSMS_INCORRECT(-24001, "登录短信码不正确"),
+  AUTH_IP_DENY(-24001, "IP黑名单：您的访问已被设置黑名单，请联系管理员"),
+
+  AUTH_LOGINSMS_INCORRECT(-25001, "登录短信码不正确"),
 
   //用户
   USER_CANT_DELETE_ADMIN(-30001, "不能删除超级管理员"),

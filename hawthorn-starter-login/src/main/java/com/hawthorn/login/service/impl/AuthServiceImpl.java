@@ -52,28 +52,28 @@ public class AuthServiceImpl implements AuthService
     log.info("====== 登录系统认证 ======");
     JwtAuthenticationToken usernameAuthentication = new JwtAuthenticationToken(loginAccount, loginPassword);
     usernameAuthentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-    // 认证
+    // todo 认证
     Authentication authentication = authenticationManager.authenticate(usernameAuthentication);
-    // 认证成功存储认证信息到上下文
+    // todo 认证成功存储认证信息到上下文
     SecurityContextHolder.getContext().setAuthentication(authentication);
-    // 生成自定义令牌并返回给客户端
+    // todo 生成自定义令牌并返回给客户端
     JwtUserDetails userDetails = (JwtUserDetails) authentication.getPrincipal();
     AccessToken accessToken = jwtTokenProvider.createToken(userDetails);
 
-    // 授予权限
+    // todo 授予权限
     // 用户名和密码通过后，添加用户授权信息
     // 用户权限列表，根据用户拥有的权限标识与如 @PreAuthorize("hasAuthority('sys:menu:view')") 标注的接口对比，决定是否可以调用接口
     Set<String> permissions = sysUserService.findPermissions(loginAccount);
     List<GrantedAuthority> grantedAuthorities = permissions.stream().map(GrantedAuthorityImpl::new).collect(Collectors.toList());
     userDetails.setAuthorities(grantedAuthorities);
 
-    // 将令牌放入redis key为token值
+    // todo 将令牌放入redis key为token值
     String sysJwt = StringMyUtil.placeHolder(AdminConstant.JWT, "login", accessToken.getToken());
-    redisMyClient.set(sysJwt, accessToken.getToken(), AdminConstant.EXPIRE_TIME_ONE_HOUR);
-    // 将令牌放入redis key为userid
-    String sysJwtUserId = StringMyUtil.placeHolder(AdminConstant.JWT, "login", userDetails.getUserInfo().getId());
-    redisMyClient.set(sysJwtUserId, accessToken.getToken(), AdminConstant.EXPIRE_TIME_ONE_HOUR);
-    // 将令牌放入redis key为username
+    //redisMyClient.set(sysJwt, accessToken.getToken(), AdminConstant.EXPIRE_TIME_ONE_HOUR);
+    // todo 将令牌放入redis key为userid
+    //String sysJwtUserId = StringMyUtil.placeHolder(AdminConstant.JWT, "login", userDetails.getUserInfo().getId());
+    //redisMyClient.set(sysJwtUserId, accessToken.getToken(), AdminConstant.EXPIRE_TIME_ONE_HOUR);
+    // todo 将令牌放入redis key为username
     String sysJwtUserName = StringMyUtil.placeHolder(AdminConstant.JWT, "login", userDetails.getUsername());
     redisMyClient.set(sysJwtUserName, accessToken.getToken(), AdminConstant.EXPIRE_TIME_ONE_HOUR);
     return RestResult.success(accessToken);

@@ -17,9 +17,9 @@ import java.util.Properties;
  * @version v1.0.1
  */
 @Slf4j
-public class PropertiesUtil
+public class PropertiesMyUtil
 {
-  private PropertiesUtil()
+  private PropertiesMyUtil()
   {
   }
 
@@ -92,7 +92,7 @@ public class PropertiesUtil
   {
     log.info("====== 开始加载properties文件内容 ======");
     Properties props = new Properties();
-    try (InputStream in = PropertiesUtil.class.getClassLoader().getResourceAsStream(propertiesSource))
+    try (InputStream in = PropertiesMyUtil.class.getClassLoader().getResourceAsStream(propertiesSource))
     {
       props.load(in);
       log.info("====== properties文件内容：{} ======", props);

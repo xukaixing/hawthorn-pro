@@ -24,7 +24,9 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -37,7 +39,7 @@ import java.util.Objects;
  * @version v1.0.1
  */
 @Component
-public class TokenGlobalFilter implements GlobalFilter, Ordered
+public class TokenFilter implements GlobalFilter, Ordered
 {
   @Autowired
   private JwtTokenConfig jwtTokenConfig;
@@ -116,15 +118,27 @@ public class TokenGlobalFilter implements GlobalFilter, Ordered
       return getVoidMono(response, BizCode.AUTH_TOKEN_INVALID);
     }
     // todo 检查Spring缓存中是否有此Token
-
-    Claims claims = null;
+    Map<String, Object> verifyMap = new HashMap<>();
     try
     {
-      claims = jwtTokenProvider.verifyToken(authToken, "");
+      verifyMap = jwtTokenProvider.verifyToken(authToken, "");
     } catch (Exception ex)
     {
       return getVoidMono(response, BizCode.UNKNOW_ERROR);
     }
+    String status = (String) verifyMap.get("status");
+    Claims claims = null;
+    if ("ok".equals(status))
+      claims = (Claims) verifyMap.get("claims");
+    else
+    {
+      String msg = (String) verifyMap.get("claims");
+      if (msg.equals("timeout"))
+        return getVoidMono(response, BizCode.AUTH_TOKEN_TIMEOUT);
+      else
+        return getVoidMono(response, BizCode.AUTH_TOKEN_INVALID);
+    }
+
     if (claims == null)
       return getVoidMono(response, BizCode.AUTH_TOKEN_INVALID);
 
@@ -180,6 +194,11 @@ public class TokenGlobalFilter implements GlobalFilter, Ordered
     return -200;
   }
 
+  /**
+   * 是否允许不校验token
+   * @param path url路径，如：/admin/sysdept/select
+   * @return
+   */
   private boolean isAllowPath(String path)
   {
     List<String> allowPaths = customGateWayFilterConfig.getAllowPaths();

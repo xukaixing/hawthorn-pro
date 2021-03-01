@@ -4,7 +4,7 @@ import com.hawthorn.backup.config.BackupDataSourceProperties;
 import com.hawthorn.backup.constant.BackupConstants;
 import com.hawthorn.backup.service.MysqlBackupService;
 import com.hawthorn.component.ret.RestResult;
-import com.hawthorn.component.utils.file.FileUtil;
+import com.hawthorn.component.utils.file.FileMyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -121,7 +121,7 @@ public class MySqlBackupController
     String restoreFilePath = BackupConstants.BACKUP_FOLDER + name;
     try
     {
-      FileUtil.deleteFile(new File(restoreFilePath));
+      FileMyUtil.deleteFile(new File(restoreFilePath));
     } catch (Exception e)
     {
       return RestResult.fail(500, e.getMessage());

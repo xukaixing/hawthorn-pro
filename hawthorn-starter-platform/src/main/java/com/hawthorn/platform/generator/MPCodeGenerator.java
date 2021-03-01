@@ -10,7 +10,7 @@ import com.hawthorn.component.exception.BizCode;
 import com.hawthorn.component.exception.BizException;
 import com.hawthorn.component.utils.common.StringMyUtil;
 import com.hawthorn.component.utils.iassert.AssertMyUtil;
-import com.hawthorn.component.utils.resource.YmlUtil;
+import com.hawthorn.component.utils.resource.YmlMyUtil;
 import com.mysql.cj.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -88,7 +88,7 @@ public class MPCodeGenerator
   {
     // 文件目录结构设置
     // 加载yml生成配置文件
-    Properties properties = YmlUtil.yaml2Properties(RESOURCE_FILE);
+    Properties properties = YmlMyUtil.yaml2Properties(RESOURCE_FILE);
     // 输出的模块名
     //String moduleName = properties.getProperty(OUTPUT_MODULE_NAME);
     String moduleName = scanner("模块名");

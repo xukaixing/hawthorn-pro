@@ -14,7 +14,7 @@ import java.util.Objects;
  * @date:2020/8/11 5:27 下午
  * @version v1.0.1
  */
-public class HttpContextUtil
+public class HttpContextMyUtil
 {
   public static HttpServletRequest getHttpServletRequest()
   {

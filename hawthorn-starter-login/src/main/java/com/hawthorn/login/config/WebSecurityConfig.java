@@ -104,7 +104,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
         .antMatchers("/webjars/**").permitAll()
         // 查看SQL监控（druid）
         .antMatchers("/druid/**").permitAll()
-        // 首页和登录页面 放行登录方法 于获取token的rest api要允许匿名访问
+        // 首页和登录页面 放行登录方法 获取token的rest api要允许匿名访问
         .antMatchers("/auth/login").permitAll()
         // swagger
         .antMatchers("/swagger-ui.html").permitAll()

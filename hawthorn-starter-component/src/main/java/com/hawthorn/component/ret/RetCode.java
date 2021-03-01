@@ -1,6 +1,6 @@
 package com.hawthorn.component.ret;
 
-import com.hawthorn.component.utils.http.HttpStatusUtil;
+import com.hawthorn.component.utils.http.HttpStatusMyUtil;
 
 /**
  * @Copyright: Copyright (c) 2020 andyten
@@ -13,22 +13,22 @@ import com.hawthorn.component.utils.http.HttpStatusUtil;
 public enum RetCode
 {
   // 成功
-  SUCCESS(HttpStatusUtil.SC_OK),
+  SUCCESS(HttpStatusMyUtil.SC_OK),
 
   // 失败
-  FAIL(HttpStatusUtil.SC_BAD_REQUEST),
+  FAIL(HttpStatusMyUtil.SC_BAD_REQUEST),
 
   // 未认证（签名错误）
-  UNAUTHORIZED(HttpStatusUtil.SC_UNAUTHORIZED),
+  UNAUTHORIZED(HttpStatusMyUtil.SC_UNAUTHORIZED),
 
   // 接口不存在
-  NOT_FOUND(HttpStatusUtil.SC_NOT_FOUND),
+  NOT_FOUND(HttpStatusMyUtil.SC_NOT_FOUND),
 
   // 客户端发送的实体主体部分比服务器能够或者希望处理的要大
-  Entity_TOOLARGE(HttpStatusUtil.SC_REQUEST_TOO_LONG),
+  Entity_TOOLARGE(HttpStatusMyUtil.SC_REQUEST_TOO_LONG),
 
   // 服务器内部错误
-  INTERNAL_SERVER_ERROR(HttpStatusUtil.SC_INTERNAL_SERVER_ERROR);
+  INTERNAL_SERVER_ERROR(HttpStatusMyUtil.SC_INTERNAL_SERVER_ERROR);
 
   public int code;
 

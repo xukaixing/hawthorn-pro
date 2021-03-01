@@ -13,7 +13,7 @@ import java.io.*;
  * @date:2020/10/18 10:53 下午
  * @version v1.0.1
  */
-public class FileUtil
+public class FileMyUtil
 {
 
   /**
