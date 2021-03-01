@@ -1,5 +1,6 @@
 package com.hawthorn.platform.interceptor;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  * @lasted: 2/24/21 4:34 PM
  * @version v1.0.1
  */
+@Component
 public class TokenInterceptor extends HandlerInterceptorAdapter
 {
   public static final String ACCESS_TOKEN = "access_token";
@@ -29,8 +31,8 @@ public class TokenInterceptor extends HandlerInterceptorAdapter
     /**
      * token 校验
      */
-    String accessToken = request.getHeader(ACCESS_TOKEN);
-    
+    //String accessToken = request.getHeader(ACCESS_TOKEN);
+
 
     return super.preHandle(request, response, handler);
   }
