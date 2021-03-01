@@ -21,4 +21,5 @@ import java.util.List;
 public class CustomGateWayFilterConfig
 {
   private List<String> allowPaths;
+  private List<String> denyIps;
 }

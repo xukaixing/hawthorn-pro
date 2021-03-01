@@ -27,12 +27,23 @@ spring:
           lowerCaseServiceId: true
       # 配置路由
       routes:
+        # admin #
         - id: service-admin
-          uri: lb://hawthorn-admin
-          predicates:
-            - Path=/admin/**
-          filters:
-            - StripPrefix=1
+          uri: lb://hawthorn-admin # lb 代表从注册中心获取服务
+          predicates: # 断言工厂，匹配谓词,多个谓词可以互相组合
+            - Path=/admin/** # 匹配所有请求路径以http://ip:port/admin/ ,如果配置多级路径，用**代替
+            #- Header=X-Request-Id, \d+ # 匹配请求头中存在符合条件“key为X-Request-Id，value为数字”的所有请求(value为正则表达式)
+            #- Cookie=chocolate, value # 匹配请求中存在cookiechocolate=value的所有请求(value是正则表达式)
+            #- Query=param1,value # 匹配所有含有请求参数param1且它的值符合正则表达式value的请求（value是正则表达式），value可省略：表示只要包含param1这个参数就匹配
+            #- Host=**.somehost.org # 匹配请求中包含域名的
+            #- Method=Get # 匹配如get，post等请求的方法
+            #- RemoteAddr=192.168.1.1/24 # 匹配对应ip地址
+          filters: # 过滤器工厂
+            #- AddRequestHeader=X-Request-Foo, Bar # 符合规则匹配成功的请求，将添加 X-Request-Foo：bar 请求头，将其传递到后端服务中，后方服务可以直接获取请求头信息
+            #- RemoveRequestHeader=X-Request-Foo # 移除请求头的过滤器工厂，可以在请求转发到后端服务之前进行 Header 的移除操作
+            #- SetStatus=401 # 接收单个状态，用于设置 Http 请求的响应码。它必须是有效的 Spring Httpstatus
+            #- RedirectTo=302, http://baidu.com # 重定向操作，比如我们需要重定向到百度。
+            - StripPrefix=1 # 去掉请求路径的最前面n个部分截取掉，如：/admin/**，去除后为/**
             # 限流过滤器，使用gateway内置令牌算法，redis失效时间：(burstCapacity/replenishRate )*2
             - name: RequestRateLimiter
               args:
@@ -84,47 +95,113 @@ spring:
                 # 指定哪些异常需要进行重试逻辑，默认值是java.io.IOException
                 exceptions:
                   - java.io.IOException
+        # claim #
         - id: service-claim
-          uri: lb://hawthorn-claim  # lb 代表从注册中心获取服务
-          predicates: # 断言工厂，匹配谓词,多个谓词可以互相组合
-            - Path=/claim/** # 匹配所有请求路径以http://ip:port/claim/ ,如果配置多级路径，用**代替
-            #- Header=X-Request-Id, \d+ # 匹配请求头中存在符合条件“key为X-Request-Id，value为数字”的所有请求(value为正则表达式)
-            #- Cookie=chocolate, value # 匹配请求中存在cookiechocolate=value的所有请求(value是正则表达式)
-            #- Query=param1,value # 匹配所有含有请求参数param1且它的值符合正则表达式value的请求（value是正则表达式），value可省略：表示只要包含param1这个参数就匹配
-            #- Host=**.somehost.org # 匹配请求中包含域名的
-            #- Method=Get # 匹配如get，post等请求的方法
-            #- RemoteAddr=192.168.1.1/24 # 匹配对应ip地址
-          filters: # 过滤器工厂
-            #- AddRequestHeader=X-Request-Foo, Bar # 符合规则匹配成功的请求，将添加 X-Request-Foo：bar 请求头，将其传递到后端服务中，后方服务可以直接获取请求头信息
-            #- RemoveRequestHeader=X-Request-Foo # 移除请求头的过滤器工厂，可以在请求转发到后端服务之前进行 Header 的移除操作
-            #- SetStatus=401 # 接收单个状态，用于设置 Http 请求的响应码。它必须是有效的 Spring Httpstatus
-            #- RedirectTo=302, http://baidu.com # 重定向操作，比如我们需要重定向到百度。
-            - StripPrefix=1 # 去掉请求路径的最前面n个部分截取掉，如：/claim/**，去除后为/**
-            # 限流过滤器，使用gateway内置令牌算法
+          uri: lb://hawthorn-claim
+          predicates:
+            - Path=/claim/**
+          filters:
+            - StripPrefix=1
             - name: RequestRateLimiter
               args:
-                # 令牌桶每秒填充平均速率,即行等价于允许用户每秒处理多少个请求，吞吐率？
                 redis-rate-limiter.replenishRate: 20
-                # 令牌桶的容量，允许在一秒钟内完成的最大请求数
                 redis-rate-limiter.burstCapacity: 500
-                # 用于限流的键的解析器的 Bean 对象的名字。它使用 SpEL 表达式根据#{@beanName}从 Spring 容器中获取 Bean 对象。
                 key-resolver: "#{@apiKeyResolver}"
+            - name: Retry
+              args:
+                retries: 2
+                series:
+                  - SERVER_ERROR
+                statuses:
+                  - BAD_GATEWAY
+                  - GATEWAY_TIMEOUT
+                  - SERVICE_UNAVAILABLE
+                methods:
+                  - GET
+                  - POST
+                backoff:
+                  firstBackoff: 1000ms
+                  maxBackoff: 3000ms
+                  factor: 2
+                  basedOnPreviousValue: false
+                exceptions:
+                  - java.io.IOException
+        # part #
         - id: service-part
           uri: lb://hawthorn-part
           predicates:
             - Path=/part/**
-          #filters:
-          # - StripPrefix=1
+          filters:
+            - StripPrefix=1
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 20
+                redis-rate-limiter.burstCapacity: 500
+                key-resolver: "#{@apiKeyResolver}"
+            - name: Retry
+              args:
+                retries: 2
+                series:
+                  - SERVER_ERROR
+                statuses:
+                  - BAD_GATEWAY
+                  - GATEWAY_TIMEOUT
+                  - SERVICE_UNAVAILABLE
+                methods:
+                  - GET
+                  - POST
+                backoff:
+                  firstBackoff: 1000ms
+                  maxBackoff: 3000ms
+                  factor: 2
+                  basedOnPreviousValue: false
+                exceptions:
+                  - java.io.IOException
+        # login #
+        - id: service-login
+          uri: lb://hawthorn-login
+          predicates:
+            - Path=/login/**
+          filters:
+            - StripPrefix=1
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 20
+                redis-rate-limiter.burstCapacity: 500
+                key-resolver: "#{@apiKeyResolver}"
+            - name: Retry
+              args:
+                retries: 2
+                series:
+                  - SERVER_ERROR
+                statuses:
+                  - BAD_GATEWAY
+                  - GATEWAY_TIMEOUT
+                  - SERVICE_UNAVAILABLE
+                methods:
+                  - GET
+                  - POST
+                backoff:
+                  firstBackoff: 1000ms
+                  maxBackoff: 3000ms
+                  factor: 2
+                  basedOnPreviousValue: false
+                exceptions:
+                  - java.io.IOException
 # 配置网关自定义参数
 mygateway:
   key-cloak: #自定义的属性和值
     public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwBYsPYcrsjNx5dnk1DHytrayMrLfJTMikix/I020HcM5mxkZSe7Iro7Kxd3Uo20he2JqpWK0q72thth3/tLh17v2QfmR/cxY9N/tK43P5BsnC+7Dx6+z0MA2/FsxKoOy8bEwwr13LRtqL+kOONxKTrjubhRLQZDNE60AB4KEs+WHRt0fRc4pnsoFmImVi8rpeae6Am9oND5jlJ+Qcat2V1YIEC92OLiqN5jF3NKwQZqz5F1I2hpDuadeZpbirXHBQXpUN0O+vBJNoD9MN1UC9kuZDPAZ48Z7ic6BQo415QfD+M3IuJaexMWUyPYAiX45i1a6uzn1tQYej0cMdLirUwIDAQAB
     #生public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmUi99bU8R277DseSxBjtHJpLWOu0+g1Er4MiRHGWwbXfqfb6T4/n889qIl0fTfBz6QRNzBldMwCVJCYU9WRVDCASl8K/eL1uA5P3HoDhTnNSLFziOpRQ6MbNCmFFCixEmlvTg4Psb4+cDNlyes5ImNT0TeFgz7chyTWmZ+Ho2kZKOfTCS9P5HtzzOp8tR7jUvwtzcKCkEh2mp0Bo3KNGEISUnmV2gFAhm5ZX7q1YiljzNukh4g3OqziBiqxzRDvgIgdcTZ/2pYzNOAvLWnCpMZrwo3wfeCL8eKRuID2ygTSdVje8ltOjiUa7cLUGf6H3uOuOzMmZo2nvATIpkQdN5wIDAQAB
     scope: hawthorn-admin
-  filter: # 白名单
-    allowPaths:
-      - /admin/sysdept/select
+  filter:
+    allowPaths: # url 白名单
+      - /login/auth/login
+      #- /admin/sysdept/select
       - /admin/sysdept/selectNoPage
+    denyIPs: # ip 黑名单
+      - 127.0.0.1
+      - 192.168.1.103
 hystrix:
   command:
     default:
