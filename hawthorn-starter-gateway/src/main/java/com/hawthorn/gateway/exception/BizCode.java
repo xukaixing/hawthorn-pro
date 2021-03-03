@@ -1,11 +1,12 @@
 package com.hawthorn.gateway.exception;
 
 /**
- * @Copyright: Copyright (c) 2020 andyten
-
- * @remark: 异常错误代码枚举类
- * @author:andy.ten@tom.com
- * @date:2020/8/11 5:26 下午
+ * @copyright: Copyright (c) 2021 andyten
+ * <p></p>
+ * @remark: TODO 异常错误代码枚举类
+ * @author: andy.ten@tom.com
+ * @created: 3/2/21 9:35 PM
+ * @lasted: 3/2/21 9:35 PM
  * @version v1.0.1
  */
 public enum BizCode
@@ -62,12 +63,15 @@ public enum BizCode
   AUTH_LOGINPASSWROD_NOTEMPTY(-22002, "登录密码不能为空"),
   AUTH_LOGINPASSWROD_INCORRECT(-22003, "登录密码不正确"),
   AUTH_LOGINUSERNAME_INCORRECT(-22004, "没有此用户"),
+  AUTH_LOGIUUID_NOTEMPTY(-22005, "登录账号uuid不能为空"),
 
   AUTH_TOKEN_ISBLANK(-23001, "token校验失败：token为空"),
   AUTH_TOKEN_INVALID(-23002, "token校验失败：token无效"),
   AUTH_TOKEN_TIMEOUT(-23003, "token校验失败：token过期"),
   AUTH_TOKEN_NOREDIS(-23004, "token校验失败：redis中不存在"),
   AUTH_TOKEN_ACCOUNT_ISBLANK(-23005, "token校验失败：token获取用户账号为空"),
+  AUTH_TOKEN_NOT_MATCH(-23006, "token匹配失败：token中用户与登录账号不一致"),
+  AUTH_TOKEN_LOGINED(-23007, "当前用户有其他人在登录，请重新登录！"),
 
   AUTH_IP_DENY(-24001, "IP黑名单：您的访问已被设置黑名单，请联系管理员"),
 

@@ -1,6 +1,5 @@
 package com.hawthorn.login.model.pojo;
 
-import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Data;
 
@@ -19,27 +18,7 @@ import java.util.Date;
 public class AccessToken
 {
   private String loginAccount;
+  private String loginUuid;
   private String token;
   private Date expirationTime;
-
-  @Data
-  @ApiModel(value = "登录信息")
-  public static class LoginInfoDTO
-  {
-
-    /**
-     * 登录账号
-     */
-    private String loginAccount;
-
-    /**
-     * 登录密码
-     */
-    private String password;
-
-    /**
-     * 登录验证码
-     */
-    private String verifyCode;
-  }
 }

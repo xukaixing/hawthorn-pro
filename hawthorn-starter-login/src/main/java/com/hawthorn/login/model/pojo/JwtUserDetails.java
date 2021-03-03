@@ -34,6 +34,11 @@ public class JwtUserDetails implements Serializable, UserDetails
     return this.userInfo.getUsername();
   }
 
+  public String getUserId()
+  {
+    return this.userInfo.getId();
+  }
+
   @JsonIgnore
   @Override
   public String getPassword()

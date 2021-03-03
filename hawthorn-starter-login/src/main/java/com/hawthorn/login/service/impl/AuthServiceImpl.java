@@ -1,7 +1,6 @@
 package com.hawthorn.login.service.impl;
 
 import com.hawthorn.component.constant.AdminConstant;
-import com.hawthorn.component.ret.RestResult;
 import com.hawthorn.component.utils.common.StringMyUtil;
 import com.hawthorn.login.model.pojo.AccessToken;
 import com.hawthorn.login.model.pojo.JwtUserDetails;
@@ -21,7 +20,9 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -47,9 +48,11 @@ public class AuthServiceImpl implements AuthService
   private RedisMyClient redisMyClient;
 
   @Override
-  public RestResult login(HttpServletRequest request, String loginAccount, String loginPassword)
+  public Map<String, Object> login(HttpServletRequest request, String loginAccount, String loginPassword)
   {
     log.info("====== 登录系统认证 ======");
+    Map<String, Object> retMap = new HashMap<>();
+
     JwtAuthenticationToken usernameAuthentication = new JwtAuthenticationToken(loginAccount, loginPassword);
     usernameAuthentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
     // todo 认证
@@ -67,16 +70,20 @@ public class AuthServiceImpl implements AuthService
     List<GrantedAuthority> grantedAuthorities = permissions.stream().map(GrantedAuthorityImpl::new).collect(Collectors.toList());
     userDetails.setAuthorities(grantedAuthorities);
 
-    // todo 将令牌放入redis key为token值
-    String sysJwt = StringMyUtil.placeHolder(AdminConstant.JWT, "login", accessToken.getToken());
-    //redisMyClient.set(sysJwt, accessToken.getToken(), AdminConstant.EXPIRE_TIME_ONE_HOUR);
-    // todo 将令牌放入redis key为userid
-    //String sysJwtUserId = StringMyUtil.placeHolder(AdminConstant.JWT, "login", userDetails.getUserInfo().getId());
-    //redisMyClient.set(sysJwtUserId, accessToken.getToken(), AdminConstant.EXPIRE_TIME_ONE_HOUR);
     // todo 将令牌放入redis key为username
-    String sysJwtUserName = StringMyUtil.placeHolder(AdminConstant.JWT, "login", userDetails.getUsername());
-    redisMyClient.set(sysJwtUserName, accessToken.getToken(), AdminConstant.EXPIRE_TIME_ONE_HOUR);
-    return RestResult.success(accessToken);
+    //String sysJwtUserName = StringMyUtil.placeHolder(AdminConstant.JWT, "login", userDetails.getUsername());
+    String sysJwtUserId = StringMyUtil.placeHolder(AdminConstant.JWT, userDetails.getUserId());
+    redisMyClient.hSet(sysJwtUserId, AdminConstant.ACCESS_TOKEN_KEY, accessToken.getToken(), AdminConstant.EXPIRE_TIME_ONE_HOUR);
+
+    // todo 将token的uuid放入redis，解决同一账户在不同电脑上同时登录问题
+    redisMyClient.hSet(sysJwtUserId, AdminConstant.LOGIN_UUID_KEY, accessToken.getLoginUuid(), AdminConstant.EXPIRE_TIME_ONE_HOUR);
+
+    // 返回结果
+    retMap.put("login-uuid", accessToken.getLoginUuid());
+    retMap.put("access-token", accessToken);
+    retMap.put("refresh-token", accessToken);
+
+    return retMap;
   }
 
   @Override

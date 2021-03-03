@@ -161,7 +161,7 @@ spring:
         - id: service-login
           uri: lb://hawthorn-login
           predicates:
-            - Path=/login/**
+            - Path=/logins/**
           filters:
             - StripPrefix=1
             - name: RequestRateLimiter
@@ -196,11 +196,11 @@ mygateway:
     scope: hawthorn-admin
   filter:
     allowPaths: # url 白名单
-      - /login/auth/login
+      - /logins/auth/login
       #- /admin/sysdept/select
       - /admin/sysdept/selectNoPage
     denyIPs: # ip 黑名单
-      - 127.0.0.1
+      #- 127.0.0.1
       - 192.168.1.103
 hystrix:
   command:
@@ -237,4 +237,3 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
-

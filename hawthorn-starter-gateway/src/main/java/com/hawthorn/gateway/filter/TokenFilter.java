@@ -56,7 +56,7 @@ public class TokenFilter implements GlobalFilter, Ordered
 
 
   /**
-   * @remark: 拦截所有的请求头
+   * @remark: todo 拦截所有的请求头
    * @param: exchange
    * @param: chain
    * @return: reactor.core.publisher.Mono<java.lang.Void>
@@ -74,6 +74,9 @@ public class TokenFilter implements GlobalFilter, Ordered
   {
     ServerHttpRequest request = exchange.getRequest();
     ServerHttpResponse response = exchange.getResponse();
+    String sLoginAccount = request.getHeaders().getFirst("useraccount");
+    String sLoginUuid = request.getHeaders().getFirst("loginuuid");
+
     // 获取请求url
     String requestUrl = request.getPath().toString();
     // 是否免校验
@@ -97,6 +100,19 @@ public class TokenFilter implements GlobalFilter, Ordered
     if (ignoreToken)
     {
       return chain.filter(exchange);
+    }
+
+    // todo 校验用户账号是否为空
+    if (StringMyUtil.isBlank(sLoginAccount))
+    {
+      response.setStatusCode(HttpStatus.UNAUTHORIZED);
+      return getVoidMono(response, BizCode.AUTH_LOGINACCOUNT_NOTEMPTY);
+    }
+    // todo 校验uuid是否为空
+    if (StringMyUtil.isBlank(sLoginUuid))
+    {
+      response.setStatusCode(HttpStatus.UNAUTHORIZED);
+      return getVoidMono(response, BizCode.AUTH_LOGIUUID_NOTEMPTY);
     }
 
     // 获取Authorization请求头内的信息
@@ -124,26 +140,46 @@ public class TokenFilter implements GlobalFilter, Ordered
       verifyMap = jwtTokenProvider.verifyToken(authToken, "");
     } catch (Exception ex)
     {
+      response.setStatusCode(HttpStatus.UNAUTHORIZED);
       return getVoidMono(response, BizCode.UNKNOW_ERROR);
     }
+
     String status = (String) verifyMap.get("status");
     Claims claims = null;
     if ("ok".equals(status))
-      claims = (Claims) verifyMap.get("claims");
-    else
     {
+      claims = (Claims) verifyMap.get("claims");
+    } else
+    {
+      response.setStatusCode(HttpStatus.UNAUTHORIZED);
       String msg = (String) verifyMap.get("claims");
       if (msg.equals("timeout"))
+      {
+        // 过期 ,判断是否超过设置的会话时间
         return getVoidMono(response, BizCode.AUTH_TOKEN_TIMEOUT);
-      else
+      } else
         return getVoidMono(response, BizCode.AUTH_TOKEN_INVALID);
     }
 
     if (claims == null)
+    {
+      response.setStatusCode(HttpStatus.UNAUTHORIZED);
       return getVoidMono(response, BizCode.AUTH_TOKEN_INVALID);
+    }
 
-    // 获取token里面的登录账号
+    // todo 验证token中的账号和登录账号是否匹配
     String loginAccount = claims.getSubject();
+    if (!loginAccount.equals(sLoginAccount))
+    {
+      response.setStatusCode(HttpStatus.UNAUTHORIZED);
+      return getVoidMono(response, BizCode.AUTH_TOKEN_NOT_MATCH);
+    }
+
+    if (StringMyUtil.isBlank(sLoginAccount))
+    {
+      response.setStatusCode(HttpStatus.UNAUTHORIZED);
+      return getVoidMono(response, BizCode.AUTH_TOKEN_INVALID);
+    }
     // todo 验证loginAccount是空的情况
     if (StringMyUtil.isBlank(loginAccount))
     {
@@ -152,11 +188,22 @@ public class TokenFilter implements GlobalFilter, Ordered
     }
 
     // todo 检查Redis中是否有此Token
-    String sysJwt = StringMyUtil.placeHolder(AdminConstant.JWT, "login", loginAccount);
-    if (!redisMyClient.hasKey(sysJwt))
+    String sysJwtUserId = StringMyUtil.placeHolder(AdminConstant.JWT, "1");
+    if (!redisMyClient.hHasKey(sysJwtUserId, AdminConstant.ACCESS_TOKEN_KEY)) // 是否存在
     {
       response.setStatusCode(HttpStatus.UNAUTHORIZED);
       return getVoidMono(response, BizCode.AUTH_TOKEN_NOREDIS);
+    } else
+    {
+      // todo 检查Reedis中的token是否过期
+    }
+
+    // todo 校验是否有多个账户同时登录
+    String loginUuid = claims.getId();
+    if (!sLoginUuid.equals(loginUuid))
+    {
+      response.setStatusCode(HttpStatus.UNAUTHORIZED);
+      return getVoidMono(response, BizCode.AUTH_TOKEN_LOGINED);
     }
 
     // todo 将用户信息放到header中

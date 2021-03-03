@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * @copyright: Copyright (c) 2020 andyten
@@ -69,16 +70,25 @@ public class JwtTokenProvider
     // 过期时间 getTime():返回一个long型的毫秒数
     final Date expirationDate = new Date(now.getTime() + jwtTokenConfig.getExpirationTime() * 1000);
 
+    // demo：claim、subject
+    // Map<String, Object> claims = new HashMap<>();
+    // claims.put("uid", "123456");
+    // claims.put("user_name", "admin");
+    // claims.put("nick_name", "X-rapido");
+    // User user = new User("tingfeng", "bulingbuling", "1056856191");
+    // String subject = new Gson().toJson(user);
+    String uuid = UUID.randomUUID().toString();
     String token = jwtTokenConfig.getTokenPrefix() + Jwts.builder()
-        //.setClaims(claims) // 设置用户的授予权限信息（角色信息）
+        //.setClaims(claims) // 自定义属性
+        .setId(uuid) // jti(JWT ID)：是JWT的唯一标识，根据业务需要，这个可以设置为一个不重复的值，主要用来作为一次性token,从而回避重放攻击
         .setIssuer(jwtTokenConfig.getIssuer()) // 设置签发者
-        .setSubject(subject) // 设置主题JwtUserDetails的userAccount
+        .setSubject(subject) // 代表这个JWT的主体，即它的所有人，也可以是一个json格式的字符串，可以存放什么userid，roldid之类
         .setIssuedAt(now) // 设置令牌签发日期
         .setExpiration(expirationDate) // 设置令牌过期时间
-        .setAudience("hawthorn-admin,hawthorn-claim") // 设置签收范围
+        .setAudience("hawthorn-admin,hawthorn-claim") // 设置签收范围，接受者
         .signWith(SignatureAlgorithm.HS256, jwtTokenConfig.getApiSecretKey()) // 设置token签名的加密算法以及追加的密钥
         .compact();
-    return AccessToken.builder().loginAccount(subject).token(token).expirationTime(expirationDate).build();
+    return AccessToken.builder().loginUuid(uuid).loginAccount(subject).token(token).expirationTime(expirationDate).build();
   }
 
   /**
@@ -99,6 +109,7 @@ public class JwtTokenProvider
   /**
    * 刷新token
    * 过滤器会对请求进行验证，所以这里可以不必验证
+   * 一般APP保持登录状态时场景使用较多，免登录
    *
    * @param oldToken 带tokenHead的token
    */

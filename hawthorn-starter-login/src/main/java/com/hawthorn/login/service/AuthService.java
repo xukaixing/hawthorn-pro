@@ -1,8 +1,7 @@
 package com.hawthorn.login.service;
 
-import com.hawthorn.component.ret.RestResult;
-
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * @Copyright: Copyright (c) 2020 andyten
@@ -14,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface AuthService
 {
-  RestResult login(HttpServletRequest request, String loginAccount, String loginPassword);
+  Map<String, Object> login(HttpServletRequest request, String loginAccount, String loginPassword);
 
   boolean loginOut();
 
