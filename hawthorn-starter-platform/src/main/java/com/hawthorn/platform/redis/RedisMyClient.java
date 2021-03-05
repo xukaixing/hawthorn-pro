@@ -1,7 +1,6 @@
 package com.hawthorn.platform.redis;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.cache.CacheException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
@@ -69,7 +68,7 @@ public class RedisMyClient
     try
     {
       valueOps.set(key, value);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis set error e = {}", e.getMessage());
     }
@@ -98,7 +97,7 @@ public class RedisMyClient
       valueOps.set(key, value);
       if (milliseconds > 0)
         expire(key, milliseconds);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis set error e={}", e.getMessage());
     }
@@ -122,33 +121,19 @@ public class RedisMyClient
     try
     {
       valueOps.increment(key, value);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis incrby error e={}", e.getMessage());
     }
   }
 
-  /**
-   * @remark: 递减
-   * @param: key: 必须是数字
-   * @param: value: 递减幅度必须要大于0
-   * @return: void
-   * <p></p>
-   * @author: andy.ten@tom.com
-   * @date: 2020/10/17 4:43 下午
-   * @version: 1.0.1
-   * Modification History:
-   * Date         Author          Version            Description
-   * -----------------------------------------------------------
-   * 2020/10/17    andy.ten        v1.0.1             init
-   */
   // @SuppressWarnings("unchecked")
   // public void decrby(String key, long value)
   // {
   //   try
   //   {
   //     valueOps.decrement(key, value);
-  //   } catch (CacheException e)
+  //   } catch (Exception e)
   //   {
   //     log.error("redis decrby error e={}", e.getMessage());
   //   }
@@ -172,7 +157,7 @@ public class RedisMyClient
     try
     {
       return valueOps.get(key);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis get error = {}", e.getMessage());
     }
@@ -206,7 +191,7 @@ public class RedisMyClient
         }
         return result;
       });
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis del error ={}", e.getMessage());
     }
@@ -222,7 +207,7 @@ public class RedisMyClient
       listOps.remove(key, -1, null);
       listOps.leftPushAll(key, values);
       redisTemplate.expire(key, milliseconds, TimeUnit.MILLISECONDS);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis setList error ={}", e.getMessage());
     }
@@ -234,7 +219,7 @@ public class RedisMyClient
     try
     {
       return listOps.range(key, 0L, -1L);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis getListAll error ={}", e.getMessage());
     }
@@ -248,7 +233,7 @@ public class RedisMyClient
     {
       listOps.rightPushAll(key, values);
       redisTemplate.expire(key, milliseconds, TimeUnit.MILLISECONDS);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis rightPushAll error ={}", e.getMessage());
     }
@@ -275,7 +260,7 @@ public class RedisMyClient
     try
     {
       return hashOps.get(key, field);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis hget error = {}", e.getMessage());
     }
@@ -302,7 +287,7 @@ public class RedisMyClient
     try
     {
       return hashOps.hasKey(key, field);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis hhasKey error = {}", e.getMessage());
     }
@@ -330,7 +315,7 @@ public class RedisMyClient
     try
     {
       return hashOps.increment(key, item, by);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis hincr error = {}", e.getMessage());
       return 0.00;
@@ -358,7 +343,7 @@ public class RedisMyClient
     try
     {
       return hashOps.increment(key, item, -by);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis hdecr error = {}", e.getMessage());
       return 0.00;
@@ -384,7 +369,7 @@ public class RedisMyClient
     try
     {
       return hashOps.entries(key);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis hmGet error = {}", e.getMessage());
     }
@@ -412,7 +397,7 @@ public class RedisMyClient
     {
       hashOps.putAll(key, map);
       return true;
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis hmSet error = {}", e.getMessage());
       return false;
@@ -445,7 +430,7 @@ public class RedisMyClient
         expire(key, miniseconds);
       }
       return true;
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis hmSet error = {}", e.getMessage());
       return false;
@@ -457,8 +442,6 @@ public class RedisMyClient
    * @param: key
    * @param: field
    * @param: value
-   * @return: void
-   * <p></p>
    * @author: andy.ten@tom.com
    * @date: 2020/10/17 4:51 下午
    * @version: 1.0.1
@@ -468,21 +451,19 @@ public class RedisMyClient
    * 2020/10/17    andy.ten        v1.0.1             init
    */
   @SuppressWarnings("unchecked")
-  public boolean hSet(String key, String field, String value)
+  public void hSet(String key, String field, String value)
   {
     try
     {
       hashOps.put(key, field, value);
-      return true;
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis hset error = {}", e.getMessage());
-      return false;
     }
   }
 
   @SuppressWarnings("unchecked")
-  public boolean hSet(String key, String field, String value, Long miniseconds)
+  public void hSet(String key, String field, String value, Long miniseconds)
   {
     try
     {
@@ -491,11 +472,9 @@ public class RedisMyClient
       {
         expire(key, miniseconds);
       }
-      return true;
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis hset error = {}", e.getMessage());
-      return false;
     }
   }
 
@@ -505,7 +484,7 @@ public class RedisMyClient
     try
     {
       return hashOps.multiGet(h, keys);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis multiGet error = {}", e.getMessage());
     }
@@ -519,7 +498,7 @@ public class RedisMyClient
     try
     {
       return hashOps.entries(key);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis hGetAll error = {}", e.getMessage());
     }
@@ -533,7 +512,7 @@ public class RedisMyClient
     {
       hashOps.putAll(key, map);
       redisTemplate.expire(key, miniseconds, TimeUnit.MILLISECONDS);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis hPutAll error = {}", e.getMessage());
     }
@@ -547,7 +526,7 @@ public class RedisMyClient
     {
       hashOps.put(key, field, value);
       redisTemplate.expire(key, milliseconds, TimeUnit.MILLISECONDS);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis putAll error = {}", e.getMessage());
     }
@@ -573,7 +552,7 @@ public class RedisMyClient
     try
     {
       return hashOps.delete(key, field);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis hdel error = {}", e.getMessage());
     }
@@ -601,7 +580,7 @@ public class RedisMyClient
     try
     {
       return setOps.members(key);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis sGet error = {}", e.getMessage());
       return null;
@@ -628,7 +607,7 @@ public class RedisMyClient
     try
     {
       return setOps.add(key, values);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis sSet error = {}", e.getMessage());
       return 0;
@@ -655,7 +634,7 @@ public class RedisMyClient
     try
     {
       return setOps.isMember(key, value);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis sHasKey error = {}", e.getMessage());
       return false;
@@ -688,7 +667,7 @@ public class RedisMyClient
         expire(key, miniseconds);
       }
       return count;
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis sSetAndTime error = {}", e.getMessage());
       return 0;
@@ -714,7 +693,7 @@ public class RedisMyClient
     try
     {
       return setOps.size(key);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis sGetSetSize error = {}", e.getMessage());
       return 0;
@@ -741,7 +720,7 @@ public class RedisMyClient
     try
     {
       return setOps.remove(key, values);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis sRemove error = {}", e.getMessage());
       return 0;
@@ -756,7 +735,7 @@ public class RedisMyClient
       long n = setOps.add(key, value);
       redisTemplate.expire(key, milliseconds, TimeUnit.MILLISECONDS);
       return n;
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis sAdd error = {}", e.getMessage());
     }
@@ -769,7 +748,7 @@ public class RedisMyClient
     try
     {
       return setOps.members(key);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis sMembers error = {}", e.getMessage());
     }
@@ -782,7 +761,7 @@ public class RedisMyClient
     try
     {
       return setOps.size(key);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis sMembersCount error = {}", e.getMessage());
     }
@@ -795,7 +774,7 @@ public class RedisMyClient
     try
     {
       return setOps.intersect(key1, key2);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis putAll error = {}", e.getMessage());
     }
@@ -808,7 +787,7 @@ public class RedisMyClient
     try
     {
       return setOps.intersect(key1, key2);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis sIntersect error = {}", e.getMessage());
     }
@@ -839,7 +818,7 @@ public class RedisMyClient
         }
         return setOps.intersect(key1, otherKeys);
       }
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis sIntersect error = {}", e.getMessage());
     }
@@ -852,7 +831,7 @@ public class RedisMyClient
     try
     {
       return setOps.intersectAndStore(key1, key2, key3);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis sIntersectAndStore error = {}", e.getMessage());
     }
@@ -865,7 +844,7 @@ public class RedisMyClient
     try
     {
       return setOps.union(key1, key2);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis sUnion error = {}", e.getMessage());
     }
@@ -878,7 +857,7 @@ public class RedisMyClient
     try
     {
       return setOps.difference(key1, key2);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis sDifference error = {}", e.getMessage());
     }
@@ -892,7 +871,7 @@ public class RedisMyClient
     try
     {
       zSetOps.add(key, val, score);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis zsAdd error = {}", e.getMessage());
     }
@@ -904,7 +883,7 @@ public class RedisMyClient
     try
     {
       return zSetOps.score(key, val);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis zsCore error = {}", e.getMessage());
     }
@@ -917,7 +896,7 @@ public class RedisMyClient
     try
     {
       return zSetOps.count(key, minScore, maxScore);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis zsCount error = {}", e.getMessage());
     }
@@ -930,7 +909,7 @@ public class RedisMyClient
     try
     {
       return zSetOps.size(key);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis zsSize error = {}", e.getMessage());
     }
@@ -943,7 +922,7 @@ public class RedisMyClient
     try
     {
       return zSetOps.remove(key, val);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis zsRemove error = {}", e.getMessage());
     }
@@ -956,7 +935,7 @@ public class RedisMyClient
     try
     {
       return zSetOps.removeRangeByScore(key, minScore, maxScore);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis zsRemoveByScore error = {}", e.getMessage());
     }
@@ -969,7 +948,7 @@ public class RedisMyClient
     try
     {
       return zSetOps.rank(key, val);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis zsRank error = {}", e.getMessage());
     }
@@ -982,7 +961,7 @@ public class RedisMyClient
     try
     {
       return zSetOps.range(key, val1, val2);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis zsRange error = {}", e.getMessage());
     }
@@ -995,7 +974,7 @@ public class RedisMyClient
     try
     {
       return zSetOps.rangeByScoreWithScores(key, val1, val2);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis zsRangeByScoreWithScores error = {}", e.getMessage());
     }
@@ -1020,7 +999,7 @@ public class RedisMyClient
     try
     {
       return redisTemplate.hasKey(key);
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis hasKey error = {}", e.getMessage());
     }
@@ -1047,7 +1026,7 @@ public class RedisMyClient
       {
         redisTemplate.expire(key, miniseconds, TimeUnit.MILLISECONDS);
       }
-    } catch (CacheException e)
+    } catch (Exception e)
     {
       log.error("redis expire error = {}", e.getMessage());
     }
@@ -1069,5 +1048,67 @@ public class RedisMyClient
   public long getExpire(String key)
   {
     return redisTemplate.getExpire(key, TimeUnit.MILLISECONDS);
+  }
+
+  /**
+   * @remark: todo 获取redis库指定前缀key
+   * @param: keyPrefix
+   * @return: java.util.Set<java.lang.String>
+   * <p>
+   *   使用scan命令代替keys, Redis是单线程处理，keys命令在KEY数量较多时，操作效率极低，时间复杂度为O(N)
+   *   key命令一旦执行会严重阻塞线上其它命令的正常请求
+   * </p>
+   * @author: andy.ten@tom.com
+   * @date: 3/5/21 10:18 AM
+   * @version: 1.0.1
+   * Modification History:
+   * Date         Author          Version            Description
+   * -----------------------------------------------------------
+   * 3/5/21    andy.ten        v1.0.1             init
+   */
+  public Set<String> keys(String keyPrefix)
+  {
+    String realKey = "";
+    if ("*".equals(keyPrefix))
+      realKey = keyPrefix;
+    else realKey = keyPrefix + "*";
+
+    try
+    {
+      String finalRealKey = realKey;
+      return redisTemplate.execute((RedisCallback<Set<String>>) connection ->
+      {
+        Set<String> binaryKeys = new HashSet<>();
+        Cursor<byte[]> cursor = connection.scan(new ScanOptions.ScanOptionsBuilder().match(finalRealKey).count(Integer.MAX_VALUE).build());
+        while (cursor.hasNext())
+        {
+          binaryKeys.add(new String(cursor.next()));
+        }
+
+        return binaryKeys;
+      });
+    } catch (Exception e)
+    {
+      log.error("redis keys error = {}", e.getMessage());
+    }
+
+    return null;
+  }
+
+  /**
+   * 删除指定前缀的key
+   * @param keyPrefix
+   */
+  public void removeAll(String keyPrefix)
+  {
+    try
+    {
+      Set<String> keys = keys(keyPrefix);
+      for (String key : keys)
+        redisTemplate.delete(key);
+    } catch (Exception e)
+    {
+      log.error("redis removeAll error = {}", e.getMessage());
+    }
   }
 }

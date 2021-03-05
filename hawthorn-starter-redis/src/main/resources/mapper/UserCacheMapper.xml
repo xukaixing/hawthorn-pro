@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hawthorn.redis.repository.UserCacheMapper">
+  <!-- 通用查询映射结果到DTO(不带公共字段) -->
+  <resultMap id="BaseResultMap" type="com.hawthorn.redis.model.dto.usercache.UserCacheDTO">
+    <!-- 主键 -->
+    <id column="id" property="id"/>
+    <!-- 业务字段 -->
+    <result column="name" property="name"/>
+    <result column="dept_id" property="deptId"/>
+  </resultMap>
+
+  <!-- 通用查询映射结果到PO(带公共字段) -->
+  <resultMap id="BaseResultMapAll" type="com.hawthorn.redis.model.po.UserCachePO">
+    <!-- 主键 -->
+    <id column="id" property="id"/>
+    <!-- 公共字段 -->
+    <result column="status" property="status"/>
+    <result column="create_by" property="createBy"/>
+    <result column="create_time" property="createTime"/>
+    <result column="last_update_by" property="lastUpdateBy"/>
+    <result column="last_update_time" property="lastUpdateTime"/>
+    <result column="del_flag" property="delFlag"/>
+    <result column="version" property="version"/>
+    <!-- 业务字段 -->
+    <result column="name" property="name"/>
+    <result column="dept_id" property="deptId"/>
+  </resultMap>
+</mapper>

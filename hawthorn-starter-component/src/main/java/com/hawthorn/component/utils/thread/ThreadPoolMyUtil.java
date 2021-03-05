@@ -6,11 +6,12 @@ import java.util.concurrent.*;
 import java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy;
 
 /**
- * @copyright: Copyright (c) 2020 andyten
+ * @copyright: Copyright (c) 2021 andyten
  * <p></p>
- * @remark: 线程池工具类
+ * @remark: todo 线程池工具类
  * @author: andy.ten@tom.com
- * @date: 2020/10/31 5:36 下午
+ * @created: 3/4/21 10:02 PM
+ * @lasted: 3/4/21 10:02 PM
  * @version v1.0.1
  */
 public class ThreadPoolUtil
