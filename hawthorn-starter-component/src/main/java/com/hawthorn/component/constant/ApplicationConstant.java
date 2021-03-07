@@ -2,7 +2,7 @@ package com.hawthorn.component.constant;
 
 import com.hawthorn.component.utils.common.SpringBeanMyUtil;
 import com.hawthorn.component.utils.thread.NamedThreadFactory;
-import com.hawthorn.component.utils.thread.ThreadPoolUtil;
+import com.hawthorn.component.utils.thread.ThreadPoolMyUtil;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.boot.convert.ApplicationConversionService;
 import org.springframework.context.ApplicationContext;
@@ -29,7 +29,7 @@ public class ApplicationConstant
   /**
    * 事件发布默认的线程池
    */
-  public static final Executor DEFAULT_EXECUTOR = ThreadPoolUtil.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 4, new NamedThreadFactory("DEFAULT-PUBLISHER"));
+  public static final Executor DEFAULT_EXECUTOR = ThreadPoolMyUtil.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 4, new NamedThreadFactory("DEFAULT-PUBLISHER"));
 
   /**
    * 应用默认的响应类型

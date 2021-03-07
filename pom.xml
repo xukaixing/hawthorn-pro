@@ -14,6 +14,7 @@
     <module>hawthorn-starter-part</module>
     <module>hawthorn-starter-mqprovider</module>
     <module>hawthorn-starter-mqconsumer</module>
+    <module>hawthorn-starter-redis</module>
   </modules>
   <parent>
     <groupId>org.springframework.boot</groupId>

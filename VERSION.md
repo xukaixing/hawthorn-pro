@@ -5,6 +5,18 @@
       xukaixing@hotmail.com
   
 ## 版本
+> v1.1.5 : 2021.03.05        
+>> 增加redis工程，实现将数据库中数据加载到redis  
+>> redis客户端类增加删除指定前缀key功能         
+
+---
+
+> v1.1.4 : 2021.03.01        
+>> gateway增加ip黑名单设置
+>> gateway增加账户同时在线校验       
+
+---
+
 > v1.1.3 : 2021.02.28        
 >> 增加rabbitmq的配置  
 >> 增加rabbitmq的生产者工程  

@@ -28,9 +28,9 @@ import java.util.Map;
 @Slf4j
 public class SysUserServiceImpl implements SysUserService
 {
-
   @Resource
   private SysUserMapper sysUserMapper;
+
 
   public List<SysUserDTO> selectNoPage()
   {

@@ -51,7 +51,7 @@ public class JwtTokenProvider
   }
 
   /**
-   * @remark: 生成token
+   * @remark: todo 生成token
    * @param: subject: 用户登录账号
    * @return: com.hawthorn.login.model.pojo.AccessToken
    * <p></p>
@@ -72,7 +72,7 @@ public class JwtTokenProvider
 
     // demo：claim、subject
     // Map<String, Object> claims = new HashMap<>();
-    // claims.put("uid", "123456");
+    // claims.put("userid", );
     // claims.put("user_name", "admin");
     // claims.put("nick_name", "X-rapido");
     // User user = new User("tingfeng", "bulingbuling", "1056856191");

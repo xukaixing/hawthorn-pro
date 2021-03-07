@@ -23,7 +23,7 @@ public class AdminConstant
   // redis expire的超时时间：30分钟
   public static final Long EXPIRE_TIME_ONE_HALFHOUR = 1000 * 60 * 30L;
   // public static final String JWT = "hawthorn:auth:jwt:{0}:{1}";
-  public static final String JWT = "haw:auth:jwt:{0}";
+  public static final String JWT = "auth:jwt:{0}";
   // 定义access_token的redis中的key
   public static final String ACCESS_TOKEN_KEY = "at";
   // 定义refresh_token的redis中的key

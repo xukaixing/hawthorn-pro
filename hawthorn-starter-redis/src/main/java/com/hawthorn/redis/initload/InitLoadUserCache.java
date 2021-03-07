@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 /**
  * @copyright: Copyright (c) 2021 andyten
  * <p></p>
- * @remark: todo 初始化加载缓存
+ * @remark: todo 初始化加载用户缓存
  * @author: andy.ten@tom.com
  * @created: 3/4/21 10:55 PM
  * @lasted: 3/4/21 10:55 PM

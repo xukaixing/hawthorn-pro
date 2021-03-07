@@ -23,7 +23,17 @@ public class AsyncTaskExecutorConfig
    * @return
    */
   @Bean("user2RedisExecutor")
-  public Object sysUser2RedisExecutor()
+  public Object user2RedisExecutor()
+  {
+    return AsyncThreadPoolTaskMyUtil.createAsyncTaskExecutor();
+  }
+
+  /**
+   * 配置系统字典存储至redis
+   * @return
+   */
+  @Bean("dict2RedisExecutor")
+  public Object dict2RedisExecutor()
   {
     return AsyncThreadPoolTaskMyUtil.createAsyncTaskExecutor();
   }

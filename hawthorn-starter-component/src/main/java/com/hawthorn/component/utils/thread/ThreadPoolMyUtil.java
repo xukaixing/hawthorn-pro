@@ -14,7 +14,7 @@ import java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy;
  * @lasted: 3/4/21 10:02 PM
  * @version v1.0.1
  */
-public class ThreadPoolUtil
+public class ThreadPoolMyUtil
 {
   /**
    * 默认的并发能力

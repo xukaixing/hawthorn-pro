@@ -2,6 +2,7 @@ package com.hawthorn.login.service.impl;
 
 import com.hawthorn.component.constant.AdminConstant;
 import com.hawthorn.component.utils.common.StringMyUtil;
+import com.hawthorn.component.utils.http.IPMyUtil;
 import com.hawthorn.login.model.pojo.AccessToken;
 import com.hawthorn.login.model.pojo.JwtUserDetails;
 import com.hawthorn.login.provider.JwtTokenProvider;
@@ -27,12 +28,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * @copyright: Copyright (c) 2020 andyten
+ * @copyright: Copyright (c) 2021 andyten
  * <p></p>
- * @remark: 认证权限服务实现类
- * @author:andy.ten@tom.com
- * @date:2020/10/12 11:30 上午
- * @version v1.0.1
+ * @remark: todo 认证权限服务实现类
+ * @author: andy.ten@tom.com
+ * @created: 12/4/20 09:00 PM
+ * @lasted: 3/4/21 12:02 PM
+ * @version v1.0.2
  */
 @Slf4j
 @Service
@@ -52,7 +54,7 @@ public class AuthServiceImpl implements AuthService
   {
     log.info("====== 登录系统认证 ======");
     Map<String, Object> retMap = new HashMap<>();
-
+    String ipAddress = IPMyUtil.getIpAddr(request);
     JwtAuthenticationToken usernameAuthentication = new JwtAuthenticationToken(loginAccount, loginPassword);
     usernameAuthentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
     // todo 认证
@@ -70,13 +72,19 @@ public class AuthServiceImpl implements AuthService
     List<GrantedAuthority> grantedAuthorities = permissions.stream().map(GrantedAuthorityImpl::new).collect(Collectors.toList());
     userDetails.setAuthorities(grantedAuthorities);
 
-    // todo 将令牌放入redis key为username
-    //String sysJwtUserName = StringMyUtil.placeHolder(AdminConstant.JWT, "login", userDetails.getUsername());
+    // todo 将令牌放入redis
     String sysJwtUserId = StringMyUtil.placeHolder(AdminConstant.JWT, userDetails.getUserId());
     redisMyClient.hSet(sysJwtUserId, AdminConstant.ACCESS_TOKEN_KEY, accessToken.getToken(), AdminConstant.EXPIRE_TIME_ONE_HOUR);
 
+    // todo 将令牌产生的客户端ip放入redis
+    String sysJwtIpAddress = StringMyUtil.placeHolder(AdminConstant.JWT, userDetails.getUserId());
+    redisMyClient.hSet(sysJwtIpAddress, AdminConstant.LOGIN_IPADDRESS_KEY, ipAddress, AdminConstant.EXPIRE_TIME_ONE_HOUR);
+
     // todo 将token的uuid放入redis，解决同一账户在不同电脑上同时登录问题
     redisMyClient.hSet(sysJwtUserId, AdminConstant.LOGIN_UUID_KEY, accessToken.getLoginUuid(), AdminConstant.EXPIRE_TIME_ONE_HOUR);
+
+    // todo 使用统一的服务：rabbitmq日志消息；实现异步记录日志
+
 
     // 返回结果
     retMap.put("login-uuid", accessToken.getLoginUuid());

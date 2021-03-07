@@ -3,6 +3,7 @@ package com.hawthorn.gateway.filter;
 import com.hawthorn.gateway.config.CustomGateWayFilterConfig;
 import com.hawthorn.gateway.config.JwtTokenConfig;
 import com.hawthorn.gateway.constant.AdminConstant;
+import com.hawthorn.gateway.constant.RedisConstant;
 import com.hawthorn.gateway.exception.BizCode;
 import com.hawthorn.gateway.provider.JwtTokenProvider;
 import com.hawthorn.gateway.redis.RedisMyClient;
@@ -32,7 +33,7 @@ import java.util.Objects;
 /**
  * @copyright: Copyright (c) 2021 andyten
  * <p></p>
- * @remark: gateway全局token校验
+ * @remark: todo gateway全局token校验
  * @author: andy.ten@tom.com
  * @created: 2/24/21 5:26 PM
  * @lasted: 2/24/21 5:26 PM
@@ -41,6 +42,9 @@ import java.util.Objects;
 @Component
 public class TokenFilter implements GlobalFilter, Ordered
 {
+  private static final String LOGIN_UUID = "loginuuid";
+  private static final String USER_ACCOUNT = "useraccount";
+
   @Autowired
   private JwtTokenConfig jwtTokenConfig;
   @Autowired
@@ -74,8 +78,8 @@ public class TokenFilter implements GlobalFilter, Ordered
   {
     ServerHttpRequest request = exchange.getRequest();
     ServerHttpResponse response = exchange.getResponse();
-    String sLoginAccount = request.getHeaders().getFirst("useraccount");
-    String sLoginUuid = request.getHeaders().getFirst("loginuuid");
+    String sLoginAccount = request.getHeaders().getFirst(USER_ACCOUNT);
+    String sLoginUuid = request.getHeaders().getFirst(LOGIN_UUID);
 
     // 获取请求url
     String requestUrl = request.getPath().toString();
@@ -187,8 +191,19 @@ public class TokenFilter implements GlobalFilter, Ordered
       return getVoidMono(response, BizCode.AUTH_TOKEN_ACCOUNT_ISBLANK);
     }
 
+    // todo 根据loginAccount，获取userid
+    Object userobj = redisMyClient.hGet(StringMyUtil.placeHolder(RedisConstant.REDIS_KEY_USER_PREFIX, loginAccount), RedisConstant.REDIS_KEY_USERID);
+    String userid = "";
+    if (userobj != null)
+      userid = userobj.toString();
+    else
+    {
+      response.setStatusCode(HttpStatus.UNAUTHORIZED);
+      return getVoidMono(response, BizCode.AUTH_TOKEN_NOREDIS);
+    }
+    //redisMyClient.hGet();
     // todo 检查Redis中是否有此Token
-    String sysJwtUserId = StringMyUtil.placeHolder(AdminConstant.JWT, "1");
+    String sysJwtUserId = StringMyUtil.placeHolder(AdminConstant.JWT, userid);
     if (!redisMyClient.hHasKey(sysJwtUserId, AdminConstant.ACCESS_TOKEN_KEY)) // 是否存在
     {
       response.setStatusCode(HttpStatus.UNAUTHORIZED);
@@ -207,7 +222,7 @@ public class TokenFilter implements GlobalFilter, Ordered
     }
 
     // todo 将用户信息放到header中
-    ServerHttpRequest mutableReq = exchange.getRequest().mutate().header("useraccount", loginAccount).build();
+    ServerHttpRequest mutableReq = exchange.getRequest().mutate().header(USER_ACCOUNT, loginAccount).build();
     ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();
     return chain.filter(mutableExchange);
 

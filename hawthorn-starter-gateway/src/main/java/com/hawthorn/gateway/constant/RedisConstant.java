@@ -1,4 +1,4 @@
-package com.hawthorn.component.constant;
+package com.hawthorn.gateway.constant;
 
 /**
  * @copyright: Copyright (c) 2021 andyten

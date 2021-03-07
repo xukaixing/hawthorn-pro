@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * @copyright: Copyright (c) 2020 andyten
  * <p></p>
- * @remark: 认证控制类
+ * @remark: todo 认证控制类
  * @author:andy.ten@tom.com
  * @date:2020/9/22 12:05 上午
  * @version v1.0.1
