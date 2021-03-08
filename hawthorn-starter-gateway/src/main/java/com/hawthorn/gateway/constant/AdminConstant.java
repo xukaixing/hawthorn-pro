@@ -1,11 +1,12 @@
 package com.hawthorn.gateway.constant;
 
 /**
- * @copyright: Copyright (c) 2020 andyten
+ * @copyright: Copyright (c) 2021 andyten
  * <p></p>
- * @remark: 定义系统级常量
- * @author:andy.ten@tom.com
- * @date:2020/8/23 5:29 下午
+ * @remark: todo 定义系统级常量
+ * @author: andy.ten@tom.com
+ * @created: 3/8/21 11:45 AM
+ * @lasted: 3/8/21 11:45 AM
  * @version v1.0.1
  */
 public class AdminConstant
@@ -16,20 +17,6 @@ public class AdminConstant
   public static final String ADMIN = "admin";
   // superman权限默认的账号名
   public static final String SUPERMAN = "superman";
-  // redis expire的超时时间：1天
-  public static final Long EXPIRE_TIME_ONE_DAY = 1000 * 60 * 60 * 24L;
-  // redis expire的超时时间：1小时
-  public static final Long EXPIRE_TIME_ONE_HOUR = 1000 * 60 * 60L;
-  // redis expire的超时时间：30分钟
-  public static final Long EXPIRE_TIME_ONE_HALFHOUR = 1000 * 60 * 30L;
-  // public static final String JWT = "hawthorn:auth:jwt:{0}:{1}";
-  public static final String JWT = "auth:jwt:{0}";
-  // 定义access_token的redis中的key
-  public static final String ACCESS_TOKEN_KEY = "at";
-  // 定义refresh_token的redis中的key
-  public static final String REFRESH_TOKEN_KEY = "rt";
-  // 定义登录用户的uuid的redis中的key
-  public static final String LOGIN_UUID_KEY = "uuid";
 
   private AdminConstant()
   {

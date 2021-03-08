@@ -70,8 +70,9 @@ public enum BizCode
   AUTH_TOKEN_TIMEOUT(-23003, "token校验失败：token过期"),
   AUTH_TOKEN_NOREDIS(-23004, "token校验失败：redis中不存在"),
   AUTH_TOKEN_ACCOUNT_ISBLANK(-23005, "token校验失败：token获取用户账号为空"),
-  AUTH_TOKEN_NOT_MATCH(-23006, "token匹配失败：token中用户与登录账号不一致"),
+  AUTH_TOKEN_NOT_MATCH_ACCOUNT(-23006, "token匹配失败：token中用户与登录账号不一致"),
   AUTH_TOKEN_LOGINED(-23007, "当前用户有其他人在登录，请重新登录！"),
+  AUTH_TOKEN_NOT_MATCH_REDIS(-23008, "token校验失败：token与redis中缓存的token不一致"),
 
   AUTH_IP_DENY(-24001, "IP黑名单：您的访问已被设置黑名单，请联系管理员"),
 
