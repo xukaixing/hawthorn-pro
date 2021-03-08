@@ -34,6 +34,7 @@ public class UserCacheServiceImpl implements UserCacheService
   {
     List<UserCacheDTO> userCache = userCacheMapper.selectUser();
     String username, usertype, deptid;
+    Long userid;
     String key;
     // todo 先删除redis中的key
     redisMyClient.removeAll(StringMyUtil.placeHolder(RedisConstant.REDIS_KEY_USER_PREFIX, "*"));
@@ -41,9 +42,11 @@ public class UserCacheServiceImpl implements UserCacheService
     for (UserCacheDTO userCacheDTO : userCache)
     {
       username = userCacheDTO.getName();
+      userid = userCacheDTO.getId();
       usertype = userCacheDTO.getUserType() == null ? "" : userCacheDTO.getUserType().toString();
       deptid = userCacheDTO.getDeptId() == null ? "" : userCacheDTO.getDeptId().toString();
       key = StringMyUtil.placeHolder(RedisConstant.REDIS_KEY_USER_PREFIX, userCacheDTO.getName());
+      redisMyClient.hSet(key, RedisConstant.REDIS_KEY_USERID, String.valueOf(userid));
       redisMyClient.hSet(key, RedisConstant.REDIS_KEY_USERNAME, username);
       redisMyClient.hSet(key, RedisConstant.REDIS_KEY_USERTYPE, usertype);
       redisMyClient.hSet(key, RedisConstant.REDIS_KEY_DEPTID, deptid);

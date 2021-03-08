@@ -1,6 +1,6 @@
 package com.hawthorn.login.service.impl;
 
-import com.hawthorn.component.constant.AdminConstant;
+import com.hawthorn.component.constant.RedisConstant;
 import com.hawthorn.component.utils.common.StringMyUtil;
 import com.hawthorn.component.utils.http.IPMyUtil;
 import com.hawthorn.login.model.pojo.AccessToken;
@@ -73,15 +73,15 @@ public class AuthServiceImpl implements AuthService
     userDetails.setAuthorities(grantedAuthorities);
 
     // todo 将令牌放入redis
-    String sysJwtUserId = StringMyUtil.placeHolder(AdminConstant.JWT, userDetails.getUserId());
-    redisMyClient.hSet(sysJwtUserId, AdminConstant.ACCESS_TOKEN_KEY, accessToken.getToken(), AdminConstant.EXPIRE_TIME_ONE_HOUR);
+    String sysJwtUserId = StringMyUtil.placeHolder(RedisConstant.JWT, userDetails.getUserId());
+    redisMyClient.hSet(sysJwtUserId, RedisConstant.ACCESS_TOKEN_KEY, accessToken.getToken(), RedisConstant.EXPIRE_TIME_ONE_HOUR);
 
     // todo 将令牌产生的客户端ip放入redis
-    String sysJwtIpAddress = StringMyUtil.placeHolder(AdminConstant.JWT, userDetails.getUserId());
-    redisMyClient.hSet(sysJwtIpAddress, AdminConstant.LOGIN_IPADDRESS_KEY, ipAddress, AdminConstant.EXPIRE_TIME_ONE_HOUR);
+    String sysJwtIpAddress = StringMyUtil.placeHolder(RedisConstant.JWT, userDetails.getUserId());
+    redisMyClient.hSet(sysJwtIpAddress, RedisConstant.LOGIN_IPADDRESS_KEY, ipAddress, RedisConstant.EXPIRE_TIME_ONE_HOUR);
 
     // todo 将token的uuid放入redis，解决同一账户在不同电脑上同时登录问题
-    redisMyClient.hSet(sysJwtUserId, AdminConstant.LOGIN_UUID_KEY, accessToken.getLoginUuid(), AdminConstant.EXPIRE_TIME_ONE_HOUR);
+    redisMyClient.hSet(sysJwtUserId, RedisConstant.LOGIN_UUID_KEY, accessToken.getLoginUuid(), RedisConstant.EXPIRE_TIME_ONE_HOUR);
 
     // todo 使用统一的服务：rabbitmq日志消息；实现异步记录日志
 

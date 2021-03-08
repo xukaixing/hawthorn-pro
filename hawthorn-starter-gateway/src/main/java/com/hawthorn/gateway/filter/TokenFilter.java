@@ -2,7 +2,7 @@ package com.hawthorn.gateway.filter;
 
 import com.hawthorn.gateway.config.CustomGateWayFilterConfig;
 import com.hawthorn.gateway.config.JwtTokenConfig;
-import com.hawthorn.gateway.constant.AdminConstant;
+import com.hawthorn.gateway.constant.HeaderConstant;
 import com.hawthorn.gateway.constant.RedisConstant;
 import com.hawthorn.gateway.exception.BizCode;
 import com.hawthorn.gateway.provider.JwtTokenProvider;
@@ -42,8 +42,6 @@ import java.util.Objects;
 @Component
 public class TokenFilter implements GlobalFilter, Ordered
 {
-  private static final String LOGIN_UUID = "loginuuid";
-  private static final String USER_ACCOUNT = "useraccount";
 
   @Autowired
   private JwtTokenConfig jwtTokenConfig;
@@ -78,8 +76,8 @@ public class TokenFilter implements GlobalFilter, Ordered
   {
     ServerHttpRequest request = exchange.getRequest();
     ServerHttpResponse response = exchange.getResponse();
-    String sLoginAccount = request.getHeaders().getFirst(USER_ACCOUNT);
-    String sLoginUuid = request.getHeaders().getFirst(LOGIN_UUID);
+    String sLoginAccount = request.getHeaders().getFirst(HeaderConstant.USER_ACCOUNT);
+    String sLoginUuid = request.getHeaders().getFirst(HeaderConstant.LOGIN_UUID);
 
     // 获取请求url
     String requestUrl = request.getPath().toString();
@@ -129,19 +127,21 @@ public class TokenFilter implements GlobalFilter, Ordered
       return getVoidMono(response, BizCode.AUTH_TOKEN_ISBLANK);
     }
     // 去掉token前缀(Bearer )，得到真实token
-    authToken = authToken.substring(jwtTokenConfig.getTokenPrefix().length());
+    String authTokenNoPrefix = authToken.substring(jwtTokenConfig.getTokenPrefix().length());
 
     // todo 验证token的前缀是否正确
-    if (authToken.startsWith(jwtTokenConfig.getTokenPrefix()))
+    if (authTokenNoPrefix.startsWith(jwtTokenConfig.getTokenPrefix()))
     {
       response.setStatusCode(HttpStatus.UNAUTHORIZED);
       return getVoidMono(response, BizCode.AUTH_TOKEN_INVALID);
     }
     // todo 检查Spring缓存中是否有此Token
+
+    // todo 验证token有效性
     Map<String, Object> verifyMap = new HashMap<>();
     try
     {
-      verifyMap = jwtTokenProvider.verifyToken(authToken, "");
+      verifyMap = jwtTokenProvider.verifyToken(authTokenNoPrefix, "");
     } catch (Exception ex)
     {
       response.setStatusCode(HttpStatus.UNAUTHORIZED);
@@ -176,14 +176,9 @@ public class TokenFilter implements GlobalFilter, Ordered
     if (!loginAccount.equals(sLoginAccount))
     {
       response.setStatusCode(HttpStatus.UNAUTHORIZED);
-      return getVoidMono(response, BizCode.AUTH_TOKEN_NOT_MATCH);
+      return getVoidMono(response, BizCode.AUTH_TOKEN_NOT_MATCH_ACCOUNT);
     }
 
-    if (StringMyUtil.isBlank(sLoginAccount))
-    {
-      response.setStatusCode(HttpStatus.UNAUTHORIZED);
-      return getVoidMono(response, BizCode.AUTH_TOKEN_INVALID);
-    }
     // todo 验证loginAccount是空的情况
     if (StringMyUtil.isBlank(loginAccount))
     {
@@ -203,14 +198,26 @@ public class TokenFilter implements GlobalFilter, Ordered
     }
     //redisMyClient.hGet();
     // todo 检查Redis中是否有此Token
-    String sysJwtUserId = StringMyUtil.placeHolder(AdminConstant.JWT, userid);
-    if (!redisMyClient.hHasKey(sysJwtUserId, AdminConstant.ACCESS_TOKEN_KEY)) // 是否存在
+    String sysJwtUserId = StringMyUtil.placeHolder(RedisConstant.JWT, userid);
+    Object redisTokenObj = redisMyClient.hGet(sysJwtUserId, RedisConstant.ACCESS_TOKEN_KEY);
+    String redisToken = "";
+    if (redisTokenObj == null)
+      redisToken = "";
+    else
+      redisToken = redisTokenObj.toString();
+    if ("".equals(redisToken)) // 是否存在
     {
       response.setStatusCode(HttpStatus.UNAUTHORIZED);
       return getVoidMono(response, BizCode.AUTH_TOKEN_NOREDIS);
     } else
     {
-      // todo 检查Reedis中的token是否过期
+      // todo 检查redis存储的token是否与传递的token一致
+      if (!redisToken.equals(authToken))
+      {
+        response.setStatusCode(HttpStatus.UNAUTHORIZED);
+        return getVoidMono(response, BizCode.AUTH_TOKEN_NOT_MATCH_REDIS);
+      }
+      // todo 检查Redis中的token是否过期
     }
 
     // todo 校验是否有多个账户同时登录
@@ -222,7 +229,7 @@ public class TokenFilter implements GlobalFilter, Ordered
     }
 
     // todo 将用户信息放到header中
-    ServerHttpRequest mutableReq = exchange.getRequest().mutate().header(USER_ACCOUNT, loginAccount).build();
+    ServerHttpRequest mutableReq = exchange.getRequest().mutate().header(HeaderConstant.USER_ACCOUNT, loginAccount).header(HeaderConstant.USER_ID, userid).build();
     ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();
     return chain.filter(mutableExchange);
 
