@@ -1,18 +1,15 @@
-package com.hawthorn.login.provider;
+package com.hawthorn.platform.utils.token;
 
 import cn.hutool.core.date.DateUtil;
 import com.hawthorn.component.utils.json.JacksonMyUtil;
-import com.hawthorn.login.model.pojo.AccessToken;
 import com.hawthorn.platform.config.JwtTokenConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +33,7 @@ import java.util.*;
  */
 @Slf4j
 @Component
-public class JwtTokenProvider
+public class JwtTokenMyUtil
 {
   private final Base64 base64 = new Base64();
 
@@ -101,94 +98,6 @@ public class JwtTokenProvider
       claimsMap.put("claims", "no");
     }
     return claimsMap;
-  }
-
-  /**
-   * 根据用户信息生成token
-   */
-  public AccessToken createToken(UserDetails userDetails)
-  {
-    return createToken(userDetails.getUsername());
-  }
-
-  /**
-   * @remark: todo 生成token
-   * @param: subject: 用户登录账号
-   * @return: com.hawthorn.login.model.pojo.AccessToken
-   * <p></p>
-   * @author: andy.ten@tom.com
-   * @date: 2/27/21 3:38 PM
-   * @version: 1.0.1
-   * Modification History:
-   * Date         Author          Version            Description
-   * -----------------------------------------------------------
-   * 2/27/21    andy.ten        v1.0.1             init
-   */
-  public AccessToken createToken(String subject)
-  {
-    // 当前时间
-    final Date now = new Date();
-    // 过期时间 getTime():返回一个long型的毫秒数
-    final Date expirationDate = new Date(now.getTime() + jwtTokenConfig.getExpirationTime() * 1000);
-
-    // demo：claim、subject
-    // Map<String, Object> claims = new HashMap<>();
-    // claims.put("userid", );
-    // claims.put("user_name", "admin");
-    // claims.put("nick_name", "X-rapido");
-    // User user = new User("tingfeng", "bulingbuling", "1056856191");
-    // String subject = new Gson().toJson(user);
-    String uuid = UUID.randomUUID().toString();
-    String token = jwtTokenConfig.getTokenPrefix() + Jwts.builder()
-        //.setClaims(claims) // 自定义属性
-        .setId(uuid) // jti(JWT ID)：是JWT的唯一标识，根据业务需要，这个可以设置为一个不重复的值，主要用来作为一次性token,从而回避重放攻击
-        .setIssuer(jwtTokenConfig.getIssuer()) // 设置签发者
-        .setSubject(subject) // 代表这个JWT的主体，即它的所有人，也可以是一个json格式的字符串，可以存放什么userid，roldid之类
-        .setIssuedAt(now) // 设置令牌签发日期
-        .setExpiration(expirationDate) // 设置令牌过期时间
-        .setAudience("hawthorn-admin,hawthorn-claim") // 设置签收范围，接受者
-        .signWith(SignatureAlgorithm.HS256, jwtTokenConfig.getApiSecretKey()) // 设置token签名的加密算法以及追加的密钥
-        .compact();
-    return AccessToken.builder().loginUuid(uuid).loginAccount(subject).token(token).expirationTime(expirationDate).build();
-  }
-
-  /**
-   * 验证token是否还有效
-   * <p>
-   * 反解析出token中信息，然后与参数中的信息比较，再校验过期时间
-   *
-   * @param token       客户端传入的token
-   * @param userDetails 从数据库中查询出来的用户信息
-   */
-  public boolean verifyToken(String token, UserDetails userDetails)
-  {
-    Claims claims = getClaimsFromToken(token);
-    return claims.getSubject().equals(userDetails.getUsername()) && !isTokenExpired(claims);
-  }
-
-
-  /**
-   * 刷新token
-   * 过滤器会对请求进行验证，所以这里可以不必验证
-   * 一般APP保持登录状态时场景使用较多，免登录
-   *
-   * @param oldToken 带tokenHead的token
-   */
-  public AccessToken refreshToken(String oldToken)
-  {
-    String token = oldToken.substring(jwtTokenConfig.getTokenPrefix().length());
-
-    // token反解析
-    Claims claims = getClaimsFromToken(token);
-
-    //如果token在30分钟之内刚刷新过，返回原token
-    if (tokenRefreshJustBefore(claims))
-    {
-      return AccessToken.builder().loginAccount(claims.getSubject()).token(oldToken).expirationTime(claims.getExpiration()).build();
-    } else
-    {
-      return createToken(claims.getSubject());
-    }
   }
 
   /**

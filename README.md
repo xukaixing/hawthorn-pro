@@ -11,6 +11,8 @@
 >> 增加redis工程，实现将数据库中数据加载到redis  
 >> redis客户端类增加删除指定前缀key功能         
 >> gateway网关增加redis中token校验一致性功能    
+>> 增加校验和不校验token注解  
+  
 ---
 
 > v1.1.4 : 2021.03.01        
@@ -202,6 +204,8 @@
 │           │               ├── boot
 │           │               ├── constant
 │           │               ├── exception
+│           │               ├── pojo
+│           │               ├── ret
 │           │               └── utils
 │           └── resources
 │               ├── rebel.xml
@@ -215,6 +219,34 @@
 │                   ├── myService.java.vm
 │                   ├── myServiceImpl.java.vm
 │                   └── myServiceImplTest.java.vm
+├── hawthorn-starter-gateway
+│   ├── pom.xml
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── com
+│       │   │       └── hawthorn
+│       │   │           └── gateway
+│       │   │               ├── BootGatewayApplication.java
+│       │   │               ├── config
+│       │   │               ├── constant
+│       │   │               ├── exception
+│       │   │               ├── filter
+│       │   │               ├── provider
+│       │   │               ├── redis
+│       │   │               ├── ret
+│       │   │               └── utils
+│       │   └── resources
+│       │       ├── application-dev.yml
+│       │       ├── application-prod.yml
+│       │       ├── application.yml
+│       │       ├── banner.txt
+│       │       ├── bootstrap.yml
+│       │       ├── logback-spring-dev.xml
+│       │       ├── logback-spring-prod.xml
+│       │       └── rebel.xml
+│       └── test
+│           └── java
 ├── hawthorn-starter-hystrixdashboard
 │   ├── pom.xml
 │   └── src
@@ -231,7 +263,8 @@
 │       │       ├── banner.txt
 │       │       ├── bootstrap.yml
 │       │       ├── logback-spring-dev.xml
-│       │       └── logback-spring-prod.xml
+│       │       ├── logback-spring-prod.xml
+│       │       └── rebel.xml
 │       └── test
 │           └── java
 ├── hawthorn-starter-login
@@ -266,6 +299,10 @@
 │       │       └── rebel.xml
 │       └── test
 │           └── java
+│               └── com
+│                   └── hawthorn
+│                       └── login
+│                           └── provider
 ├── hawthorn-starter-monitor
 │   ├── pom.xml
 │   └── src
@@ -286,6 +323,59 @@
 │       │       └── rebel.xml
 │       └── test
 │           └── java
+├── hawthorn-starter-mqconsumer
+│   ├── pom.xml
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── com
+│       │   │       └── hawthorn
+│       │   │           └── mq
+│       │   │               ├── BootMqConsumerApplication.java
+│       │   │               ├── config
+│       │   │               ├── controller
+│       │   │               └── listener
+│       │   └── resources
+│       │       ├── META-INF
+│       │       ├── application-dev.yml
+│       │       ├── application-prod.yml
+│       │       ├── application.yml
+│       │       ├── banner.txt
+│       │       ├── bootstrap.yml
+│       │       ├── logback-spring-dev.xml
+│       │       ├── logback-spring-prod.xml
+│       │       ├── mapper
+│       │       └── rebel.xml
+│       └── test
+│           └── java
+│               └── com
+│                   └── hawthorn
+├── hawthorn-starter-mqprovider
+│   ├── pom.xml
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── com
+│       │   │       └── hawthorn
+│       │   │           └── mq
+│       │   │               ├── BootMqProviderApplication.java
+│       │   │               ├── config
+│       │   │               └── controller
+│       │   └── resources
+│       │       ├── META-INF
+│       │       ├── application-dev.yml
+│       │       ├── application-prod.yml
+│       │       ├── application.yml
+│       │       ├── banner.txt
+│       │       ├── bootstrap.yml
+│       │       ├── logback-spring-dev.xml
+│       │       ├── logback-spring-prod.xml
+│       │       ├── mapper
+│       │       └── rebel.xml
+│       └── test
+│           └── java
+│               └── com
+│                   └── hawthorn
 ├── hawthorn-starter-part
 │   ├── pom.xml
 │   └── src
@@ -322,13 +412,14 @@
 │           │   │           ├── exception
 │           │   │           ├── generator
 │           │   │           ├── hystrix
+│           │   │           ├── interceptor
 │           │   │           ├── model
 │           │   │           ├── redis
 │           │   │           ├── repository
-│           │   │           ├── ret
 │           │   │           ├── service
 │           │   │           ├── utils
 │           │   │           └── validatecode
+│           │   ├── model
 │           │   └── org
 │           │       └── springframework
 │           │           └── cloud
@@ -337,9 +428,40 @@
 │               ├── META-INF
 │               │   └── spring.factories
 │               └── rebel.xml
+├── hawthorn-starter-redis
+│   ├── pom.xml
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── com
+│       │   │       └── hawthorn
+│       │   │           └── redis
+│       │   │               ├── BootRedisApplication.java
+│       │   │               ├── config
+│       │   │               ├── constant
+│       │   │               ├── initload
+│       │   │               ├── model
+│       │   │               ├── repository
+│       │   │               └── service
+│       │   └── resources
+│       │       ├── META-INF
+│       │       ├── application-dev.yml
+│       │       ├── application-prod.yml
+│       │       ├── application.yml
+│       │       ├── banner.txt
+│       │       ├── bootstrap.yml
+│       │       ├── generator.yml
+│       │       ├── logback-spring-dev.xml
+│       │       ├── logback-spring-prod.xml
+│       │       ├── mapper
+│       │       │   ├── DictCacheMapper.xml
+│       │       │   └── UserCacheMapper.xml
+│       │       └── rebel.xml
+│       └── test
+│           └── java
 └── pom.xml
 
-137 directories, 94 files
+213 directories, 138 files
 
 ```
 

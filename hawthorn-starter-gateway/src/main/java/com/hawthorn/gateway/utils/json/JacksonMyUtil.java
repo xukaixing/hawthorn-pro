@@ -1,5 +1,6 @@
 package com.hawthorn.gateway.utils.json;
 
+import cn.hutool.json.JSON;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -236,6 +237,41 @@ public class JacksonMyUtil
     {
       throw new JacksonJsonException(e);
     }
+  }
+
+  /**
+   * @remark: todo json对象转String字符串
+   * @param: obj
+   * @return: java.lang.String
+   * <p></p>
+   * @author: andy.ten@tom.com
+   * @date: 3/8/21 7:59 PM
+   * @version: 1.0.1
+   * Modification History:
+   * Date         Author          Version            Description
+   * -----------------------------------------------------------
+   * 3/8/21    andy.ten        v1.0.1             init
+   */
+  public static String json2Str(Object obj)
+  {
+    if (null == obj)
+    {
+      return null;
+    }
+    if (obj instanceof CharSequence)
+    {
+      return StringMyUtil.str((CharSequence) obj);
+    }
+    return json2Str(object2Json(obj));
+  }
+
+  public static String json2Str(JSON json)
+  {
+    if (null == json)
+    {
+      return null;
+    }
+    return json.toJSONString(0);
   }
 
   /**
