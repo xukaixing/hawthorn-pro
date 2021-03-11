@@ -1,6 +1,7 @@
 package com.hawthorn.redis.config;
 
-import com.hawthorn.component.utils.thread.AsyncThreadPoolTaskMyUtil;
+import com.hawthorn.platform.config.ExecutorConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -18,6 +19,9 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableAsync
 public class AsyncTaskExecutorConfig
 {
+  @Autowired
+  private ExecutorConfig executorConfig;
+
   /**
    * 配置系统用户存储至redis
    * @return
@@ -25,7 +29,7 @@ public class AsyncTaskExecutorConfig
   @Bean("user2RedisExecutor")
   public Object user2RedisExecutor()
   {
-    return AsyncThreadPoolTaskMyUtil.createAsyncTaskExecutor();
+    return executorConfig.getAsyncExecutor();
   }
 
   /**
@@ -35,6 +39,6 @@ public class AsyncTaskExecutorConfig
   @Bean("dict2RedisExecutor")
   public Object dict2RedisExecutor()
   {
-    return AsyncThreadPoolTaskMyUtil.createAsyncTaskExecutor();
+    return executorConfig.getAsyncExecutor();
   }
 }

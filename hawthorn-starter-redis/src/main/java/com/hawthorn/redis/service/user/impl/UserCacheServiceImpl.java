@@ -6,6 +6,7 @@ import com.hawthorn.platform.redis.RedisMyClient;
 import com.hawthorn.redis.model.dto.usercache.UserCacheDTO;
 import com.hawthorn.redis.repository.UserCacheMapper;
 import com.hawthorn.redis.service.user.UserCacheService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ import java.util.List;
  * @version v1.0.1
  */
 @Service
+@Slf4j
 public class UserCacheServiceImpl implements UserCacheService
 {
   @Autowired
@@ -51,5 +53,6 @@ public class UserCacheServiceImpl implements UserCacheService
       redisMyClient.hSet(key, RedisConstant.REDIS_KEY_USERTYPE, usertype);
       redisMyClient.hSet(key, RedisConstant.REDIS_KEY_DEPTID, deptid);
     }
+    log.info("====== load userdata to redis success ======");
   }
 }

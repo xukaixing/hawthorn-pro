@@ -6,6 +6,7 @@ import com.hawthorn.platform.redis.RedisMyClient;
 import com.hawthorn.redis.model.dto.dictcache.DictCacheDTO;
 import com.hawthorn.redis.repository.DictCacheMapper;
 import com.hawthorn.redis.service.dict.DictCacheService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ import java.util.List;
  * @version v1.0.1
  */
 @Service
+@Slf4j
 public class DictCacheServiceImpl implements DictCacheService
 {
   @Autowired
@@ -48,5 +50,7 @@ public class DictCacheServiceImpl implements DictCacheService
       redisMyClient.hSet(key, RedisConstant.REDIS_KEY_DICLABEL, label);
       redisMyClient.hSet(key, RedisConstant.REDIS_KEY_DICTYPE, type);
     }
+
+    log.info("====== load dictdata to redis success ======");
   }
 }
