@@ -3,55 +3,65 @@
 <configuration>
   <!--
   <springProperty scope="context" name="logLevel" source="logging.level"/>
+  <springProperty scope="context" name="logFile" source="logging.file"/>
   -->
+  <!-- 从application.yml 中获取参数 -->
+  <springProperty scope="context" name="springAppName" source="spring.application.name"/>
   <!-- 文件输出格式 -->
-  <!--格式化输出：%d:表示日期    %thread:表示线程名     %-5level:级别从左显示5个字符宽度  %msg:日志消息    %n:是换行符-->
-  <property name="PATTERN"
-            value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%-5level userId:%X{user} [%thread] %c [%L] -| %msg%n"/>
+  <property name="PATTERN" value="%-23(%d{yyyy-MM-dd HH:mm:ss.SSS}) |[${applicationName},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{userId:-}] %magenta([%thread]) -%-5level [%thread] %c [%L] -| %msg%n"/>
+  <property name="PATTERN-CONSOLE" value="%-23(%d{yyyy-MM-dd HH:mm:ss.SSS}) |[${springAppName:-appname},%X{X-B3-TraceId:-traceid},%X{X-B3-SpanId:-spanid},%X{userAccount:-useraccount}] %magenta([%thread]) -%green(%-5level) %cyan(%c [%L]) -| %msg%n"/>
+  <property name="ROLLINGSIZE" value="5MB"/>
   <!--日志文件输出路径 工程所在目录-->
   <property name="FILE_PATH" value="logs/"/>
 
   <logger name="com.hawthorn"/>
   <logger name="org.springframework.web" level="info"/>
+  <logger name="org.springframework.dao" level="info"/>
+  <logger name="org.springframework.jdbc"/>
+  <logger name="springfox.documentation" level="WARN"/>
+  <logger name="com.netflix.discovery" level="WARN"/>
+  <logger name="org.springframework.context" level="WARN"/>
+  <logger name="org.springframework.core" level="WARN"/>
+  <logger name="org.springframework.data" level="WARN"/>
   <logger name="org.ibatis"/>
   <logger name="druid.sql"/>
-  <logger name="org.springframework.jdbc"/>
 
   <!-- 控制台打印 -->
   <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
-      <pattern>${PATTERN}</pattern>
+      <pattern>${PATTERN-CONSOLE}</pattern>
+      <charset>UTF-8</charset>
     </encoder>
   </appender>
+
   <!-- 每天产生一个文件 -->
   <appender name="ALLFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <!-- 文件路径 -->
     <file>${FILE_PATH}/logs.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
       <!-- 文件名称 -->
-      <fileNamePattern>${FILE_PATH}/logs.%d{yyyy-MM-dd}-%i.log
-      </fileNamePattern>
-      <maxFileSize>10MB</maxFileSize>
+      <fileNamePattern>${FILE_PATH}/logs.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+      <maxFileSize>${ROLLINGSIZE}</maxFileSize>
       <!--日志文件保留天数30天 -->
-      <maxHistory>30</maxHistory>
-      <totalSizeCap>500MB</totalSizeCap>
+      <maxHistory>3</maxHistory>
+      <totalSizeCap>100MB</totalSizeCap>
     </rollingPolicy>
     <layout class="ch.qos.logback.classic.PatternLayout">
       <pattern>${PATTERN}</pattern>
     </layout>
   </appender>
+
   <!-- 错误日志打印 -->
   <appender name="ERRORFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <!-- 文件路径 -->
     <file>${FILE_PATH}/logs_error.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
       <!-- 文件名称 -->
-      <fileNamePattern>${FILE_PATH}/logs_error.%d{yyyy-MM-dd}-%i.log
-      </fileNamePattern>
-      <maxFileSize>10MB</maxFileSize>
+      <fileNamePattern>${FILE_PATH}/logs_error.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+      <maxFileSize>${ROLLINGSIZE}</maxFileSize>
       <!--日志文件保留天数30天 -->
-      <maxHistory>30</maxHistory>
-      <totalSizeCap>500MB</totalSizeCap>
+      <maxHistory>3</maxHistory>
+      <totalSizeCap>100MB</totalSizeCap>
     </rollingPolicy>
     <append>true</append>
     <layout class="ch.qos.logback.classic.PatternLayout">
@@ -64,6 +74,7 @@
       <onMismatch>DENY</onMismatch>
     </filter>
   </appender>
+
   <!-- 警告日志打印 -->
   <appender name="WARNFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <!-- 文件路径 -->
@@ -71,10 +82,10 @@
     <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
       <!-- 文件名称 -->
       <fileNamePattern>${FILE_PATH}/logs_warn.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
-      <maxFileSize>10MB</maxFileSize>
+      <maxFileSize>${ROLLINGSIZE}</maxFileSize>
       <!-- 日志文件保留天数30天 -->
-      <maxHistory>30</maxHistory>
-      <totalSizeCap>500MB</totalSizeCap>
+      <maxHistory>3</maxHistory>
+      <totalSizeCap>100MB</totalSizeCap>
     </rollingPolicy>
     <append>true</append>
     <layout class="ch.qos.logback.classic.PatternLayout">
@@ -93,10 +104,10 @@
     <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
       <!-- 文件名称 -->
       <fileNamePattern>${FILE_PATH}/logs_druid.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
-      <maxFileSize>10MB</maxFileSize>
+      <maxFileSize>${ROLLINGSIZE}</maxFileSize>
       <!-- 日志文件保留天数30天 -->
-      <maxHistory>30</maxHistory>
-      <totalSizeCap>500MB</totalSizeCap>
+      <maxHistory>3</maxHistory>
+      <totalSizeCap>50MB</totalSizeCap>
     </rollingPolicy>
     <append>true</append>
     <layout class="ch.qos.logback.classic.PatternLayout">
@@ -119,10 +130,10 @@
     <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
       <!-- 文件名称 -->
       <fileNamePattern>${FILE_PATH}/logs_exectime.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
-      <maxFileSize>10MB</maxFileSize>
+      <maxFileSize>${ROLLINGSIZE}</maxFileSize>
       <!-- 日志文件保留天数30天 -->
-      <maxHistory>30</maxHistory>
-      <totalSizeCap>500MB</totalSizeCap>
+      <maxHistory>3</maxHistory>
+      <totalSizeCap>100MB</totalSizeCap>
     </rollingPolicy>
     <append>true</append>
     <layout class="ch.qos.logback.classic.PatternLayout">
@@ -133,14 +144,15 @@
       <level>WARN</level>
     </filter>
   </appender>
+
   <!-- execTime执行方法慢日志 -->
   <logger name="com.hawthorn.platform.aspect.ExecTimeAspect">
     <appender-ref ref="ExecTime_FILE"/>
   </logger>
 
   <root>
-    <appender-ref ref="ALLFILE"/>
     <appender-ref ref="CONSOLE"/>
+    <appender-ref ref="ALLFILE"/>
     <appender-ref ref="ERRORFILE"/>
     <appender-ref ref="WARNFILE"/>
   </root>

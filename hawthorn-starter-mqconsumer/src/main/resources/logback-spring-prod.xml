@@ -5,9 +5,11 @@
   <springProperty scope="context" name="logLevel" source="logging.level"/>
   <springProperty scope="context" name="logFile" source="logging.file"/>
   -->
+  <!-- 从application.yml 中获取参数 -->
+  <springProperty scope="context" name="springAppName" source="spring.application.name"/>
   <!-- 文件输出格式 -->
-  <!--格式化输出：%d:表示日期    %thread:表示线程名     %-5level:级别从左显示5个字符宽度  %msg:日志消息    %n:是换行符-->
-  <property name="PATTERN" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%-5level userId:%X{user} [%thread] %c [%L] -| %msg%n"/>
+  <property name="PATTERN" value="%-23(%d{yyyy-MM-dd HH:mm:ss.SSS}) |[${applicationName},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{userId:-}] %magenta([%thread]) -%-5level [%thread] %c [%L] -| %msg%n"/>
+  <property name="PATTERN-CONSOLE" value="%-23(%d{yyyy-MM-dd HH:mm:ss.SSS}) |[${springAppName:-appname},%X{X-B3-TraceId:-traceid},%X{X-B3-SpanId:-spanid},%X{userAccount:-useraccount}] %magenta([%thread]) -%green(%-5level) %cyan(%c [%L]) -| %msg%n"/>
   <property name="ROLLINGSIZE" value="5MB"/>
   <!--日志文件输出路径 工程所在目录-->
   <property name="FILE_PATH" value="logs/"/>
@@ -24,13 +26,14 @@
   <logger name="org.ibatis"/>
   <logger name="druid.sql"/>
 
-
   <!-- 控制台打印 -->
   <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
-      <pattern>${PATTERN}</pattern>
+      <pattern>${PATTERN-CONSOLE}</pattern>
+      <charset>UTF-8</charset>
     </encoder>
   </appender>
+
   <!-- 每天产生一个文件 -->
   <appender name="ALLFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <!-- 文件路径 -->
@@ -47,6 +50,7 @@
       <pattern>${PATTERN}</pattern>
     </layout>
   </appender>
+
   <!-- 错误日志打印 -->
   <appender name="ERRORFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <!-- 文件路径 -->
@@ -70,6 +74,7 @@
       <onMismatch>DENY</onMismatch>
     </filter>
   </appender>
+
   <!-- 警告日志打印 -->
   <appender name="WARNFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <!-- 文件路径 -->

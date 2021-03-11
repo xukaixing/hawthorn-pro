@@ -5,10 +5,11 @@
   <springProperty scope="context" name="logLevel" source="logging.level"/>
   <springProperty scope="context" name="logFile" source="logging.file"/>
   -->
+  <!-- 从application.yml 中获取参数 -->
+  <springProperty scope="context" name="springAppName" source="spring.application.name"/>
   <!-- 文件输出格式 -->
-  <!--格式化输出：%d:表示日期    %thread:表示线程名     %-5level:级别从左显示5个字符宽度  %msg:日志消息    %n:是换行符-->
-  <property name="PATTERN" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%-5level userId --- %X{user} [%thread] %c [%L] -| %msg%n"/>
-  <property name="PATTERN-CONSOLE" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%green(%-5level) %magenta(userId --- %X{user} [%thread]) %cyan(%c [%L]) -| %msg%n"/>
+  <property name="PATTERN" value="%-23(%d{yyyy-MM-dd HH:mm:ss.SSS}) |[${applicationName},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{userId:-}] %magenta([%thread]) -%-5level [%thread] %c [%L] -| %msg%n"/>
+  <property name="PATTERN-CONSOLE" value="%-23(%d{yyyy-MM-dd HH:mm:ss.SSS}) |[${springAppName:-appname},%X{X-B3-TraceId:-traceid},%X{X-B3-SpanId:-spanid},%X{userAccount:-useraccount}] %magenta([%thread]) -%green(%-5level) %cyan(%c [%L]) -| %msg%n"/>
   <property name="ROLLINGSIZE" value="5MB"/>
   <!--日志文件输出路径 工程所在目录-->
   <property name="FILE_PATH" value="logs/"/>
@@ -25,7 +26,6 @@
   <logger name="org.ibatis"/>
   <logger name="druid.sql"/>
 
-
   <!-- 控制台打印 -->
   <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
@@ -33,6 +33,7 @@
       <charset>UTF-8</charset>
     </encoder>
   </appender>
+
   <!-- 每天产生一个文件 -->
   <appender name="ALLFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <!-- 文件路径 -->
@@ -49,6 +50,7 @@
       <pattern>${PATTERN}</pattern>
     </layout>
   </appender>
+
   <!-- 错误日志打印 -->
   <appender name="ERRORFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <!-- 文件路径 -->
@@ -72,6 +74,7 @@
       <onMismatch>DENY</onMismatch>
     </filter>
   </appender>
+
   <!-- 警告日志打印 -->
   <appender name="WARNFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <!-- 文件路径 -->
@@ -145,33 +148,6 @@
   <!-- execTime执行方法慢日志 -->
   <logger name="com.hawthorn.platform.aspect.ExecTimeAspect">
     <appender-ref ref="ExecTime_FILE"/>
-  </logger>
-
-  <!-- rabbitmq 日志输出 -->
-  <appender name="RabbitMq_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <!-- 正在记录的日志文件的路径及文件名 -->
-    <file>${FILE_PATH}/log_rabbitmq.log</file>
-    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-      <!-- 文件名称 -->
-      <fileNamePattern>${FILE_PATH}/logs_rabbitmq.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
-      <maxFileSize>${ROLLINGSIZE}</maxFileSize>
-      <!-- 日志文件保留天数30天 -->
-      <maxHistory>3</maxHistory>
-      <totalSizeCap>100MB</totalSizeCap>
-    </rollingPolicy>
-    <append>true</append>
-    <layout class="ch.qos.logback.classic.PatternLayout">
-      <pattern>${PATTERN}</pattern>
-    </layout>
-    <!-- 此日志文件记录warn级别以及以上 -->
-    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-      <level>DEBUG</level>
-    </filter>
-  </appender>
-
-  <!-- rabbitmq 日志 -->
-  <logger name="com.hawthorn.mq">
-    <appender-ref ref="RabbitMq_FILE"/>
   </logger>
 
   <root>
