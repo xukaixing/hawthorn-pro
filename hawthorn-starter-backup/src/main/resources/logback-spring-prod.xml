@@ -8,8 +8,8 @@
   <!-- 从application.yml 中获取参数 -->
   <springProperty scope="context" name="springAppName" source="spring.application.name"/>
   <!-- 文件输出格式 -->
-  <property name="PATTERN" value="%-23(%d{yyyy-MM-dd HH:mm:ss.SSS}) |[${applicationName},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{userId:-}] %magenta([%thread]) -%-5level [%thread] %c [%L] -| %msg%n"/>
-  <property name="PATTERN-CONSOLE" value="%-23(%d{yyyy-MM-dd HH:mm:ss.SSS}) |[${springAppName:-appname},%X{X-B3-TraceId:-traceid},%X{X-B3-SpanId:-spanid},%X{userAccount:-useraccount}] %magenta([%thread]) -%green(%-5level) %cyan(%c [%L]) -| %msg%n"/>
+  <property name="PATTERN" value="%-23(%d{yyyy-MM-dd HH:mm:ss.SSS}) |[${springAppName:-appname},%X{X-B3-TraceId:-traceid},%X{X-B3-SpanId:-spanid},%X{userAccount:-useraccount}] [%thread] %-5level %c [%L] -|%msg%n"/>
+  <property name="PATTERN-CONSOLE" value="%-23(%d{yyyy-MM-dd HH:mm:ss.SSS}) |[${springAppName:-appname},%X{X-B3-TraceId:-traceid},%X{X-B3-SpanId:-spanid},%X{userAccount:-useraccount}] %magenta([%thread]) -%green(%-5level) %cyan(%c [%L]) -|%msg%n"/>
   <property name="ROLLINGSIZE" value="5MB"/>
   <!--日志文件输出路径 工程所在目录-->
   <property name="FILE_PATH" value="logs/"/>
@@ -159,3 +159,4 @@
 
   <jmxConfigurator/>
 </configuration>
+    s
