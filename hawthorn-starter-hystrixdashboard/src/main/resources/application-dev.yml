@@ -1,8 +1,7 @@
 # =====================================
 # @Desc: springboot工程配置文件，使用yml方式
 # @Auther: andy.ten@tom.com
-# @Date: 2020/08/08 9:39 上午
-# @Version: v1.0.1
+# @Version: v1.0.9
 # =====================================
 server:
   tomcat:
@@ -11,13 +10,20 @@ server:
     threads:
       max: 800
       min-spare: 100
+
 spring:
-  # 监控配置
-  boot:
-    admin:
-      client:
-        url: http://localhost:8000
+  #  boot:
+  #  admin: # 监控配置 使用注册中心，不需要单独增加client监控
+  #  client:
+  #    url: http://localhost:8000
+  #  instance:
+  #    prefer-ip: true
+  #  discovery:
+  #    ignored-services: consul
+
+  # =====================================
   # consul配置
+  # =====================================
   cloud:
     consul:
       enabled: true
@@ -35,37 +41,15 @@ spring:
         # 默认id配置的问题是：某个微服务即使有多个实例，只要端口相同，那么Consul上依然只会保留1条数据！要想解决这个问题，只需要让不同实例，拥有不同的InstanceId即可。
         instance-id: ${spring.application.name}-${spring.cloud.client.ip-address}-${server.port}
 
-  # redis配置
-  redis:
-    host: 127.0.0.1
-    # Redis服务器连接端口
-    port: 6379
-    # Redis服务器连接密码（默认为空）
-    password: 123456
-    # lettuce:springboot2.0+使用；低版本使用：jedis
-    lettuce:
-      pool:
-        # 连接池最大连接数（使用负值表示没有限制）
-        max-active: 8
-        # 连接池最大阻塞等待时间（使用负值表示没有限制）
-        max-wait: -1
-        # 连接池中的最大空闲连接
-        max-idle: 8
-        # 连接池中的最小空闲连接
-        min-idle: 0
-    # 连接超时时间（毫秒）如果不设置，取默认值2000
-    timeout: 30000
-    # 连接的数据库
-    database: 0
-# 配置log
+# =====================================
+# log配置
+# =====================================
 logging:
   config: classpath:logback-spring-dev.xml
   level:
-    #io.swagger.models.parameters.AbstractSerializableParameter: error
+    #    io.swagger.models.parameters.AbstractSerializableParameter: error
     com.hawthorn: debug
     org.ibatis: debug
     druid.sql: debug
     org.springframework.jdbc: info
     root: info
-
-

@@ -9,12 +9,12 @@
 # =====================================
 server:
   address: 127.0.0.1
-  port: 4705
+  port: 4902
 #  servlet:
-#    context-path: /redis # /${spring.application.name}
+#    context-path: /backup # /${spring.application.name}
 spring:
   application:
-    name: hawthorn-redis
+    name: hawthorn-backup
 
   #  profiles:
   #    active: dev

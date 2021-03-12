@@ -1,94 +1,78 @@
+# =====================================
+# @Desc: springboot工程配置文件，使用yml方式
+# @Auther: andy.ten@tom.com
+# @Version: v1.0.3
+# =====================================
+
+# =====================================
+# 启动端口号
+# =====================================
+server:
+  address: 127.0.0.1
+  port: 4702
+#  servlet:
+#    context-path: /login # /${spring.application.name}
 spring:
+  application:
+    name: hawthorn-login
+
   #  profiles:
   #    active: dev
   cloud:
-    # 关闭从cloud获取配置
     config:
-      enabled: false
+      enabled: false # 关闭从cloud获取配置
 
-  #数据源配置
-  datasource:
-    #druid连接池配置，在/druid/index.html可以查看监控页
+  # =====================================
+  # 数据源配置
+  # =====================================
+  datasource: #druid连接池配置，在/druid/index.html可以查看监控页
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       #driver-class-name: com.mysql.jdbc.Driver
       #com.mysql.jdbc.Driver： 是mybatis-connection-java 5 及 5 以下的
       #com.mysql.cj.jdbc.Driver:对应的是mybatis-connection-Java 6 及以上的,推荐使用
       #com.mysql.cj.jdbc.Driver:需在url后增加指定时区参数：&serverTimezone=Asia/Shanghai
-      #UTC:比中国时间早8个小时
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      #初始化时建立物理连接的个数
-      initial-size: 10
-      #最小连接池数量
-      min-idle: 10
-      #最大连接池数量 maxIdle已经不再使用
-      max-active: 20
-      #获取连接等待超时的时间，单位毫秒
-      max-wait: 60000
-      #既作为检测的间隔时间又作为testWhileIdel执行的依据，间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-      time-between-eviction-runs-millis: 60000
-      #销毁线程时检测当前连接的最后活动时间和当前时间差大于该值时，关闭当前连接
-      #一个连接在池中最小生存的时间，单位是毫秒
+      driver-class-name: com.mysql.cj.jdbc.Driver #UTC:比中国时间早8个小时
+      initial-size: 10 #初始化时建立物理连接的个数
+      min-idle: 10 #初始化时建立物理连接的个数
+      max-active: 20 #最大连接池数量 maxIdle已经不再使用
+      max-wait: 60000 #获取连接等待超时的时间，单位毫秒
+      time-between-eviction-runs-millis: 60000 #既作为检测的间隔时间又作为testWhileIdel执行的依据，间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
       min-evictable-idle-time-millis: 300000
-      #一个连接在池中最大生存的时间，单位是毫秒
-      #max-evictable-idle-time-millis: 900000
-      #用来检测连接是否有效的sql 必须是一个查询语句
-      #mysql中为 select 'x'
-      #oracle中为 select 1 from dual
-      validation-query: select 'x'
+      #      max-evictable-idle-time-millis: 900000 #一个连接在池中最大生存的时间，单位是毫秒
+      validation-query: select 'x' #用来检测连接是否有效的sql 必须是一个查询语句;mysql中为 select 'x';oracle中为 select 1 from dual
       validation-query-timeout: 5
-      #申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。
-      test-while-idle: true
-      #申请连接时会执行validationQuery检测连接是否有效,开启会降低性能,默认为true
-      test-on-borrow: false
-      #归还连接时会执行validationQuery检测连接是否有效,开启会降低性能,默认为true
-      test-on-return: false
-      #当数据库抛出不可恢复的异常时,抛弃该连接
-      #exception-sorter: true
-      #是否缓存preparedStatement,mysql5.5+建议开启
-      pool-prepared-statements: true
-      #当值大于0时poolPreparedStatements会自动修改为true
-      max-pool-prepared-statement-per-connection-size: 20
-      #合并多个DruidDataSource的监控数据
-      use-global-data-source-stat: true
-      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙，注意filter是有顺序的
-      filters: stat,wall,slf4j
+      test-while-idle: true #申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。
+      test-on-borrow: false #申请连接时会执行validationQuery检测连接是否有效,开启会降低性能,默认为true
+      test-on-return: false #归还连接时会执行validationQuery检测连接是否有效,开启会降低性能,默认为true
+      #      exception-sorter: true #当数据库抛出不可恢复的异常时,抛弃该连接
+      pool-prepared-statements: true #是否缓存preparedStatement,mysql5.5+建议开启
+      max-pool-prepared-statement-per-connection-size: 20 #当值大于0时poolPreparedStatements会自动修改为true
+      use-global-data-source-stat: true #合并多个DruidDataSource的监控数据
+      filters: stat,wall,slf4j # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙，注意filter是有顺序的
       filter:
-        # 统计监控信息，配置慢sql
-        stat:
+        stat: # 统计监控信息，配置慢sql
           enabled: true
           log-slow-sql: true
           slow-sql-millis: 3000
           merge-sql: true
-          #db-type: sqlserver
-        # 防御SQL注入攻击,配置SQL防火墙
-        wall:
+        #          db-type: sqlserver
+        wall: # 防御SQL注入攻击,配置SQL防火墙
           enabled: true
           config:
-            # 是否允许执行Alter Table语句
-            alter-table-allow: false
-            # truncate语句是危险，缺省打开，若需要自行关闭
-            truncate-allow: false
+            alter-table-allow: false # 是否允许执行Alter Table语句
+            truncate-allow: false # truncate语句是危险，缺省打开，若需要自行关闭
             drop-table-allow: false
-            #是否允许非以上基本语句的其他语句，缺省关闭，通过这个选项就能够屏蔽DDL
-            none-base-statement-allow: false
-            #检查UPDATE语句是否带where条件，这是有风险的，但不是SQL注入类型的风险
-            update-where-none-check: true
-            #SELECT ... INTO OUTFILE 是否允许，这个是mysql注入攻击的常见手段，缺省是禁止的
-            select-into-outfile-allow: false
-            #是否允许调用Connection.getMetadata方法，这个方法调用会暴露数据库的表信息
-            metadata-allow: true
-            #允许多条sql一起执行
-            multiStatementAllow: true
-            #查询条件被永远是true，允许执行
-            condition-and-alway-true-allow: true
-            #允许有注释
-            comment-allow: true
-          #对被认为是攻击的SQL进行LOG.error输出
-          log-violation: true
-          #对被认为是攻击的SQL抛出SQLExcepton
-          throw-exception: true
-          #db-type: mysql
+            none-base-statement-allow: false #是否允许非以上基本语句的其他语句，缺省关闭，通过这个选项就能够屏蔽DDL
+            update-where-none-check: true #检查UPDATE语句是否带where条件，这是有风险的，但不是SQL注入类型的风险
+            select-into-outfile-allow: false #SELECT ... INTO OUTFILE 是否允许，这个是mysql注入攻击的常见手段，缺省是禁止的
+            metadata-allow: true #是否允许调用Connection.getMetadata方法，这个方法调用会暴露数据库的表信息
+            multiStatementAllow: true #允许多条sql一起执行
+            condition-and-alway-true-allow: true #查询条件被永远是true，允许执行
+            comment-allow: true #允许有注释
+          log-violation: true #对被认为是攻击的SQL进行LOG.error输出
+          throw-exception: true #对被认为是攻击的SQL抛出SQLExcepton
+        #          db-type: mysql
         slf4j:
           enabled: true
           connection-log-enabled: false
@@ -103,74 +87,52 @@ spring:
           statement-log-enabled: false
           statement-create-after-log-enabled: false
           statement-executable-sql-log-enable: true
-          # 开启后，将打印sql异常的堆栈信息
-          statement-log-error-enabled: false
-      #设置访问druid监控页的账号和密码,默认没有
-      stat-view-servlet:
-        # 是否启用StatViewServlet（监控页面）默认值为false（考虑到安全问题默认并未启动，如需启用建议设置密码或白名单以保障安全）
-        enabled: true
+          statement-log-error-enabled: false # 开启后，将打印sql异常的堆栈信息
+      stat-view-servlet: #设置访问druid监控页的账号和密码,默认没有
+        enabled: true # 是否启用StatViewServlet（监控页面）默认值为false（考虑到安全问题默认并未启动，如需启用建议设置密码或白名单以保障安全）
         login-username: ${DRUID_USER:admin}
         login-password: ${DRUID_PWD:admin123}
         url-pattern: "/druid/*"
-        #允许清除记录
-        reset-enable: false
-      # 用于采集web-jdbc关联监控的数据,监控url访问
-      web-stat-filter:
+        reset-enable: false #允许清除记录
+      web-stat-filter: # 用于采集web-jdbc关联监控的数据,监控url访问
         enabled: true
-        # 添加过滤规则
-        url-pattern: /*
-        # 排除不需要监控的url，比如.js,/jslib/等等
-        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
-        #设置profileEnable能够监控单个url调用的sql列表。
-        profile-enable: true
-        # 最大session数，缺省是1000个
-        session-stat-max-count: 100000
-        # 关闭session统计
-        session-stat-enable: false
+        url-pattern: /* # 添加过滤规则
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" # 排除不需要监控的url，比如.js,/jslib/等等
+        profile-enable: true #设置profileEnable能够监控单个url调用的sql列表
+        session-stat-max-count: 100000 # 最大session数，缺省是1000个
+        session-stat-enable: false # 关闭session统计
       aop-patterns: com.hawthorn.*.service.*
-      # 物理连接初始化的时候执行的sql
-      #connection-init-sqls: 'set names utf8mb4'
+#      connection-init-sqls: 'set names utf8mb4' # 物理连接初始化的时候执行的sql
 
-##-------mybatis plus 配置----------------start----------------------
+# =====================================
+# mybatis plus 配置
+# =====================================
 mybatis-plus:
   # 如果是放在src/main/java目录下 classpath:/com/yourpackage/*/mapper/*Mapper.xml
   # 如果是放在resource目录 classpath:/mapper/*Mapper.xml
-  mapper-locations: classpath:/mapper/*.xml
+  mapper-locations: classpath*:/mapper/*Mapper.xml
   global-config:
     db-config:
-      db-type: mysql
-      #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
-      id-type: AUTO
-      #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
-      field-strategy: 0
-      #驼峰下划线转换
-      db-column-underline: true
-      #mp2.3+ 全局表前缀 mp_
-      #table-prefix: mp_
-      #刷新mapper 调试神器
-      refresh-mapper: true
-      #数据库大写下划线转换
-      #capital-mode: true
-      # Sequence序列接口实现类配置
-      #key-generator: com.baomidou.mybatisplus.incrementer.OracleKeyGenerator
-      #逻辑删除配置 逻辑已删除值,默认为值为1
-      logic-delete-value: 0
-      # 逻辑未删除值 0 默认值为0
-      logic-not-delete-value: -1
+      id-type: AUTO #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+      select-strategy: ignored #是否字段值进行null和'' 比较操作
+      insert-strategy: ignored
+      update-strategy: ignored
+      table-underline: true # 驼峰转换，只对表名有效
+      #      table-prefix: mp_ #mp2.3+ 全局表前缀 mp_
+      #capital-mode: true #数据库大写下划线转换
+      #key-generator: com.baomidou.mybatisplus.incrementer.OracleKeyGenerator # Sequence序列接口实现类配置
+      logic-delete-value: 0 #逻辑删除配置 逻辑已删除值,默认为值为1
+      logic-not-delete-value: -1 # 逻辑未删除值 0 默认值为0
       #sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
-      #    #自定义填充策略接口实现
-      #meta-object-handler: com.hawthorn.platform.model.MetaObjectHandleImpl
+      #meta-object-handler: com.hawthorn.platform.model.MetaObjectHandleImpl #自定义填充策略接口实现
   configuration:
-    #配置数据库column列名下划线命名返回为java实体属性的驼峰命名，自动匹配；无需as（没开启这个，SQL需要写as： select user_name as userName）
-    map-underscore-to-camel-case: true
-    #关闭二级缓存
-    cache-enabled: false
-    #配置JdbcTypeForNull, oracle数据库必须配置
-    #jdbc-type-for-null: 'null'
+    map-underscore-to-camel-case: true #配置数据库column列名下划线命名返回为java实体属性的驼峰命名，自动匹配；无需as（没开启这个，SQL需要写as： select user_name as userName）
+    cache-enabled: false #关闭二级缓存
+    #jdbc-type-for-null: 'null' #配置JdbcTypeForNull, oracle数据库必须配置
 
-  ##-------mybatis plus 配置----------------end----------------------
-
+  # =====================================
   #JPA配置
+  # =====================================
   #  jpa:
   #    database: mysql
   #    properties:
@@ -188,7 +150,9 @@ mybatis-plus:
   #    #show-sql 是否在日志中打印出自动生成的 SQL，方便调试的时候查看
   #    show-sql: true
 
-  #thymeleaf配置
+  # =====================================
+  # thymeleaf配置
+  # =====================================
 #  thymeleaf:
 #    cache: false
 #    prefix: classpath:/templates/

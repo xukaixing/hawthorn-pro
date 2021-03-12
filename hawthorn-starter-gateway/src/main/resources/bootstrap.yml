@@ -1,4 +1,20 @@
+# =====================================
+# @Desc: springboot工程配置文件，使用yml方式
+# @Auther: andy.ten@tom.com
+# @Version: v1.0.3
+# =====================================
+
+# =====================================
+# 启动端口号
+# =====================================
+server:
+  address: 127.0.0.1
+  port: 4001
+
 spring:
+  application:
+    name: hawthorn-gateway
+
   #  profiles:
   #    active: dev
   cloud:

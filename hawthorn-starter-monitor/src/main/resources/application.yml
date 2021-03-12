@@ -1,33 +1,24 @@
-# 启动端口号
-server:
-  address: 127.0.0.1
-  port: 4000
+# =====================================
+# @Desc: springboot工程配置文件，使用yml方式
+# @Auther: andy.ten@tom.com
+# @Version: v1.0.2
+# =====================================
 spring:
-  application:
-    name: hawthorn-monitor
   profiles:
     active: dev
+
+# =====================================
 # 开放健康检查接口
+# =====================================
 management:
-  security:
-    enabled: false
-  health:
-    #    db:
-    #      enabled: false
-    #    mail:
-    #      enabled: false
-    #    mongo:
-    #      enabled: false
-    #    redis:
-    #      enabled: false
-    consul:
-      enabled: true
-    binders:
-      enabled: false
   endpoints:
     web:
       exposure:
         include: "*"
+      # 自定义监控路径 admin
+      # 默认值：http://localhost:7001/actuator/*
+      # 配置后：http://localhost:7001/admin/*
+      #base-path: /admin
   endpoint:
     health:
       show-details: ALWAYS

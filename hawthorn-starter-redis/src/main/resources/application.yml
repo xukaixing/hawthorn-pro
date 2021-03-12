@@ -1,29 +1,16 @@
 # =====================================
 # @Desc: springboot工程配置文件，使用yml方式
-#        包括：server、datasource(druid)、jpa配置
 # @Auther: andy.ten@tom.com
-# @Date: 2020/08/08 9:39 上午
-# @Version: v1.0.1
+# @Version: v1.0.2
 # =====================================
-# 启动端口号
-server:
-  address: 127.0.0.1
-  port: 4705
-  #servlet:
-  # context-path: /redis # /${spring.application.name}
+
 spring:
-  application:
-    name: hawthorn-redis
-  #main:
-  # 后注入的bean是否是覆盖
-  #allow-bean-definition-overriding: true
-  # springboot2.0以后使用servlet，之前使用http:
-  servlet:
+  #    main:
+  #      allow-bean-definition-overriding: true #后注入的bean是否是覆盖
+  servlet: # springboot2.0以后使用servlet，之前使用http
     multipart:
-      # 单个文件大小
-      max-file-size: 5MB
-      # 总上传的数据大小
-      max-request-size: 25MB
+      max-file-size: 5MB # 单个文件大小
+      max-request-size: 25MB # 总上传的数据大小
   security:
     user:
       name: admin
@@ -53,74 +40,46 @@ spring:
 #  # 对Http响应码进行重试
 #  retryableStatusCodes: 500,401,404,502
 
+# =====================================
 # 配置feign
+# =====================================
 feign:
   httpclient:
-    # 让feign使用Apache HTTPClient做请求，而不是默认的urlConnection
-    enabled: true
+    enabled: false # 让feign使用Apache HTTPClient做请求，而不是默认的urlConnection
   okhttp:
-    # 让feign使用Apache okhttp做请求，而不是默认的urlConnection
-    # okhttp模式不支持压缩配置
-    enabled: false
-  # 压缩配置
-  compression:
+    enabled: false # 让feign使用Apache okhttp做请求，而不是默认的urlConnection,okhttp模式不支持压缩配置
+  compression: # 压缩配置
     request:
       enabled: true
-      # 默认
-      mime-types: text/xml,application/xml,application/json
-      # 默认
-      min-request-size: 2048
+      mime-types: text/xml,application/xml,application/json # 默认
+      min-request-size: 2048 # 默认
     response:
       enabled: true
-  # 在feign中开启hystrix功能，默认情况下feign不开启hystrix功能
-  hystrix:
+  hystrix: # 在feign中开启hystrix功能，默认情况下feign不开启hystrix功能
     enabled: true
-    # 配置hystrix的参数
-#    hystrix:
-#     threadpool:
-#      default:
-#       # 线程池核心线程数，默认为10；并发执行的最大线程数；大多数时候，默认值为10的线程会很好
-#      coreSize: 10
-#     # 最大排队长度。默认-1，使用SynchronousQueue。其他值则使用 LinkedBlockingQueue。如果要从-1换成其他值则需重启，即该值不能动态调整，若要动态调整，需要使用到下边这个配置
-#    maxQueueSize: 1000
-#     即使maxQueueSize没有达到，达到queueSizeRejectionThreshold该值后，请求也会被拒绝，默认值5
-#    queueSizeRejectionThreshold: 800
-#    command:
-#     default: 默认参数，作用的所有的hystrix的客户端,如果需要对某个具体的接口，可以写接口+方法名称
-#     default:
-#      fallback:
-#     是否开启回退方法
-#       enabled: true
-#    execution:
-#     isolation:
-#      thread:
-#     该配置用于 HystrixCommand 执行的超时时间设置，当 HystrixCommand 执行的时间超过了该配置所设置的数值后就会进入服务降级处理，单位是毫秒，默认值为 1000。
-#       timeoutInMilliseconds: 30000
-#    circuitBreaker:
-#     当在配置时间窗口内达到此数量的失败后，进行短路。默认20个;
-#     requestVolumeThreshold: 50
-#     出错百分比阈值，当达到此阈值后，开始短路。默认50%）
-#    errorThresholdPercentage: 50%
-#     短路多久以后开始尝试是否恢复，默认5s）-单位ms
-#    sleepWindowInMilliseconds: 5000
+#hystrix:
+#  threadpool:
+#    default:
+#      coreSize: 10 # 线程池核心线程数，默认为10；并发执行的最大线程数；大多数时候，默认值为10的线程会很好
+#      maxQueueSize: 1000 # 最大排队长度。默认-1，使用SynchronousQueue。其他值则使用 LinkedBlockingQueue。如果要从-1换成其他值则需重启，即该值不能动态调整，若要动态调整，需要使用到下边这个配置
+#      queueSizeRejectionThreshold: 800 # 即使maxQueueSize没有达到，达到queueSizeRejectionThreshold该值后，请求也会被拒绝，默认值5
+#  command:
+#    default: # 全局默认参数，作用的所有的hystrix的客户端,如果需要对某个具体的接口，可以写接口+方法名称
+#      enabled: true # 是否开启回退方法
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 30000 # 该配置用于 HystrixCommand 执行的超时时间设置，当 HystrixCommand 执行的时间超过了该配置所设置的数值后就会进入服务降级处理，单位是毫秒，默认值为 1000。
+#      circuitBreaker:
+#        requestVolumeThreshold: 50 # 当在配置时间窗口内达到此数量的失败后，进行短路。默认20个;
+#        errorThresholdPercentage: 50% # 出错百分比阈值，当达到此阈值后，开始短路。默认50%）
+#        sleepWindowInMilliseconds: 5000 # 短路多久以后开始尝试是否恢复，默认5s）-单位ms
+#    TestDemoApi: 单个类配置
 
+# =====================================
 # 开放健康检查接口
+# =====================================
 management:
-  security:
-    enabled: false
-  health:
-    #    db:
-    #      enabled: false
-    #    mail:
-    #      enabled: false
-    #    mongo:
-    #      enabled: false
-    #    redis:
-    #      enabled: false
-    consul:
-      enabled: true
-    binders:
-      enabled: false
   endpoints:
     web:
       exposure:
@@ -133,7 +92,9 @@ management:
     health:
       show-details: ALWAYS
 
+# =====================================
 # 自定义属性
+# =====================================
 myprops:
   exectime:
     errtime: 3000

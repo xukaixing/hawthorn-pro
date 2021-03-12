@@ -1,19 +1,16 @@
-# 启动端口号
-server:
-  address: 127.0.0.1
-  port: 4001
+# =====================================
+# @Desc: springboot工程配置文件，使用yml方式
+# @Auther: andy.ten@tom.com
+# @Version: v1.0.2
+# =====================================
 spring:
   main:
     allow-bean-definition-overriding: true
-  application:
-    name: hawthorn-gateway
   profiles:
     active: dev
   cloud:
-    # gateway配置
     gateway:
-      # gateway 默认使用 netty httpClient 实现。
-      httpclient:
+      httpclient: # gateway 默认使用 netty httpClient 实现。
         connect-timeout: 2000 #连接超时时间 ，动态
         response-timeout: 20s #请求读取超时时间，动态
       # discovery.filters： 只有从注册中心建立的路由的才会附加（lb)
@@ -21,13 +18,12 @@ spring:
       # discovery.filters 不支持el 表达式配置
       discovery:
         locator:
-          # 当新加服务的时候，不用去配置路由规则和重启网关;为所有服务都进行转发操作
-          enabled: true
-          # 支持小写的服务名称进行访问，开启小写服务名称后大写的服务名称就不能使用，两者只能选其一
-          lowerCaseServiceId: true
-      # 配置路由
-      routes:
-        # admin #
+          enabled: true # 当新加服务的时候，不用去配置路由规则和重启网关;为所有服务都进行转发操作
+          lowerCaseServiceId: true # 支持小写的服务名称进行访问，开启小写服务名称后大写的服务名称就不能使用，两者只能选其一
+      routes: # 配置路由
+        # =====================================
+        # admin
+        # =====================================
         - id: service-admin
           uri: lb://hawthorn-admin # lb 代表从注册中心获取服务
           predicates: # 断言工厂，匹配谓词,多个谓词可以互相组合
@@ -44,16 +40,12 @@ spring:
             #- SetStatus=401 # 接收单个状态，用于设置 Http 请求的响应码。它必须是有效的 Spring Httpstatus
             #- RedirectTo=302, http://baidu.com # 重定向操作，比如我们需要重定向到百度。
             - StripPrefix=1 # 去掉请求路径的最前面n个部分截取掉，如：/admin/**，去除后为/**
-            # 限流过滤器，使用gateway内置令牌算法，redis失效时间：(burstCapacity/replenishRate )*2
-            - name: RequestRateLimiter
+            - name: RequestRateLimiter # 限流过滤器，使用gateway内置令牌算法，redis失效时间：(burstCapacity/replenishRate )*2
               args:
-                # 令牌桶每秒填充平均速率,即行等价于允许用户每秒处理多少个请求，吞吐率？每秒补充20个
-                redis-rate-limiter.replenishRate: 20
-                # 令牌桶的容量，允许在一秒钟内完成的最大请求数
-                redis-rate-limiter.burstCapacity: 1000
+                redis-rate-limiter.replenishRate: 20 # 令牌桶每秒填充平均速率,即行等价于允许用户每秒处理多少个请求，吞吐率？每秒补充20个
+                redis-rate-limiter.burstCapacity: 1000 # 令牌桶的容量，允许在一秒钟内完成的最大请求数
                 #rate-limiter: “#{@redisRateLimiter}”
-                # 用于限流的键的解析器的 Bean 对象的名字。它使用 SpEL 表达式根据#{@beanName}从 Spring 容器中获取 Bean 对象。
-                key-resolver: "#{@apiKeyResolver}"
+                key-resolver: "#{@apiKeyResolver}" # 用于限流的键的解析器的 Bean 对象的名字。它使用 SpEL 表达式根据#{@beanName}从 Spring 容器中获取 Bean 对象。
             # 服务降级  触发调用 HystrixFallbackHandler GatewayFallbackConfig 无须配置hystrix，通过全局异常处理即可；配置后，无法响应全局异常处理；
             # Hystrix 配置在Retry在前：
             #   不管重试几次，都只会按照Hystrix超时时间为准。
@@ -62,11 +54,9 @@ spring:
             #  args:
             #    name: default
             #    fallbackUri: 'forward:/defaultfallback'
-            # 重试
-            - name: Retry
+            - name: Retry # 重试
               args:
-                # 重试次数，默认值是3次（不算第一次调用，再重试次数）
-                retries: 2
+                retries: 2 # 重试次数，默认值是3次（不算第一次调用，再重试次数）
                 # 状态码配置（分段），符合的某段状态码才会进行重试逻辑，默认值是SERVER_ERROR，值是5，也就是5XX(5开头的状态码)，共有5个值：
                 # INFORMATIONAL(1),
                 # SUCCESSFUL(2),
@@ -75,27 +65,24 @@ spring:
                 # RVER_ERROR(5);
                 series:
                   - SERVER_ERROR
-                  # 状态码配置，和series不同的是这边是具体状态码的配置,取值来自：org.springframework.http.HttpStatus
-                statuses:
+                statuses: # 状态码配置，和series不同的是这边是具体状态码的配置,取值来自：org.springframework.http.HttpStatus
                   - BAD_GATEWAY
                   - GATEWAY_TIMEOUT
                   - SERVICE_UNAVAILABLE
-                  # 可以使用状态 ok进行验证重试机制（admin服务报错，但是返回状态是ok）
-                  #- OK
-                # 指定哪些方法的请求需要进行重试逻辑，默认值是GET方法（GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS, TRACE;）
-                methods:
+                  #- OK # 可以使用状态 ok进行验证重试机制（admin服务报错，但是返回状态是ok）
+                methods: # 指定哪些方法的请求需要进行重试逻辑，默认值是GET方法（GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS, TRACE;）
                   - GET
                   - POST
-                # 重试的策略和间隔 会按照公式firstBackoff * (factor ^ n) 其中n为迭代
-                backoff:
+                backoff: # 重试的策略和间隔 会按照公式firstBackoff * (factor ^ n) 其中n为迭代
                   firstBackoff: 1000ms # 隔多少秒后进行第一次重试，第二次重试时间为firstBackoff * (factor ^ n)
                   maxBackoff: 3000ms # 重试最大间隔时间
                   factor: 2
                   basedOnPreviousValue: false
-                # 指定哪些异常需要进行重试逻辑，默认值是java.io.IOException
-                exceptions:
+                exceptions: # 指定哪些异常需要进行重试逻辑，默认值是java.io.IOException
                   - java.io.IOException
-        # claim #
+        # =====================================
+        # claim
+        # =====================================
         - id: service-claim
           uri: lb://hawthorn-claim
           predicates:
@@ -126,7 +113,9 @@ spring:
                   basedOnPreviousValue: false
                 exceptions:
                   - java.io.IOException
-        # part #
+        # =====================================
+        # part
+        # =====================================
         - id: service-part
           uri: lb://hawthorn-part
           predicates:
@@ -157,7 +146,9 @@ spring:
                   basedOnPreviousValue: false
                 exceptions:
                   - java.io.IOException
-        # login #
+        # =====================================
+        # login
+        # =====================================
         - id: service-login
           uri: lb://hawthorn-login
           predicates:
@@ -188,7 +179,17 @@ spring:
                   basedOnPreviousValue: false
                 exceptions:
                   - java.io.IOException
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000 # hystrix 信号量隔离 10秒后自动超时
+
+# =====================================
 # 配置网关自定义参数
+# =====================================
 mygateway:
   key-cloak: #自定义的属性和值
     public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwBYsPYcrsjNx5dnk1DHytrayMrLfJTMikix/I020HcM5mxkZSe7Iro7Kxd3Uo20he2JqpWK0q72thth3/tLh17v2QfmR/cxY9N/tK43P5BsnC+7Dx6+z0MA2/FsxKoOy8bEwwr13LRtqL+kOONxKTrjubhRLQZDNE60AB4KEs+WHRt0fRc4pnsoFmImVi8rpeae6Am9oND5jlJ+Qcat2V1YIEC92OLiqN5jF3NKwQZqz5F1I2hpDuadeZpbirXHBQXpUN0O+vBJNoD9MN1UC9kuZDPAZ48Z7ic6BQo415QfD+M3IuJaexMWUyPYAiX45i1a6uzn1tQYej0cMdLirUwIDAQAB
@@ -199,33 +200,15 @@ mygateway:
       - /logins/auth/login
       #- /admin/sysdept/select
       - /admin/sysdept/selectNoPage
+      - /admin/feign/
     denyIPs: # ip 黑名单
       #- 127.0.0.1
       - 192.168.1.103
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 10000 # hystrix 信号量隔离 10秒后自动超时
+
+# =====================================
 # 开放健康检查接口
+# =====================================
 management:
-  security:
-    enabled: false
-  health:
-    #    db:
-    #      enabled: false
-    #    mail:
-    #      enabled: false
-    #    mongo:
-    #      enabled: false
-    #    redis:
-    #      enabled: false
-    consul:
-      enabled: true
-    binders:
-      enabled: false
   endpoints:
     web:
       exposure:

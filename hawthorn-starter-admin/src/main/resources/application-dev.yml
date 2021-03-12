@@ -1,8 +1,7 @@
 # =====================================
 # @Desc: springboot工程配置文件，使用yml方式
 # @Auther: andy.ten@tom.com
-# @Date: 2020/08/08 9:39 上午
-# @Version: v1.0.1
+# @Version: v1.0.9
 # =====================================
 server:
   tomcat:
@@ -11,21 +10,20 @@ server:
     threads:
       max: 800
       min-spare: 100
-spring:
-  config:
-    #关闭配置中心
-    enabled: false
-    #boot:
-    # 监控配置 使用注册中心，不需要单独增加client监控
-    #admin:
-    #client:
-    #  url: http://localhost:8000
-    #instance:
-    # prefer-ip: true
-    #discovery:
-    #  ignored-services: consul
 
+spring:
+  #  boot:
+  #  admin: # 监控配置 使用注册中心，不需要单独增加client监控
+  #  client:
+  #    url: http://localhost:8000
+  #  instance:
+  #    prefer-ip: true
+  #  discovery:
+  #    ignored-services: consul
+
+  # =====================================
   # consul配置
+  # =====================================
   cloud:
     consul:
       enabled: true
@@ -42,56 +40,69 @@ spring:
         # 默认的id为：${spring.application.name}-${server.port}
         # 默认id配置的问题是：某个微服务即使有多个实例，只要端口相同，那么Consul上依然只会保留1条数据！要想解决这个问题，只需要让不同实例，拥有不同的InstanceId即可。
         instance-id: ${spring.application.name}-${spring.cloud.client.ip-address}-${server.port}
+
+  # =====================================
   # 数据源配置
+  # =====================================
   datasource:
     druid:
-      url: jdbc:mysql://localhost:3306/hawthorn?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useOldAliasMetadataBehavior=true&useSSL=false
+      url: jdbc:mysql://localhost:3306/hawthorn?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useOldAliasMetadataBehavior=true&useSSL=false&autoReconnect=true&failOverReadOnly=false
       username: root
       password: 123456
 
-  # redis配置
+  # =====================================
+  # redis
+  # =====================================
   redis:
     host: 127.0.0.1
-    # Redis服务器连接端口
-    port: 6379
-    # Redis服务器连接密码（默认为空）
-    password: 123456
-    # redis集群
-    #cluster:
-    # 获取失败 最大重定向次数，默认值是5 一般当此值设置过大时，容易报：Too many Cluster redirections
-    # max-redirects: 3
-    # redis节点
-    #nodes:
-    # - 10.0.0.1:6380
-    # - 10.0.0.2:6380
-    # - 10.0.0.3:6380
-    # - 10.0.0.1:6381
-    # - 10.0.0.2:6381
-    # - 10.0.0.3:6381
-    # lettuce:springboot2.0+使用；低版本使用：jedis
-    lettuce:
+    port: 6379 # Redis服务器连接端口
+    password: 123456 # Redis服务器连接密码（默认为空）
+
+    #    cluster: # redis集群
+    #      max-redirects: 3 # 获取失败 最大重定向次数，默认值是5 一般当此值设置过大时，容易报：Too many Cluster redirections
+    #      nodes: # redis节点
+    #        - 10.0.0.1:6380
+    #        - 10.0.0.2:6380
+    #        - 10.0.0.3:6380
+    #        - 10.0.0.1:6381
+    #        - 10.0.0.2:6381
+    #        - 10.0.0.3:6381
+
+    lettuce: # lettuce:springboot2.0+使用；低版本使用：jedis
       pool:
-        # 连接池最大连接数（使用负值表示没有限制）
-        max-active: 300
-        # 连接池最大阻塞等待时间（使用负值表示没有限制）
-        max-wait: -1s
-        # 连接池中的最大空闲连接
-        max-idle: 100
-        # 连接池中的最小空闲连接
-        min-idle: 20
-    # 连接超时时间（毫秒）如果不设置，取默认值2000
-    timeout: 30000
-    # 连接的数据库
-    database: 0
-# 配置log
+        max-active: 300 # 连接池最大连接数（使用负值表示没有限制）
+        max-wait: -1s # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-idle: 100 # 连接池中的最大空闲连接
+        min-idle: 20 # 连接池中的最小空闲连接
+    timeout: 30000 # 连接超时时间（毫秒）如果不设置，取默认值2000
+    database: 0 # 连接的数据库
+
+  # =====================================
+  # zipkin
+  # =====================================
+  zipkin:
+    base-url: http://10.211.55.14:9411/
+    compression:
+      enabled: true
+  sleuth:
+    sampler:
+      probability: 1 #样本采集量，默认为0.1，为了测试这里修改为1，正式环境一般使用默认值（百分比采样）。
+    async: #过滤async跟踪
+      enabled: false
+    web:
+      enabled: true
+    scheduled: #过滤scheduled跟踪
+      enabled: false
+
+# =====================================
+# log配置
+# =====================================
 logging:
   config: classpath:logback-spring-dev.xml
   level:
-    #io.swagger.models.parameters.AbstractSerializableParameter: error
+    #    io.swagger.models.parameters.AbstractSerializableParameter: error
     com.hawthorn: debug
     org.ibatis: debug
     druid.sql: debug
     org.springframework.jdbc: info
     root: info
-
-
