@@ -15,7 +15,7 @@
   <description>Hawthorn project for MqProvider</description>
 
   <properties>
-    <hawthorn.platform.starter.version>1.1.4-SNAPSHOT</hawthorn.platform.starter.version>
+    <hawthorn.platform.starter.version>1.1.6-SNAPSHOT</hawthorn.platform.starter.version>
     <spring.boot.admin.client>2.3.0</spring.boot.admin.client>
   </properties>
 
@@ -33,11 +33,6 @@
       <version>${spring.boot.admin.client}</version>
     </dependency>
 
-    <!-- rabbit-mq -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-amqp</artifactId>
-    </dependency>
   </dependencies>
   <build>
     <resources>

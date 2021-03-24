@@ -2,6 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  <!--
   <modules>
     <module>hawthorn-starter-component</module>
     <module>hawthorn-starter-platform</module>
@@ -16,6 +17,7 @@
     <module>hawthorn-starter-mqconsumer</module>
     <module>hawthorn-starter-redis</module>
   </modules>
+  -->
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
@@ -38,6 +40,8 @@
     <maven.build.timestamp.format>yyyy_MM_dd_HH_mm_ss</maven.build.timestamp.format>
     <project.build.date>${maven.build.timestamp}</project.build.date>
     <spring.icloud.version>Hoxton.RELEASE</spring.icloud.version>
+    <swagger.springfox.version>3.0.0</swagger.springfox.version>
+    <swagger.knife4j.version>3.0.2</swagger.knife4j.version>
     <swagger2.version>2.9.2</swagger2.version>
     <!-- swagger的annotations 、models 版本升级为1.5.22.默认为1.5.20,解决刷新swagger页面，会报java.lang.NumberFormatException: For input string: "" 错误-->
     <swagger2.annotations.version>1.5.22</swagger2.annotations.version>
@@ -54,7 +58,7 @@
     <mybatis.plus.gen.velocity.version>2.2</mybatis.plus.gen.velocity.version>
     <alibaba.druid.version>1.1.22</alibaba.druid.version>
     <alibaba.fastjson.version>1.2.73</alibaba.fastjson.version>
-
+    <logstash.encoder.version>6.3</logstash.encoder.version>
     <apache.common.lang3.version>3.7</apache.common.lang3.version>
     <apache.httpclient.version>4.5.9</apache.httpclient.version>
     <common.collection.version>3.2.2</common.collection.version>
@@ -120,7 +124,7 @@
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
 
-    <!-- swagger2 -->
+    <!-- swagger2
     <dependency>
       <groupId>io.springfox</groupId>
       <artifactId>springfox-swagger2</artifactId>
@@ -145,6 +149,30 @@
       <groupId>com.github.xiaoymin</groupId>
       <artifactId>swagger-bootstrap-ui</artifactId>
       <version>${swagger.bootstrap.ui.version}</version>
+    </dependency>
+    -->
+    <!-- swagger3.0 -->
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-boot-starter</artifactId>
+      <version>${swagger.springfox.version}</version>
+    </dependency>
+
+    <!-- swagger Knife4j 必须要有排除，否则启动工程会有冲突-->
+    <dependency>
+      <groupId>com.github.xiaoymin</groupId>
+      <artifactId>knife4j-spring-boot-starter</artifactId>
+      <version>${swagger.knife4j.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>io.springfox</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>io.swagger</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <!-- 配置lombok -->
@@ -282,6 +310,31 @@
       <version>${jwt.version}</version>
     </dependency>
 
+    <!--sleuth -->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-sleuth</artifactId>
+    </dependency>
+
+    <!-- zipkin -->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-zipkin</artifactId>
+    </dependency>
+
+    <!-- rabbit-mq -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-amqp</artifactId>
+    </dependency>
+
+    <!-- 输出 Json 格式日志 -->
+    <dependency>
+      <groupId>net.logstash.logback</groupId>
+      <artifactId>logstash-logback-encoder</artifactId>
+      <version>${logstash.encoder.version}</version>
+    </dependency>
+
     <!-- others -->
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
@@ -309,11 +362,27 @@
   </dependencies>
   <build>
     <plugins>
+      <!-- 不能带maven plugin，在各个工程中增加，否则会导致打包后报错：Unable to read meta-data for class
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
+      -->
     </plugins>
   </build>
+
+  <!--增加nexus仓库私服设置，配合mvn deploy:deploy -->
+  <distributionManagement>
+    <repository>
+      <id>nexus-releases</id>
+      <name>Scisoft Release Repository</name>
+      <url>http://scisoft.eicp.net:7071/repository/hawthorn-release/</url>
+    </repository>
+    <snapshotRepository>
+      <id>nexus-snapshots</id>
+      <name>Scisoft Snapshot Repository</name>
+      <url>http://scisoft.eicp.net:7071/repository/hawthorn-snapshot/</url>
+    </snapshotRepository>
+  </distributionManagement>
 
 </project>

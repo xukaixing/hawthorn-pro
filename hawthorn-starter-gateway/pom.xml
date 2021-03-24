@@ -25,6 +25,7 @@
     <project.build.date>${maven.build.timestamp}</project.build.date>
     <spring.icloud.version>Hoxton.RELEASE</spring.icloud.version>
     <redis.commons.pool2.version>2.7.0</redis.commons.pool2.version>
+    <swagger.springfox.version>3.0.0</swagger.springfox.version>
     <swagger2.version>2.9.2</swagger2.version>
     <!-- swagger的annotations 、models 版本升级为1.5.22.默认为1.5.20,解决刷新swagger页面，会报java.lang.NumberFormatException: For input string: "" 错误-->
     <swagger2.annotations.version>1.5.22</swagger2.annotations.version>
@@ -111,7 +112,7 @@
       <version>${hutool.version}</version>
     </dependency>
 
-    <!-- swagger2 -->
+    <!-- swagger2
     <dependency>
       <groupId>io.springfox</groupId>
       <artifactId>springfox-swagger2</artifactId>
@@ -136,6 +137,13 @@
       <groupId>com.github.xiaoymin</groupId>
       <artifactId>swagger-bootstrap-ui</artifactId>
       <version>${swagger.bootstrap.ui.version}</version>
+    </dependency>
+    -->
+    <!-- swagger3.0 -->
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-boot-starter</artifactId>
+      <version>${swagger.springfox.version}</version>
     </dependency>
 
     <!-- alibaba fastjson工具类 -->
