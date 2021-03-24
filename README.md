@@ -6,28 +6,25 @@
       xukaixing@hotmail.com
   
 ## 版本
-
-> v1.1.5 : 2021.03.05        
->> 增加redis工程，实现将数据库中数据加载到redis  
->> redis客户端类增加删除指定前缀key功能         
->> gateway网关增加redis中token校验一致性功能    
->> 增加校验和不校验token注解  
+> v1.1.8 : 2021.03.23            
+>> 增加Dockerfile打包文件      
+>> 调整component包结构    
+>> 调整pom.xml的maven打包插件         
   
 ---
 
-> v1.1.4 : 2021.03.01        
->> gateway增加ip黑名单设置
->> gateway增加账户同时在线校验       
-
+> v1.1.7 : 2021.03.18            
+>> swagger2.0升级为3.0    
+>> 增加Knife4j增强ui
+>> 增加logstash日志配置                
+  
 ---
 
-> v1.1.3 : 2021.02.28        
->> 增加rabbitmq的配置  
->> 增加rabbitmq的生产者工程  
->> 增加rabbitmq的消费者工程  
->> gateway工程增加token校验拦截器  
->> 优化utils工具命名规范  
->> jwt工具类升级  
+> v1.1.6 : 2021.03.11          
+>> 增加sleuth链路追踪  
+>> 增加zipkin链路展示
+>> 优化yml配置文件内容  
+>> 日志文件增加traceid配置  
       
 ## 环境
 
@@ -57,26 +54,34 @@
   - `Ribbon`: ribbon负载均衡组件
   - `Consul`: 注册中心服务
   - `Gateway`: gateway网关
+  - `RequestRateLimiter`: 网关限流组件
   - `Spring Boot Admin`: 监控组件
-  - `Spring security`: 安全组件
+  - `Spring Security`: 安全组件
   - `Jwt`: token组件
-  - `Hystrix Dashboard`: 可视化监控熔断服务组件
+  - `Hystrix Dashboard`: 可视化监控RequestRateLimiter限流熔断服务组件
   - `Feign Httpclient`: feign连接池组件
   - `Turbine`: 可视化turbine多服务监控组件
   - `Redis`: redis缓存组件
   - `Amqp`: rabbit mq消息组件
+  - `Sleuth`: 链路跟踪组件
+  - `Zipkin`: 链路跟踪展示组件
+  
 - 自定义工具
-  - `Exectime`: aop的执行时间工具
-  - `Str2Util`: 处理字符串工具类
+  - `Exectime`: aop的执行时间注解
+  - `CheckToken`: aop的校验token注解
+  - `NoCheckToken`: aop的非校验token注解
+  - `StringMyUtil`: 处理字符串工具类
   - `Map2ObjectUtil`: 、mapper与obj互相转换工具类
-  - `AssertUtil`: 断言工具类
-  - `PropertiesUtil、YmlUtil`: .property、.yml文件读取工具类
-  - `Redis Client`: redis封装工具类
+  - `AssertMyUtil`: 断言工具类
+  - `PropertiesMyUtil、YmlMyUtil`: .property、.yml文件读取工具类
+  - `IPMyUtil`: 获取请求ip地址工具类 
+  - `RedisClient`: redis封装工具类
   - `JwtProvider`: jwt工具类
+  - `JwtTokenMyUtil`: 平台token校验工具类
   - `CollectionUtil`: 处理集合工具类
-  - `FileUtil`: 处理文件工具类
-  - `JacksonUtil`: 处理json工具类
-  - `ThreadPoolUtil`: 线程池工具类
+  - `FileMyUtil`: 处理文件工具类
+  - `JacksonMyUtil`: 处理json工具类
+  - `ThreadPooMylUtil`: 线程池工具类
   - `GlobalExceptionHandler`: 全局异常处理类
   - `DBMapper`: 扩展封装mybatis-plus的BaseMapper类
   - `RestResult`: 封装全局返回结果类
@@ -84,8 +89,10 @@
   - `MPCodeGenerator`: 代码生成工具类
   - `HystrixFallbackFactory`: 熔断fallback工具类
   - `RandomUtil`: 生成随机数工具类
-  - `JwtProvider`: jwt工具类
-  - `AsyncThreadPoolTaskMyUtil`: 异步方法工具类
+  - `AsyncThreadPoolTaskMyUtil`: 异步方法工具类  
+  - `RequestWrapper、ResponseWrapper`: 请求和响应封装类
+  - `CustomTracingFilterr`: 自定义sleuth链路过滤器
+  
 - 工程端口说明
   - `hawthorn-starter-monitor`: 4000
   - `hawthorn-starter-gateway`: 4001 

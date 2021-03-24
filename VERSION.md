@@ -5,9 +5,33 @@
       xukaixing@hotmail.com
   
 ## 版本
+> v1.1.8 : 2021.03.23            
+>> 增加Dockerfile打包文件      
+>> 调整component包结构    
+>> 调整pom.xml的maven打包插件         
+  
+---
+
+> v1.1.7 : 2021.03.18            
+>> swagger2.0升级为3.0    
+>> 增加Knife4j增强ui
+>> 增加logstash日志配置                
+  
+---
+
+> v1.1.6 : 2021.03.11          
+>> 增加sleuth链路追踪  
+>> 增加zipkin链路展示
+>> 优化yml配置文件内容  
+>> 日志文件增加traceid配置          
+  
+---
+
 > v1.1.5 : 2021.03.05        
 >> 增加redis工程，实现将数据库中数据加载到redis  
 >> redis客户端类增加删除指定前缀key功能         
+>> gateway网关增加redis中token校验一致性功能    
+>> 增加校验和不校验token注解        
 
 ---
 
