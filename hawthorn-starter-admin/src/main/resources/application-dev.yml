@@ -1,7 +1,7 @@
 # =====================================
 # @Desc: springboot工程配置文件，使用yml方式
 # @Auther: andy.ten@tom.com
-# @Version: v1.0.9
+# @Version: v1.1.0
 # =====================================
 server:
   tomcat:
@@ -22,7 +22,7 @@ spring:
   #    ignored-services: consul
 
   # =====================================
-  # consul配置
+  # consul
   # =====================================
   cloud:
     consul:
@@ -42,7 +42,7 @@ spring:
         instance-id: ${spring.application.name}-${spring.cloud.client.ip-address}-${server.port}
 
   # =====================================
-  # 数据源配置
+  # druid
   # =====================================
   datasource:
     druid:
@@ -78,10 +78,32 @@ spring:
     database: 0 # 连接的数据库
 
   # =====================================
-  # zipkin
+  # rabbitmq
+  # =====================================
+  rabbitmq:
+    host: 10.211.55.14
+    port: 5672
+    username: hawthorn-rbmq
+    password: 123456
+    virtual-host: hawthorn_vhost
+    connection-timeout: 3000
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    template:
+      retry:
+        enabled: true
+        max-attempts: 3
+        initial-interval: 10000ms
+        max-interval: 300000ms
+        multiplier: 2
+
+  # =====================================
+  # zipkin 通过docker容器配置与rabbit和elasticsearch关联
   # =====================================
   zipkin:
-    base-url: http://10.211.55.14:9411/
+    #    base-url: http://10.211.55.14:9411/ # rabbit模式需要注释掉
+    sender:
+      type: rabbit # 默认为web，http方式
     compression:
       enabled: true
   sleuth:
@@ -91,11 +113,24 @@ spring:
       enabled: false
     web:
       enabled: true
+      #additional-skip-pattern: ".*feign.hello.*" # 过滤不需要跟踪的url
     scheduled: #过滤scheduled跟踪
       enabled: false
+    redis:
+      enabled: false # 过滤redis跟踪
 
 # =====================================
-# log配置
+# swagger
+# =====================================
+springfox:
+  documentation:
+    swagger-ui:
+      enabled=true: true
+knife4j:
+  enable: true
+
+# =====================================
+# logback
 # =====================================
 logging:
   config: classpath:logback-spring-dev.xml

@@ -16,7 +16,7 @@ spring:
       name: admin
       password: admin
   profiles:
-    active: dev
+    active: prod
 
 # 配置feign的Ribbon 不建议配置；httpclient的超时可以在类中配置；重试不建议配置是可能会调用多次导致数据重复
 #ribbon:
