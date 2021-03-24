@@ -24,6 +24,8 @@ public class RestResult
   private String msg;
   @ApiModelProperty(value = "数据", name = "data")
   private Object data;
+  //@ApiModelProperty(value = "跟踪id", name = "traceid")
+  //private String traceid;
 
   public RestResult()
   {
@@ -31,6 +33,7 @@ public class RestResult
     this.status = "";
     this.msg = "";
     this.data = (new JSONObject());
+    //this.traceid = "";
   }
 
   public RestResult setCode(RetCode retCode)

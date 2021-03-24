@@ -4,6 +4,7 @@ import com.hawthorn.component.ret.RestResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = {"claim-hello"})
 @RestController
 @RequestMapping("/hello")
+@Slf4j
 public class HelloController
 {
   /**
@@ -32,7 +34,7 @@ public class HelloController
   @GetMapping(value = "/sayHello")
   public RestResult sayHello()
   {
-
+    log.info("====== feign 执行 ======");
     return RestResult.success("hello claim ! ");
   }
 }

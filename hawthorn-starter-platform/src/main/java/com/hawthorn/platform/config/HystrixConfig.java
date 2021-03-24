@@ -1,7 +1,7 @@
 package com.hawthorn.platform.config;
 
 
-import com.hawthorn.component.boot.AbstractSpringConfiguration;
+import com.hawthorn.platform.boot.AbstractSpringConfiguration;
 import com.hawthorn.platform.hystrix.ReactiveDefaultHystrixConcurrencyStrategy;
 import com.hawthorn.platform.hystrix.ReactiveSecurityHystrixConcurrencyStrategy;
 import com.hawthorn.platform.hystrix.ServletDefaultHystrixConcurrencyStrategy;

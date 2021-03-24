@@ -1,4 +1,4 @@
-package com.hawthorn.component.utils.http;
+package com.hawthorn.platform.utils.http;
 
 import javax.servlet.http.HttpServletRequest;
 

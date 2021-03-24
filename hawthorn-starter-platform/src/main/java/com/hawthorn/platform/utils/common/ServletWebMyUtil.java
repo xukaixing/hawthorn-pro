@@ -1,4 +1,4 @@
-package com.hawthorn.component.utils.common;
+package com.hawthorn.platform.utils.common;
 
 import com.google.common.io.CharStreams;
 import com.hawthorn.component.constant.GlobalConstant;

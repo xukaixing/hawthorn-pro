@@ -42,10 +42,10 @@ public class WebMvcConfig implements WebMvcConfigurer
     // 多个拦截器组成一个拦截器链
     // addPathPatterns 用于添加拦截规则，/**表示拦截所有请求
     // excludePathPatterns 用户排除拦截
-    // registry
-    //     .addInterceptor(tokenInterceptor)
-    //     .addPathPatterns("/**")
-    //     .excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**");
+    registry
+        .addInterceptor(tokenInterceptor)
+        .addPathPatterns("/**")
+        .excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**", "/v3/**", "/swagger-ui/**", "/swagger-ui.html/**", "/doc.html/**", "/api-docs-ext/**");
     // super.addInterceptors(registry);
   }
 
@@ -58,11 +58,22 @@ public class WebMvcConfig implements WebMvcConfigurer
   {
     // 添加文档对应的映射：swagger增加url映射
     registry
-        .addResourceHandler("swagger-ui.html")
+        .addResourceHandler("/swagger-ui/**")
         .addResourceLocations("classpath:/META-INF/resources/");
     // 所有/webjars/开头的请求 都会去后面配置的路径下查找资源
     registry
         .addResourceHandler("/webjars/**")
         .addResourceLocations("classpath:/META-INF/resources/webjars/");
+    // 添加文档对应的映射：swagger增加url映射
+    registry
+        .addResourceHandler("/doc.html")
+        .addResourceLocations("classpath:/META-INF/resources/");
   }
+
+  // @Override
+  // public void addViewControllers(ViewControllerRegistry registry)
+  // {
+  //   registry.addViewController("/swagger-ui/")
+  //       .setViewName("forward:/swagger-ui/index.html");
+  // }
 }

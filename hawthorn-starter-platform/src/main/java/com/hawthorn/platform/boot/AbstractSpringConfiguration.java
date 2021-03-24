@@ -1,4 +1,4 @@
-package com.hawthorn.component.boot;
+package com.hawthorn.platform.boot;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

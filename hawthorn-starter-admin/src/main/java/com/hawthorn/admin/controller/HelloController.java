@@ -3,8 +3,8 @@ package com.hawthorn.admin.controller;
 import com.hawthorn.admin.feign.HelloFeignService;
 import com.hawthorn.component.ret.RestResult;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = {"demo-hello-controller"})
 @RestController
 @RequestMapping("/feign")
+@Slf4j
 public class HelloController
 {
   @Autowired
@@ -32,11 +33,10 @@ public class HelloController
    * @version: 1.0.1
    */
   @ApiOperation(value = "feign->/hello->sayHello", notes = "feign接口调用demo")
-  @ApiImplicitParams({
-  })
   @GetMapping(value = "/hello/sayHello")
   public RestResult sayHello()
   {
+    log.info("====== feign 调用 ======");
     return helloFeignService.sayHello();
   }
 }

@@ -141,9 +141,4 @@ public enum BizCode
     this.code = code;
     this.msg = msg;
   }
-
-  public static void main(String[] args)
-  {
-    //System.out.println(BizCode.DICT_EXISTED.code);
-  }
 }

@@ -44,6 +44,10 @@ public class ResponseBodyAdviceImpl implements ResponseBodyAdvice<Object>
   @Override
   public Object beforeBodyWrite(Object o, MethodParameter returnType, MediaType mediaType, Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest request, ServerHttpResponse response)
   {
+    // 增加traceid跟踪id
+    String traceid = response.getHeaders().getFirst("TraceId");
+    if (traceid == null) traceid = "";
+
     // 如果返回值是BaseResult类型，则直接返回
     if (o instanceof RestResult)
     {
@@ -67,7 +71,10 @@ public class ResponseBodyAdviceImpl implements ResponseBodyAdvice<Object>
       //return RestResult.success(o);
     }
     // 屏蔽swagger接口api + Actuator监控路径请求
-    if (request.getURI().toString().contains("/swagger") || request.getURI().toString().contains("/v2/api-docs") || request.getURI().toString().contains("/actuator"))
+    if (request.getURI().toString().contains("/swagger")
+        || request.getURI().toString().contains("/v2/api-docs")
+        || request.getURI().toString().contains("/v3/api-docs")
+        || request.getURI().toString().contains("/actuator"))
     {
       return o;
     }

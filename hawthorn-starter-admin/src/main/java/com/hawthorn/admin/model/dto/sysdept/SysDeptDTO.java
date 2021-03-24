@@ -19,28 +19,28 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@ApiModel(value = "sys_dept" , description = "机构管理" )
+@ApiModel(value = "sys_dept", description = "机构管理")
 public class SysDeptDTO extends BaseDTO
 {
   /**
    * 编号
    */
-  @ApiModelProperty(value = "编号" , name = "id" )
+  @ApiModelProperty(value = "编号", name = "id")
   private Long id;
   /**
    * 机构名称
    */
-  @ApiModelProperty(value = "机构名称" , name = "name" )
+  @ApiModelProperty(value = "机构名称", name = "name")
   private String name;
   /**
    * 上级机构ID，一级机构为0
    */
-  @ApiModelProperty(value = "上级机构ID，一级机构为0" , name = "parentId" )
+  @ApiModelProperty(value = "上级机构ID，一级机构为0", name = "parentId")
   private Long parentId;
   /**
    * 排序
    */
-  @ApiModelProperty(value = "排序" , name = "orderNum" )
+  @ApiModelProperty(value = "排序", name = "orderNum")
   private Integer orderNum;
 
   public SysDeptDTO()

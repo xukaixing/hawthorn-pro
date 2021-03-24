@@ -1,6 +1,6 @@
-package com.hawthorn.component.utils.common;
+package com.hawthorn.platform.utils.common;
 
-import com.hawthorn.component.utils.reactive.ReactiveWebUtil;
+import com.hawthorn.platform.utils.reactive.ReactiveWebUtil;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

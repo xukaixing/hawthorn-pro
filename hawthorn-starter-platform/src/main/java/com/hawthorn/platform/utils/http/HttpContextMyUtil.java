@@ -1,4 +1,4 @@
-package com.hawthorn.component.utils.http;
+package com.hawthorn.platform.utils.http;
 
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;

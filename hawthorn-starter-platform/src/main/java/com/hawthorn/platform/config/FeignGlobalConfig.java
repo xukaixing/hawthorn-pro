@@ -9,8 +9,8 @@ package com.hawthorn.platform.config;
  * @version v1.0.1
  */
 
-import com.hawthorn.component.utils.json.ObjectRequestParam2StringConverter;
 import com.hawthorn.platform.hystrix.MyHystrixFallbackHandlerFactory;
+import com.hawthorn.platform.utils.json.ObjectRequestParam2StringConverter;
 import feign.Feign;
 import feign.Logger;
 import feign.Request;
@@ -38,8 +38,6 @@ import org.springframework.format.FormatterRegistry;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 // 可以添加在主类下，但是不用添加@Configuration。
@@ -194,18 +192,18 @@ public class FeignGlobalConfig
     httpClientBuilder.setDefaultRequestConfig(defaultRequestConfig);
     HttpClient client = httpClientBuilder.build();
 
-    // 启动定时器，定时回收过期的连接
-    Timer timer = new Timer();
-    timer.schedule(new TimerTask()
-    {
-      @Override
-      public void run()
-      {
-        log.debug("====== closeIdleConnections ======");
-        pollingConnectionManager.closeExpiredConnections();
-        pollingConnectionManager.closeIdleConnections(5, TimeUnit.SECONDS);
-      }
-    }, 10 * 1000, 5 * 1000); // 10秒后，每隔5秒调用
+    // 启动定时器，定时回收过期的连接 该定时器会产生sleuth的async调用链
+    // Timer timer = new Timer();
+    // timer.schedule(new TimerTask()
+    // {
+    //   @Override
+    //   public void run()
+    //   {
+    //     //log.debug("====== closeIdleConnections ======");
+    //     pollingConnectionManager.closeExpiredConnections();
+    //     pollingConnectionManager.closeIdleConnections(5, TimeUnit.SECONDS);
+    //   }
+    // }, 10 * 1000, 5 * 1000); // 10秒后，每隔5秒调用
     log.info("====== Apache httpclient 初始化连接池完毕 ======");
 
     return client;

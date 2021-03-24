@@ -1,4 +1,4 @@
-package com.hawthorn.component.utils.reactive;
+package com.hawthorn.platform.utils.reactive;
 
 import org.springframework.web.reactive.function.server.ServerRequest;
 

@@ -3,9 +3,7 @@ package com.hawthorn.platform.config;
 import brave.http.HttpAdapter;
 import brave.http.HttpSampler;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cloud.sleuth.instrument.web.ServerSampler;
 import org.springframework.cloud.sleuth.instrument.web.SkipPatternProvider;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.regex.Pattern;
@@ -13,7 +11,7 @@ import java.util.regex.Pattern;
 /**
  * @copyright: Copyright (c) 2021 andyten
  * <p></p>
- * @remark: todo sleuth过滤url调用跟踪,不知道为什么不起作用
+ * @remark: todo sleuth过滤url调用跟踪,不知道为什么不起作用,在yml配置可用
  * @author: andy.ten@tom.com
  * @created: 3/12/21 8:25 PM
  * @lasted: 3/12/21 8:25 PM
@@ -21,29 +19,27 @@ import java.util.regex.Pattern;
  */
 @Configuration
 @Slf4j
-class SleuthPreventSamplerConfig
+class SleuthPreventSamplerConfig extends HttpSampler
 {
 
-  @Bean(name = ServerSampler.NAME)
-  HttpSampler myHttpSampler(SkipPatternProvider provider)
-  {
-    Pattern pattern = provider.skipPattern();
-    return new HttpSampler()
-    {
+  private final Pattern pattern;
 
-      @Override
-      public <Req> Boolean trySample(HttpAdapter<Req, ?> adapter, Req request)
-      {
-        String url = adapter.path(request);
-        Pattern p = Pattern
-            .compile(".*swagger.*|.*api-docs.*|.*metrics.*|.*hystrix.*|.*monitor.*|.*actuator.*");
-        boolean shouldSkip = p.matcher(url).matches();
-        if (shouldSkip)
-        {
-          return false;
-        }
-        return null;
-      }
-    };
+  SleuthPreventSamplerConfig(SkipPatternProvider provider)
+  {
+    this.pattern = provider.skipPattern();
+  }
+
+  @Override
+  public <Req> Boolean trySample(HttpAdapter<Req, ?> httpAdapter, Req req)
+  {
+    String url = httpAdapter.path(req);
+    Pattern p = Pattern
+        .compile(".*feign.hello.*");
+    boolean shouldSkip = p.matcher(url).matches();
+    if (shouldSkip)
+    {
+      return false;
+    }
+    return null;
   }
 }

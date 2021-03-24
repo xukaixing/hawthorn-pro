@@ -1,7 +1,8 @@
-package com.hawthorn.component.utils.json;
+package com.hawthorn.platform.utils.json;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hawthorn.component.utils.json.JacksonMyUtil;
 import lombok.SneakyThrows;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.convert.TypeDescriptor;

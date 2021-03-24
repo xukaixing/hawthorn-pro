@@ -122,7 +122,7 @@ public class SysUserController
    */
   @ApiOperation(value = "查询->按状态查询用户", notes = "按状态查询用户信息服务 带参数status")
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "status", value = "状态", required = true, dataType = "byte", paramType = "query")
+      @ApiImplicitParam(name = "status", value = "状态", required = true, dataType = "Byte", dataTypeClass = Byte.class, paramType = "query")
   })
   @GetMapping(value = "/selectUsersByStatus")
   public List<SysUserDTO> selectUsersByStatus(@RequestParam(value = "status", required = true) Byte status)
@@ -140,8 +140,8 @@ public class SysUserController
    */
   @ApiOperation(value = "查询->按属性查询用户", notes = "按属性查询用户信息服务")
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "fieldName", value = "属性名", required = true, dataType = "string", paramType = "query"),
-      @ApiImplicitParam(name = "fieldValue", value = "属性值", required = false, dataType = "string", paramType = "query")
+      @ApiImplicitParam(name = "fieldName", value = "属性名", required = true, dataType = "String", dataTypeClass = String.class, paramType = "query"),
+      @ApiImplicitParam(name = "fieldValue", value = "属性值", required = false, dataType = "String", dataTypeClass = String.class, paramType = "query")
   })
   @GetMapping(value = "/selectUsersByField")
   public List<SysUserDTO> selectUsersByField(@RequestParam(value = "fieldName") String fieldName, @RequestParam(value = "fieldValue") String fieldValue)

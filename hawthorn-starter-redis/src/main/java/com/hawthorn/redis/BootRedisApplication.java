@@ -9,10 +9,11 @@ import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import springfox.documentation.oas.annotations.EnableOpenApi;
 
 @SpringBootApplication
-@EnableSwagger2
+//@EnableSwagger2
+@EnableOpenApi
 @EnableFeignClients
 @EnableDiscoveryClient
 @EnableCircuitBreaker

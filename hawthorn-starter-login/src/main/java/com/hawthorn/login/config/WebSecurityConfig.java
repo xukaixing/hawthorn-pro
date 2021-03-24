@@ -108,9 +108,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
         .antMatchers("/auth/login").permitAll()
         // swagger
         .antMatchers("/swagger-ui.html").permitAll()
+        .antMatchers("/swagger-ui/**").permitAll()
         .antMatchers("/swagger-resources/**").permitAll()
         .antMatchers("/v2/api-docs").permitAll()
-        .antMatchers("/webjars/springfox-swagger-ui/**").permitAll()
+        .antMatchers("/v3/api-docs").permitAll()
+        .antMatchers("/webjars/**").permitAll()
         .antMatchers("/doc.html").permitAll()
         // 登录验证码
         .antMatchers("/auth/verifyCode").permitAll()

@@ -1,8 +1,9 @@
-package com.hawthorn.component.constant;
+package com.hawthorn.platform.constant;
 
-import com.hawthorn.component.utils.common.SpringBeanMyUtil;
+import com.hawthorn.component.constant.SpringBeanConstant;
 import com.hawthorn.component.utils.thread.NamedThreadFactory;
 import com.hawthorn.component.utils.thread.ThreadPoolMyUtil;
+import com.hawthorn.platform.utils.common.SpringBeanMyUtil;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.boot.convert.ApplicationConversionService;
 import org.springframework.context.ApplicationContext;

@@ -1,15 +1,18 @@
 package com.hawthorn.platform.config;
 
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.http.HttpMethod;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.builders.ResponseMessageBuilder;
+import springfox.documentation.builders.ResponseBuilder;
+import springfox.documentation.oas.annotations.EnableOpenApi;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
-import springfox.documentation.service.ResponseMessage;
+import springfox.documentation.service.Response;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
@@ -17,18 +20,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Copyright: Copyright (c) 2020 andyten
-
- * @remark: swagger2配置类
- * @author:andy.ten@tom.com
- * @date:2020/8/11 5:25 下午
- * @version v1.0.1
+ * @copyright: Copyright (c) 2021 andyten
+ * <p></p>
+ * @remark: todo swagger配置类
+ * @author: andy.ten@tom.com
+ * @created: 9/12/20 11:56 AM
+ * @lasted: 3/17/21 11:56 AM
+ * @version v1.0.2
  */
 @Configuration
+@EnableOpenApi
+@EnableKnife4j
 // 启动swagger
 // @EnableSwagger2
 // 自动扫描，该注解会扫描指定路径下的所有的配置，默认扫描该类所在包下面的所有配置文件
 // @ComponentScan("com.hawthorn.**.config")
+// 注意类名不能更改
 public class SwaggerConfig
 {
   /*
@@ -42,29 +49,28 @@ public class SwaggerConfig
   public Docket createRestApi()
   {
     // 设置全局响应状态码
-    List<ResponseMessage> responseMessageList = new ArrayList<>();
-    responseMessageList.add(new ResponseMessageBuilder().code(200).message("成功").build());
-    responseMessageList.add(new ResponseMessageBuilder().code(400).message("请求返回错误").build());
-    responseMessageList.add(new ResponseMessageBuilder().code(404).message("找不到资源").build());
-    responseMessageList.add(new ResponseMessageBuilder().code(409).message("业务逻辑异常").build());
-    responseMessageList.add(new ResponseMessageBuilder().code(422).message("参数校验异常").build());
-    responseMessageList.add(new ResponseMessageBuilder().code(500).message("服务器内部错误").build());
-    responseMessageList.add(new ResponseMessageBuilder().code(503).message("Hystrix异常").build());
+    List<Response> responseMessageList = new ArrayList<>();
+    responseMessageList.add(new ResponseBuilder().code("200").description("成功").build());
+    responseMessageList.add(new ResponseBuilder().code("400").description("请求返回错误").build());
+    responseMessageList.add(new ResponseBuilder().code("404").description("找不到资源").build());
+    responseMessageList.add(new ResponseBuilder().code("409").description("业务逻辑异常").build());
+    responseMessageList.add(new ResponseBuilder().code("422").description("参数校验异常").build());
+    responseMessageList.add(new ResponseBuilder().code("500").description("服务器内部错误").build());
+    responseMessageList.add(new ResponseBuilder().code("503").description("Hystrix异常").build());
 
-    return new Docket(DocumentationType.SWAGGER_2)
-
-        .useDefaultResponseMessages(false)
-        .globalResponseMessage(RequestMethod.GET, responseMessageList)
-        .globalResponseMessage(RequestMethod.POST, responseMessageList)
-        .globalResponseMessage(RequestMethod.PUT, responseMessageList)
-        .globalResponseMessage(RequestMethod.DELETE, responseMessageList)
-
+    return new Docket(DocumentationType.OAS_30) // swagger3需要将SWAGGER_2改成OAS_30
         .apiInfo(apiInfo())
         .select()
+        .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+        //.apis(RequestHandlerSelectors.withMethodAnnotation(Operation.class))
         .apis(RequestHandlerSelectors.basePackage("com.hawthorn"))
         .apis(RequestHandlerSelectors.any())
         .paths(PathSelectors.any())
-        .build();
+        .build()
+        .globalResponses(HttpMethod.GET, responseMessageList)
+        .globalResponses(HttpMethod.POST, responseMessageList)
+        .globalResponses(HttpMethod.DELETE, responseMessageList)
+        .globalResponses(HttpMethod.PUT, responseMessageList);
   }
 
   /*
@@ -76,11 +82,11 @@ public class SwaggerConfig
   private ApiInfo apiInfo()
   {
     return new ApiInfoBuilder()
-        .title("Swagger2 接口服务API文档")
+        .title("Swagger 接口服务API文档")
         .description("hawthorn-pro")
         .version("1.0")
         .license("version1.0.1")
-        .contact(new Contact("xukaixing", "https://github.com/xukaixing/", "andy.ten@tom.com"))
+        .contact(new Contact("andy.ten", "https://github.com/xukaixing/", "xukaixing@hotmail.com"))
         .build();
   }
 }

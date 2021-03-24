@@ -1,6 +1,6 @@
 package com.hawthorn.platform.hystrix;
 
-import com.hawthorn.component.utils.common.SpringWebFluxMyUtil;
+import com.hawthorn.platform.utils.common.SpringWebFluxMyUtil;
 import com.netflix.hystrix.strategy.concurrency.HystrixConcurrencyStrategy;
 import org.springframework.web.server.ServerWebExchange;
 

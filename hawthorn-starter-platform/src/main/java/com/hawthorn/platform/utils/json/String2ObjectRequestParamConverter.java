@@ -1,5 +1,6 @@
-package com.hawthorn.component.utils.json;
+package com.hawthorn.platform.utils.json;
 
+import com.hawthorn.component.utils.json.JacksonMyUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.ConditionalGenericConverter;

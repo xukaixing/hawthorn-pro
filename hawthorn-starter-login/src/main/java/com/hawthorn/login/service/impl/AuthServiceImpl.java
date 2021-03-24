@@ -2,7 +2,6 @@ package com.hawthorn.login.service.impl;
 
 import com.hawthorn.component.constant.RedisConstant;
 import com.hawthorn.component.utils.common.StringMyUtil;
-import com.hawthorn.component.utils.http.IPMyUtil;
 import com.hawthorn.login.model.pojo.AccessToken;
 import com.hawthorn.login.model.pojo.JwtUserDetails;
 import com.hawthorn.login.provider.JwtTokenProvider;
@@ -11,6 +10,7 @@ import com.hawthorn.login.security.JwtAuthenticationToken;
 import com.hawthorn.login.service.AuthService;
 import com.hawthorn.login.service.SysUserService;
 import com.hawthorn.platform.redis.RedisMyClient;
+import com.hawthorn.platform.utils.http.IPMyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,4 +1,4 @@
-package com.hawthorn.component.utils.file;
+package com.hawthorn.platform.utils.file;
 
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 
@@ -122,13 +122,5 @@ public class FileMyUtil
   {
     String classPath = FileUtils.class.getClassLoader().getResource("").getPath();
     return classPath;
-  }
-
-  public static void main(String[] args)
-  {
-//        File file = new File("D:/errlog.txt");
-//        System.out.println(readFile(file));
-    System.out.println(getClassPath());
-    System.out.println(getProjectPath());
   }
 }

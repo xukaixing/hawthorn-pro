@@ -1,6 +1,6 @@
 package com.hawthorn.platform.hystrix;
 
-import com.hawthorn.component.utils.common.SpringWebMvcMyUtil;
+import com.hawthorn.platform.utils.common.SpringWebMvcMyUtil;
 import com.netflix.hystrix.strategy.concurrency.HystrixConcurrencyStrategy;
 
 import javax.servlet.http.HttpServletRequest;

@@ -1,6 +1,6 @@
 package com.hawthorn.platform.aspect;
 
-import com.hawthorn.component.utils.http.HttpContextMyUtil;
+import com.hawthorn.platform.utils.http.HttpContextMyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

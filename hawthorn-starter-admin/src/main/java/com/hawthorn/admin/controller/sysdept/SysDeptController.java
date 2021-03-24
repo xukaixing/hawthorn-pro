@@ -6,7 +6,6 @@ import com.hawthorn.admin.model.dto.sysdept.SysDeptDTO;
 import com.hawthorn.admin.service.sysdept.SysDeptService;
 import com.hawthorn.component.utils.bean.QcBean;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,8 +37,6 @@ public class SysDeptController
    * @version: 1.0.1
    */
   @ApiOperation(value = "查询->机构管理信息", notes = "查询机构管理信息服务 带分页")
-  @ApiImplicitParams({
-  })
   @GetMapping(value = "/select")
   public IPage<SysDeptDTO> select() throws Exception
   {
@@ -61,8 +58,6 @@ public class SysDeptController
    * @version: 1.0.1
    */
   @ApiOperation(value = "查询->机构管理信息 不带分页", notes = "查询机构管理信息服务 不带分页")
-  @ApiImplicitParams({
-  })
   @GetMapping(value = "/selectNoPage")
   public List<SysDeptDTO> selectNoPage()
   {

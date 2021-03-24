@@ -1,6 +1,7 @@
-package com.hawthorn.component.utils.common;
+package com.hawthorn.platform.utils.common;
 
-import com.hawthorn.component.constant.ApplicationConstant;
+import com.hawthorn.component.utils.common.StringMyUtil;
+import com.hawthorn.platform.constant.ApplicationConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.PropertyAccessorFactory;

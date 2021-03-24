@@ -1,7 +1,8 @@
-package com.hawthorn.component.utils.common;
+package com.hawthorn.platform.utils.common;
 
-import com.hawthorn.component.constant.ApplicationConstant;
+import com.hawthorn.component.utils.common.ArrayMyUtil;
 import com.hawthorn.component.utils.iassert.AssertMyUtil;
+import com.hawthorn.platform.constant.ApplicationConstant;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
