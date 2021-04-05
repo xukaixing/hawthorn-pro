@@ -188,6 +188,19 @@ knife4j:
   enable: true
 
 # =====================================
+# logback
+# =====================================
+logging:
+  config: classpath:logback-spring-dev.xml
+  level:
+    #    io.swagger.models.parameters.AbstractSerializableParameter: error
+    com.hawthorn: debug
+    org.ibatis: debug
+    druid.sql: debug
+    org.springframework.jdbc: info
+    root: info
+
+# =====================================
 # 自定义属性
 # =====================================
 myprops:

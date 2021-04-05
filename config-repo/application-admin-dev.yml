@@ -3,14 +3,6 @@
 # @Auther: andy.ten@tom.com
 # @Version: v1.1.0
 # =====================================
-server:
-  tomcat:
-    max-connections: 10000
-    accept-count: 1000
-    threads:
-      max: 800
-      min-spare: 100
-
 spring:
   profiles:
     include: common-dev
