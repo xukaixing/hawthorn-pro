@@ -8,13 +8,10 @@
 # 启动端口号
 # =====================================
 server:
-  #  address: 127.0.0.1 #需去掉，否在docker中映射地址出错
-  port: 4701
-#  servlet:
-#    context-path: /admin # /${spring.application.name}
+  port: 4902
 spring:
   application:
-    name: hawthorn-admin
+    name: hawthorn-backup
   profiles:
     include: common-dev
 
@@ -26,30 +23,3 @@ spring:
       url: jdbc:mysql://localhost:3306/hawthorn?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useOldAliasMetadataBehavior=true&useSSL=false&autoReconnect=true&failOverReadOnly=false
       username: root
       password: 123456
-
-  # =====================================
-  # zipkin 通过docker容器配置与rabbit和elasticsearch关联
-  # =====================================
-  zipkin:
-    #    base-url: http://10.211.55.14:9411/ # rabbit模式需要注释掉
-    sender:
-      type: rabbit # 默认为web，http方式
-    compression:
-      enabled: true
-  sleuth:
-    sampler:
-      probability: 0.1 #样本采集量，默认为0.1，为了测试这里修改为1，正式环境一般使用默认值（百分比采样）。
-    async: #过滤async跟踪
-      enabled: false
-    web:
-      enabled: true
-      #additional-skip-pattern: ".*feign.hello.*" # 过滤不需要跟踪的url
-    scheduled: #过滤scheduled跟踪
-      enabled: false
-    redis:
-      enabled: false # 过滤redis跟踪
-
-# =====================================
-# test
-# =====================================
-hello: hello, dev configurations.

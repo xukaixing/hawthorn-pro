@@ -9,12 +9,12 @@
 # =====================================
 server:
   #  address: 127.0.0.1 #需去掉，否在docker中映射地址出错
-  port: 4701
+  port: 4702
 #  servlet:
-#    context-path: /admin # /${spring.application.name}
+#    context-path: /login # /${spring.application.name}
 spring:
   application:
-    name: hawthorn-admin
+    name: hawthorn-login
   profiles:
     include: common-prod
 
