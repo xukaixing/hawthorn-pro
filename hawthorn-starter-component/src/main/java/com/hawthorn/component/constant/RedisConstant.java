@@ -28,7 +28,7 @@ public class RedisConstant
   public static final String LOGIN_UUID_KEY = "uuid";
   // 定义登录用户的ipaddress的redis中的key
   public static final String LOGIN_IPADDRESS_KEY = "ip";
-  
+
   // user redis
   public static final String REDIS_KEY_USER_PREFIX = "cache:user:{0}";
   public static final String REDIS_KEY_USERNAME = "name";
@@ -37,7 +37,7 @@ public class RedisConstant
   public static final String REDIS_KEY_USERTYPE = "type";
 
   // dict redis
-  public static final String REDIS_KEY_DICT_PREFIX = "cache:dict:{0}";
+  public static final String REDIS_KEY_DICT_PREFIX = "cache:dict:{0}:{1}";
   public static final String REDIS_KEY_DICVALUE = "val";
   public static final String REDIS_KEY_DICID = "id";
   public static final String REDIS_KEY_DICLABEL = "label";

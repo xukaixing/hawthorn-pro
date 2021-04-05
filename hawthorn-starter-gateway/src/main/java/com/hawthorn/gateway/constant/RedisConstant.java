@@ -37,7 +37,7 @@ public class RedisConstant
   public static final String REDIS_KEY_USERTYPE = "type";
 
   // dict redis
-  public static final String REDIS_KEY_DICT_PREFIX = "cache:dict:{0}";
+  public static final String REDIS_KEY_DICT_PREFIX = "cache:dict:{0}:{1}";
   public static final String REDIS_KEY_DICVALUE = "val";
   public static final String REDIS_KEY_DICID = "id";
   public static final String REDIS_KEY_DICLABEL = "label";

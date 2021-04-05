@@ -45,7 +45,7 @@ public class DictCacheServiceImpl implements DictCacheService
       value = dictCacheDTO.getValue();
       type = dictCacheDTO.getType();
       label = dictCacheDTO.getLabel();
-      key = StringMyUtil.placeHolder(RedisConstant.REDIS_KEY_DICT_PREFIX, dictCacheDTO.getType());
+      key = StringMyUtil.placeHolder(RedisConstant.REDIS_KEY_DICT_PREFIX, dictCacheDTO.getType(), value);
       redisMyClient.hSet(key, RedisConstant.REDIS_KEY_DICVALUE, value);
       redisMyClient.hSet(key, RedisConstant.REDIS_KEY_DICLABEL, label);
       redisMyClient.hSet(key, RedisConstant.REDIS_KEY_DICTYPE, type);
