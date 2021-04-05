@@ -13,7 +13,7 @@ server:
 
 spring:
   profiles:
-    include: application-common-dev
+    include: common-dev
   # =====================================
   # druid
   # =====================================
