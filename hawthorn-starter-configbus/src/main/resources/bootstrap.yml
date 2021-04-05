@@ -1,0 +1,23 @@
+# =====================================
+# @Desc: springboot工程配置文件，使用yml方式
+# @Auther: andy.ten@tom.com
+# @Version: v1.0.3
+# =====================================
+
+# =====================================
+# 启动端口号
+# =====================================
+server:
+  #  address: 127.0.0.1 #需去掉，否在docker中映射地址出错
+  port: 4706
+#  servlet:
+#    context-path: /configbus # /${spring.application.name}
+spring:
+  application:
+    name: hawthorn-configbus
+
+  #  profiles:
+  #    active: dev
+  cloud:
+    config:
+      enabled: false # 关闭从cloud获取配置
