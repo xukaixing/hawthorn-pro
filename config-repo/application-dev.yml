@@ -1,4 +1,13 @@
 hello: hello, dev configurations.
+spring:
+  # =====================================
+  # druid
+  # =====================================
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/hawthorn?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useOldAliasMetadataBehavior=true&useSSL=false&autoReconnect=true&failOverReadOnly=false
+      username: root
+      password: 123456
 # =====================================
 # swagger
 # =====================================
