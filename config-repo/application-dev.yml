@@ -1,0 +1,10 @@
+hello: hello, dev configurations.
+# =====================================
+# swagger
+# =====================================
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true
+knife4j:
+  enable: true
