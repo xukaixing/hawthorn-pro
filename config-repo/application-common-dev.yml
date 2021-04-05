@@ -58,7 +58,7 @@ spring:
   # redis
   # =====================================
   redis:
-    host: 10.211.55.22
+    host: 10.211.55.2
     port: 6379 # Redis服务器连接端口
     password: 123456 # Redis服务器连接密码（默认为空）
 
@@ -196,8 +196,3 @@ myprops:
   exectime:
     errtime: 5000
     warntime: 3000
-
-# =====================================
-# test
-# =====================================
-hello: hello, dev configurations.
