@@ -9,14 +9,13 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <artifactId>hawthorn-starter-backup</artifactId>
-  <version>1.0.3-SNAPSHOT</version>
+  <version>1.0.4-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>hawthorn-starter-backup</name>
   <description>Hawthorn project for Backup</description>
 
   <properties>
     <hawthorn.platform.starter.version>1.1.6-SNAPSHOT</hawthorn.platform.starter.version>
-    <spring.boot.admin.client>2.3.0</spring.boot.admin.client>
   </properties>
 
   <dependencies>
@@ -25,11 +24,15 @@
       <artifactId>hawthorn-starter-platform</artifactId>
       <version>${hawthorn.platform.starter.version}</version>
     </dependency>
-    <!--spring-boot-admin-client-->
+    <!-- rabbit-mq -->
     <dependency>
-      <groupId>de.codecentric</groupId>
-      <artifactId>spring-boot-admin-starter-client</artifactId>
-      <version>${spring.boot.admin.client}</version>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-amqp</artifactId>
+    </dependency>
+    <!-- spring-cloud-config -->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-config</artifactId>
     </dependency>
   </dependencies>
   <build>

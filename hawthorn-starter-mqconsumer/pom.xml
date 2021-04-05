@@ -9,14 +9,13 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <artifactId>hawthorn-starter-mqconsumer</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.2-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>hawthorn-starter-mqconsumer</name>
   <description>Hawthorn project for MqConsumer</description>
 
   <properties>
     <hawthorn.platform.starter.version>1.1.6-SNAPSHOT</hawthorn.platform.starter.version>
-    <spring.boot.admin.client>2.3.0</spring.boot.admin.client>
   </properties>
 
   <dependencies>
@@ -26,17 +25,16 @@
       <version>${hawthorn.platform.starter.version}</version>
     </dependency>
 
-    <!--spring-boot-admin-client-->
-    <dependency>
-      <groupId>de.codecentric</groupId>
-      <artifactId>spring-boot-admin-starter-client</artifactId>
-      <version>${spring.boot.admin.client}</version>
-    </dependency>
-
     <!-- rabbit-mq -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-amqp</artifactId>
+    </dependency>
+
+    <!-- spring-cloud-config -->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-config</artifactId>
     </dependency>
 
   </dependencies>

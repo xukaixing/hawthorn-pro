@@ -1,7 +1,7 @@
 # =====================================
 # @Desc: springboot工程配置文件，使用yml方式
 # @Auther: andy.ten@tom.com
-# @Version: v1.0.9
+# @Version: v1.1.0
 # =====================================
 server:
   tomcat:
@@ -12,14 +12,6 @@ server:
       min-spare: 100
 
 spring:
-  #  boot:
-  #  admin: # 监控配置 使用注册中心，不需要单独增加client监控
-  #  client:
-  #    url: http://localhost:8000
-  #  instance:
-  #    prefer-ip: true
-  #  discovery:
-  #    ignored-services: consul
 
   # =====================================
   # consul配置
@@ -27,18 +19,16 @@ spring:
   cloud:
     consul:
       enabled: true
-      host: localhost
+      host: 10.211.55.2
       port: 8500
       discovery:
         enabled: true
-        register: true # 是否将自身服务注册到consul中
-        hostname: ${server.address}
-        health-check-path: /actuator/health  #服务健康检查地址
+        register: true
+        #        hostname: ${server.address}
+        health-check-path: /actuator/health
         health-check-interval: 15s
         health-check-critical-timeout: 30s
-        service-name: ${spring.application.name} # 注册到consul的服务名称
-        # 默认的id为：${spring.application.name}-${server.port}
-        # 默认id配置的问题是：某个微服务即使有多个实例，只要端口相同，那么Consul上依然只会保留1条数据！要想解决这个问题，只需要让不同实例，拥有不同的InstanceId即可。
+        service-name: ${spring.application.name}
         instance-id: ${spring.application.name}-${spring.cloud.client.ip-address}-${server.port}
 
 # =====================================

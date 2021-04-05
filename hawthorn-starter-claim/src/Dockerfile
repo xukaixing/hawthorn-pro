@@ -15,7 +15,7 @@ RUN /bin/ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 RUN echo "Asia/Shanghai" > /etc/timezone
 
 ###### 各个工程修改 begin ######
-ARG JAR_FILE=hawthorn-starter-claim-1.0.4-SNAPSHOT.jar
+ARG JAR_FILE=hawthorn-starter-claim-1.0.5-SNAPSHOT.jar
 ARG LOG_PACKAGE=claim
 ENV APP_NAME=claim.jar
 ###### end ######

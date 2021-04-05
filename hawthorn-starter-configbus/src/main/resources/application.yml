@@ -1,7 +1,7 @@
 # =====================================
 # @Desc: springboot工程配置文件，使用yml方式
 # @Auther: andy.ten@tom.com
-# @Version: v1.0.3
+# @Version: v1.0.4
 # =====================================
 
 spring:
@@ -11,12 +11,8 @@ spring:
     multipart:
       max-file-size: 5MB
       max-request-size: 25MB
-  security:
-    user:
-      name: admin
-      password: admin
   profiles:
-    active: prod
+    active: dev
 
 # =====================================
 # 开放健康检查接口
@@ -33,11 +29,3 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
-
-# =====================================
-# 自定义属性
-# =====================================
-myprops:
-  exectime:
-    errtime: 3000
-    warntime: 2000

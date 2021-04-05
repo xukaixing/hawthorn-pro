@@ -6,6 +6,14 @@
       xukaixing@hotmail.com
   
 ## 版本
+> v1.1.9 : 2021.04.05            
+>> 增加配置中心工程 
+>> 增加配置文件工程  
+>> 增加配置中心文件
+>> 优化配置中心              
+  
+---
+
 > v1.1.8 : 2021.03.23            
 >> 增加Dockerfile打包文件      
 >> 调整component包结构    
@@ -19,12 +27,6 @@
 >> 增加logstash日志配置                
   
 ---
-
-> v1.1.6 : 2021.03.11          
->> 增加sleuth链路追踪  
->> 增加zipkin链路展示
->> 优化yml配置文件内容  
->> 日志文件增加traceid配置  
       
 ## 环境
 
@@ -65,6 +67,7 @@
   - `Amqp`: rabbit mq消息组件
   - `Sleuth`: 链路跟踪组件
   - `Zipkin`: 链路跟踪展示组件
+  - `Config`: 配置中心组件
   
 - 自定义工具
   - `Exectime`: aop的执行时间注解
@@ -102,7 +105,8 @@
   - `hawthorn-starter-login`: 4702    
   - `hawthorn-starter-mqprovider`: 4703  
   - `hawthorn-starter-mqconsumer`: 4704  
-  - `hawthorn-starter-redis`: 4705       
+  - `hawthorn-starter-redis`: 4705
+  - `hawthorn-starter-configbus`: 4706       
   - `hawthorn-starter-hystrixdashboard`: 4901
   - `hawthorn-starter-backup`: 4902  
 ## 运行
@@ -116,7 +120,27 @@
 
 ``` 目录
 .
+├── config-repo
+│   ├── application-admin-dev.yml
+│   ├── application-admin-prod.yml
+│   ├── application-backup-dev.yml
+│   ├── application-backup-prod.yml
+│   ├── application-claim-dev.yml
+│   ├── application-claim-prod.yml
+│   ├── application-common-dev.yml
+│   ├── application-common-prod.yml
+│   ├── application-login-dev.yml
+│   ├── application-login-prod.yml
+│   ├── application-mqconsumer-dev.yml
+│   ├── application-mqconsumer-prod.yml
+│   ├── application-mqprovider-dev.yml
+│   ├── application-mqprovider-prod.yml
+│   ├── application-part-dev.yml
+│   ├── application-part-prod.yml
+│   ├── application-redis-dev.yml
+│   └── application-redis-prod.yml
 ├── hawthorn-starter-admin
+│   ├── Dockerfile
 │   ├── db
 │   │   └── hawthorn.sql
 │   ├── pom.xml
@@ -127,7 +151,6 @@
 │       │   │       └── hawthorn
 │       │   │           └── admin
 │       │   │               ├── BootAdminApplication.java
-│       │   │               ├── config
 │       │   │               ├── controller
 │       │   │               ├── feign
 │       │   │               ├── model
@@ -173,6 +196,7 @@
 │       │       ├── application-prod.yml
 │       │       ├── application.yml
 │       │       ├── banner.txt
+│       │       ├── bootstrap.yml
 │       │       ├── logback-spring-dev.xml
 │       │       ├── logback-spring-prod.xml
 │       │       └── rebel.xml
@@ -181,6 +205,7 @@
 ├── hawthorn-starter-claim
 │   ├── pom.xml
 │   └── src
+│       ├── Dockerfile
 │       ├── main
 │       │   ├── java
 │       │   │   └── com
@@ -208,7 +233,6 @@
 │           │   └── com
 │           │       └── hawthorn
 │           │           └── component
-│           │               ├── boot
 │           │               ├── constant
 │           │               ├── exception
 │           │               ├── pojo
@@ -226,9 +250,32 @@
 │                   ├── myService.java.vm
 │                   ├── myServiceImpl.java.vm
 │                   └── myServiceImplTest.java.vm
+├── hawthorn-starter-configbus
+│   ├── Dockerfile
+│   ├── pom.xml
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── com
+│       │   │       └── hawthorn
+│       │   │           └── configbus
+│       │   │               └── BootConfigBusApplication.java
+│       │   └── resources
+│       │       ├── META-INF
+│       │       ├── application-dev.yml
+│       │       ├── application-prod.yml
+│       │       ├── application.yml
+│       │       ├── banner.txt
+│       │       ├── bootstrap.yml
+│       │       ├── logback-spring-dev.xml
+│       │       ├── logback-spring-prod.xml
+│       │       └── rebel.xml
+│       └── test
+│           └── java
 ├── hawthorn-starter-gateway
 │   ├── pom.xml
 │   └── src
+│       ├── Dockerfile
 │       ├── main
 │       │   ├── java
 │       │   │   └── com
@@ -277,6 +324,7 @@
 ├── hawthorn-starter-login
 │   ├── pom.xml
 │   └── src
+│       ├── Dockerfile
 │       ├── main
 │       │   ├── java
 │       │   │   └── com
@@ -333,6 +381,7 @@
 ├── hawthorn-starter-mqconsumer
 │   ├── pom.xml
 │   └── src
+│       ├── Dockerfile
 │       ├── main
 │       │   ├── java
 │       │   │   └── com
@@ -360,6 +409,7 @@
 ├── hawthorn-starter-mqprovider
 │   ├── pom.xml
 │   └── src
+│       ├── Dockerfile
 │       ├── main
 │       │   ├── java
 │       │   │   └── com
@@ -415,8 +465,12 @@
 │           │   │           ├── PlatformAutoEnable.java
 │           │   │           ├── annotation
 │           │   │           ├── aspect
+│           │   │           ├── boot
+│           │   │           ├── common
 │           │   │           ├── config
+│           │   │           ├── constant
 │           │   │           ├── exception
+│           │   │           ├── filter
 │           │   │           ├── generator
 │           │   │           ├── hystrix
 │           │   │           ├── interceptor
@@ -425,8 +479,8 @@
 │           │   │           ├── repository
 │           │   │           ├── service
 │           │   │           ├── utils
-│           │   │           └── validatecode
-│           │   ├── model
+│           │   │           ├── validatecode
+│           │   │           └── wrapper
 │           │   └── org
 │           │       └── springframework
 │           │           └── cloud
@@ -438,6 +492,7 @@
 ├── hawthorn-starter-redis
 │   ├── pom.xml
 │   └── src
+│       ├── Dockerfile
 │       ├── main
 │       │   ├── java
 │       │   │   └── com
@@ -468,7 +523,7 @@
 │           └── java
 └── pom.xml
 
-213 directories, 138 files
+227 directories, 175 files
 
 ```
 

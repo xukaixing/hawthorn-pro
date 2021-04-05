@@ -53,11 +53,12 @@ import java.util.List;
   #set($classMapping = ${controllerDomain})
 #end
 /**
- * @Copyright: Copyright (c) 2020 ${author}
+ * @copyright: Copyright (c) 2021 ${author}
  * <p></p>
- * @remark: $!{table.comment} controller
+ * @remark: todo $!{table.comment} controller
  * @author: ${author}
- * @date: ${date}
+ * @created: ${date}
+ * @lasted: ${date}
  * @version v1.0.1
  */
 @Api(tags = {"$mainName-$moduleMapping"})

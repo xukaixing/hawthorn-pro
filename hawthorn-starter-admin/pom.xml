@@ -16,7 +16,6 @@
 
   <properties>
     <hawthorn.platform.starter.version>1.1.6-SNAPSHOT</hawthorn.platform.starter.version>
-    <spring.boot.admin.client>2.3.0</spring.boot.admin.client>
   </properties>
 
   <dependencies>
@@ -26,29 +25,16 @@
       <version>${hawthorn.platform.starter.version}</version>
     </dependency>
 
-    <!--spring-boot-admin-client-->
-    <dependency>
-      <groupId>de.codecentric</groupId>
-      <artifactId>spring-boot-admin-starter-client</artifactId>
-      <version>${spring.boot.admin.client}</version>
-    </dependency>
-
-    <!--sleuth -->
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-sleuth</artifactId>
-    </dependency>
-
-    <!-- zipkin -->
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-zipkin</artifactId>
-    </dependency>
-
     <!-- rabbit-mq -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-amqp</artifactId>
+    </dependency>
+
+    <!-- spring-cloud-config -->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-config</artifactId>
     </dependency>
 
   </dependencies>

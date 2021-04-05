@@ -8,5 +8,5 @@
                                                                |___/
 
 :: Spring Boot ::               (v2.3.2 RELEASE)
-=== HawThorn Login Application | Version: 1.0.6 Releasze ===
+=== HawThorn Login Application | Version: 1.0.7 Releasze ===
 === Author | andy.ten@tom.com & xukaixing@hotmail.com  ===

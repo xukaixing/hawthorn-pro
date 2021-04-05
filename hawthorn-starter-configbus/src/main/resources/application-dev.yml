@@ -13,36 +13,6 @@ server:
 
 spring:
   # =====================================
-  # consul
-  # =====================================
-  cloud:
-    consul:
-      enabled: true
-      host: localhost
-      port: 8500
-      discovery:
-        enabled: true
-        register: true
-        hostname: ${server.address}
-        health-check-path: /actuator/health
-        health-check-interval: 15s
-        health-check-critical-timeout: 30s
-        service-name: ${spring.application.name}
-        # 默认的id为：${spring.application.name}-${server.port}
-        instance-id: ${spring.application.name}-${spring.cloud.client.ip-address}-${server.port}
-
-  # =====================================
-  # config
-  # =====================================
-  config:
-    label: master # git仓库分支
-    server:
-      git:
-        uri: https://gitee.com/liuge1988/mango.git  # 配置git仓库的地址
-        search-paths: src/config-repo  # git仓库地址下的相对地址，可以配置多个，用,分割。
-        username: xukaixing  # git仓库的账号
-        password: Qasdf123  # git仓库的密码
-  # =====================================
   # rabbitmq
   # =====================================
   rabbitmq:

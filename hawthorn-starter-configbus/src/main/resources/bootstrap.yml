@@ -8,16 +8,45 @@
 # 启动端口号
 # =====================================
 server:
-  #  address: 127.0.0.1 #需去掉，否在docker中映射地址出错
   port: 4706
 #  servlet:
 #    context-path: /configbus # /${spring.application.name}
 spring:
   application:
     name: hawthorn-configbus
-
-  #  profiles:
-  #    active: dev
+  # =====================================
+  # consul
+  # =====================================
   cloud:
+    consul:
+      enabled: true
+      host: 10.211.55.2
+      port: 8500
+      discovery:
+        enabled: true
+        register: true
+        health-check-path: /actuator/health
+        health-check-interval: 15s
+        health-check-critical-timeout: 30s
+        service-name: ${spring.application.name}
+        # 默认的id为：${spring.application.name}-${server.port}
+        instance-id: ${spring.application.name}-${spring.cloud.client.ip-address}-${server.port}
+
+    # =====================================
+    # config
+    # 仓库中的配置文件会被转换成web接口，访问可以参照以下的规则
+    # /{application}/{profile}[/{label}]
+    # /{application}-{profile}.yml
+    # /{label}/{application}-{profile}.yml
+    # /{application}-{profile}.properties
+    # /{label}/{application}-{profile}.properties
+    # =====================================
     config:
-      enabled: false # 关闭从cloud获取配置
+      #label: dev-andyten # 在bootstrap.yml中配置分支
+      server:
+        git:
+          default-label: dev-andyten # 在application.yml中配置分支
+          uri: https://gitee.com/xukaixing/hawthorn-pro.git  # 配置git仓库的地址
+          search-paths: /config-repo  # git仓库地址下的相对地址，可以配置多个，用,分割。
+          username: xukaixing-guest  # git仓库的账号
+          password: Qasdf123  # git仓库的密码

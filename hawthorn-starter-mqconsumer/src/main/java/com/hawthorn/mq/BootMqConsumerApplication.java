@@ -6,7 +6,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import springfox.documentation.oas.annotations.EnableOpenApi;
 
 @SpringBootApplication
-//@EnableSwagger2
 @EnableOpenApi
 @EnableDiscoveryClient
 public class BootMqConsumerApplication
