@@ -31,8 +31,6 @@ spring:
     user:
       name: admin
       password: admin
-  profiles:
-    active: dev
 
   # =====================================
   # consul
