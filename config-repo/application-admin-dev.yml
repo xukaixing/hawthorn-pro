@@ -1,5 +1,19 @@
-hello: hello, dev configurations.
+# =====================================
+# @Desc: springboot工程配置文件，使用yml方式
+# @Auther: andy.ten@tom.com
+# @Version: v1.1.0
+# =====================================
+server:
+  tomcat:
+    max-connections: 10000
+    accept-count: 1000
+    threads:
+      max: 800
+      min-spare: 100
+
 spring:
+  profiles:
+    include: application-common-dev
   # =====================================
   # druid
   # =====================================
@@ -8,12 +22,8 @@ spring:
       url: jdbc:mysql://localhost:3306/hawthorn?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useOldAliasMetadataBehavior=true&useSSL=false&autoReconnect=true&failOverReadOnly=false
       username: root
       password: 123456
+
 # =====================================
-# swagger
+# test
 # =====================================
-springfox:
-  documentation:
-    swagger-ui:
-      enabled: true
-knife4j:
-  enable: true
+hello: hello, dev configurations.
