@@ -30,4 +30,4 @@ spring:
 # =====================================
 # test
 # =====================================
-hello: hello, dev configurations2.
+hello: hello, dev configurations.
