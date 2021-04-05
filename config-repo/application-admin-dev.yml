@@ -1,9 +1,20 @@
 # =====================================
 # @Desc: springboot工程配置文件，使用yml方式
 # @Auther: andy.ten@tom.com
-# @Version: v1.1.0
+# @Version: v1.1.1
 # =====================================
+
+# =====================================
+# 启动端口号
+# =====================================
+server:
+  #  address: 127.0.0.1 #需去掉，否在docker中映射地址出错
+  port: 4701
+#  servlet:
+#    context-path: /admin # /${spring.application.name}
 spring:
+  application:
+    name: hawthorn-admin
   profiles:
     include: common-dev
   # =====================================

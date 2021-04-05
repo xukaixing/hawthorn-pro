@@ -183,15 +183,15 @@ management:
 springfox:
   documentation:
     swagger-ui:
-      enabled: true
+      enabled: false
 knife4j:
-  enable: true
+  enable: false
 
 # =====================================
 # logback
 # =====================================
 logging:
-  config: classpath:logback-spring-dev.xml
+  config: classpath:logback-spring-prod.xml
   level:
     #    io.swagger.models.parameters.AbstractSerializableParameter: error
     com.hawthorn: debug
