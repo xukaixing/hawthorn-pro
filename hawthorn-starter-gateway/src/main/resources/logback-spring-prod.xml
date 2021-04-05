@@ -7,9 +7,14 @@
   -->
   <!-- 从application.yml 中获取参数 -->
   <springProperty scope="context" name="springAppName" source="spring.application.name"/>
+  <property name="LOG" value="logs"/>
+  <property name="LOGERROR" value="logs_error"/>
+  <property name="LOGWARN" value="logs_warn"/>
+  <property name="LOGSTASH" value="logs_trace"/>
+
   <!-- 文件输出格式 -->
-  <property name="PATTERN" value="%-23(%d{yyyy-MM-dd HH:mm:ss.SSS}) |[${springAppName:-appname},%X{X-B3-TraceId:-traceid},%X{X-B3-SpanId:-spanid},%X{userAccount:-useraccount}] [%thread] %-5level %c [%L] -|%msg%n"/>
-  <property name="PATTERN-CONSOLE" value="%-23(%d{yyyy-MM-dd HH:mm:ss.SSS}) |[${springAppName:-appname},%X{X-B3-TraceId:-traceid},%X{X-B3-SpanId:-spanid},%X{userAccount:-useraccount}] %magenta([%thread]) -%green(%-5level) %cyan(%c [%L]) -|%msg%n"/>
+  <property name="PATTERN" value="%-23(%d{yyyy-MM-dd HH:mm:ss.SSS}) |[${springAppName:-appname},%X{X-B3-TraceId:-traceid},%X{X-B3-SpanId:-spanid},%X{userAccount:-account}] [%thread] %-5level %c [%L] -|%msg%n"/>
+  <property name="PATTERN-CONSOLE" value="%-23(%d{yyyy-MM-dd HH:mm:ss.SSS}) |[${springAppName:-appname},%X{X-B3-TraceId:-traceid},%X{X-B3-SpanId:-spanid},%X{userAccount:-account}] %magenta([%thread]) -%green(%-5level) %cyan(%c [%L]) -|%msg%n"/>
   <property name="ROLLINGSIZE" value="5MB"/>
   <!--日志文件输出路径 工程所在目录-->
   <property name="FILE_PATH" value="logs/"/>
@@ -37,10 +42,10 @@
   <!-- 每天产生一个文件 -->
   <appender name="ALLFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <!-- 文件路径 -->
-    <file>${FILE_PATH}/logs.log</file>
+    <file>${FILE_PATH}/${LOG}.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
       <!-- 文件名称 -->
-      <fileNamePattern>${FILE_PATH}/logs.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+      <fileNamePattern>${FILE_PATH}/${LOG}.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
       <maxFileSize>${ROLLINGSIZE}</maxFileSize>
       <!--日志文件保留天数30天 -->
       <maxHistory>3</maxHistory>
@@ -54,10 +59,10 @@
   <!-- 错误日志打印 -->
   <appender name="ERRORFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <!-- 文件路径 -->
-    <file>${FILE_PATH}/logs_error.log</file>
+    <file>${FILE_PATH}/${LOGERROR}.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
       <!-- 文件名称 -->
-      <fileNamePattern>${FILE_PATH}/logs_error.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+      <fileNamePattern>${FILE_PATH}/${LOGERROR}.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
       <maxFileSize>${ROLLINGSIZE}</maxFileSize>
       <!--日志文件保留天数30天 -->
       <maxHistory>3</maxHistory>
@@ -78,10 +83,10 @@
   <!-- 警告日志打印 -->
   <appender name="WARNFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <!-- 文件路径 -->
-    <file>${FILE_PATH}/logs_warn.log</file>
+    <file>${FILE_PATH}/${LOGWARN}.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
       <!-- 文件名称 -->
-      <fileNamePattern>${FILE_PATH}/logs_warn.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+      <fileNamePattern>${FILE_PATH}/${LOGWARN}.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
       <maxFileSize>${ROLLINGSIZE}</maxFileSize>
       <!-- 日志文件保留天数30天 -->
       <maxHistory>3</maxHistory>

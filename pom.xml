@@ -310,24 +310,6 @@
       <version>${jwt.version}</version>
     </dependency>
 
-    <!--sleuth -->
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-sleuth</artifactId>
-    </dependency>
-
-    <!-- zipkin -->
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-zipkin</artifactId>
-    </dependency>
-
-    <!-- rabbit-mq -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-amqp</artifactId>
-    </dependency>
-
     <!-- 输出 Json 格式日志 -->
     <dependency>
       <groupId>net.logstash.logback</groupId>

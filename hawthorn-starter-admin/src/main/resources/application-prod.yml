@@ -108,7 +108,7 @@ spring:
       enabled: true
   sleuth:
     sampler:
-      probability: 1 #样本采集量，默认为0.1，为了测试这里修改为1，正式环境一般使用默认值（百分比采样）。
+      probability: 0.1 #样本采集量，默认为0.1，为了测试这里修改为1，正式环境一般使用默认值（百分比采样）。
     async: #过滤async跟踪
       enabled: false
     web:
@@ -125,7 +125,7 @@ spring:
 springfox:
   documentation:
     swagger-ui:
-      enabled=true: false
+      enabled: false
 knife4j:
   enable: false
 

@@ -7,10 +7,10 @@
   -->
   <!-- 从application.yml 中获取参数 -->
   <springProperty scope="context" name="springAppName" source="spring.application.name"/>
-  <property name="LOG" value="log"/>
+  <property name="LOG" value="logs"/>
   <property name="LOGERROR" value="logs_error"/>
   <property name="LOGWARN" value="logs_warn"/>
-  <property name="LOGSTASH" value="log_trace"/>
+  <property name="LOGSTASH" value="logs_trace"/>
 
   <!-- 文件输出格式 -->
   <property name="PATTERN" value="%-23(%d{yyyy-MM-dd HH:mm:ss.SSS}) |[${springAppName:-appname},%X{X-B3-TraceId:-traceid},%X{X-B3-SpanId:-spanid},%X{userAccount:-account}] [%thread] %-5level %c [%L] -|%msg%n"/>
@@ -45,7 +45,7 @@
     <file>${FILE_PATH}/${LOG}.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
       <!-- 文件名称 -->
-      <fileNamePattern>${FILE_PATH}/logs.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+      <fileNamePattern>${FILE_PATH}/${LOG}.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
       <maxFileSize>${ROLLINGSIZE}</maxFileSize>
       <!--日志文件保留天数30天 -->
       <maxHistory>3</maxHistory>
@@ -156,8 +156,8 @@
   </logger>
 
   <!-- Appender to log to file in a JSON format -->
-  <appender name="logstash" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <!--  <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">-->
+  <appender name="LOGSTASH" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!--  <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">-->
     <param name="Encoding" value="UTF-8"/>
     <!--
     <remoteHost>192.168.1.242</remoteHost>
@@ -198,10 +198,10 @@
 
   <root>
     <appender-ref ref="CONSOLE"/>
-    <appender-ref ref="logstash"/>
     <appender-ref ref="ALLFILE"/>
     <appender-ref ref="ERRORFILE"/>
     <appender-ref ref="WARNFILE"/>
+    <appender-ref ref="LOGSTASH"/>
   </root>
 
   <jmxConfigurator/>

@@ -3,30 +3,98 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.andyten</groupId>
-    <artifactId>hawthorn-starter-parent</artifactId>
-    <version>HT5-RELEASE</version>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.3.2.RELEASE</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <artifactId>hawthorn-starter-monitor</artifactId>
-  <version>1.0.3-SNAPSHOT</version>
+  <version>1.0.4-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>hawthorn-starter-monitor</name>
   <description>Hawthorn project for Monitor</description>
 
   <properties>
-    <hawthorn.platform.starter.version>1.1.6-SNAPSHOT</hawthorn.platform.starter.version>
+    <!-- 设置源码和输出文件的编码规则 -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <java.version>8</java.version>
+    <maven.build.timestamp.format>yyyy_MM_dd_HH_mm_ss</maven.build.timestamp.format>
+    <project.build.date>${maven.build.timestamp}</project.build.date>
+    <spring.icloud.version>Hoxton.RELEASE</spring.icloud.version>
+
     <spring.boot.admin.starter.version>2.3.0</spring.boot.admin.starter.version>
     <spring.boot.admin.server.version>2.3.0</spring.boot.admin.server.version>
     <spring.boot.admin.server.ui.version>2.3.0</spring.boot.admin.server.ui.version>
   </properties>
+  <!-- 配置Spring Icloud -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring.icloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
-    <!--spring-boot-admin 引入该依赖，能够从consul中获取服务，无须在client增加配置；否则无法读取服务-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-config</artifactId>
+    </dependency>
+    <!-- 支持 @ConfigurationProperties 注解，application.yml自定义属性 -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <!-- junit test -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- spring aop -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-aop</artifactId>
+    </dependency>
+
+    <!-- spring监控 -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+
+    <!-- 配置lombok -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <!--consul-->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-consul-discovery</artifactId>
+    </dependency>
+
+    <!-- 引入该依赖，能够从consul中获取服务，无须在client增加配置；否则无法读取服务 -->
     <dependency>
       <groupId>de.codecentric</groupId>
       <artifactId>spring-boot-admin-starter-server</artifactId>
       <version>${spring.boot.admin.starter.version}</version>
     </dependency>
+
     <!--spring-boot-admin-->
     <dependency>
       <groupId>de.codecentric</groupId>
@@ -38,6 +106,12 @@
       <artifactId>spring-boot-admin-server-ui</artifactId>
       <version>${spring.boot.admin.server.ui.version}</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
   </dependencies>
   <build>
     <resources>

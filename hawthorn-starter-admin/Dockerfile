@@ -14,23 +14,27 @@ ENV LC_ALL en_US.UTF-8
 RUN /bin/ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 RUN echo "Asia/Shanghai" > /etc/timezone
 
-#用于指定传递给构建运行时的变量
+###### 各个工程修改 begin ######
 ARG JAR_FILE=hawthorn-starter-admin-1.1.2-SNAPSHOT.jar
+ARG LOG_PACKAGE=admin
+ENV APP_NAME=admin.jar
+###### end ######
 
 RUN echo ${JAR_FILE}
+RUN echo ${LOG_PACKAGE}
 
 #创建存放应用的目录
-RUN mkdir -p /home/app/jars
+RUN mkdir -p /home/app/${LOG_PACKAGE}
 
 #将本地文件添加到容器中，tar类型文件会自动解压(网络压缩资源不会被解压)，可以访问网络资源，类似wget
-ADD /target/${JAR_FILE} /home/app/jars/admin.jar
+ADD /target/${JAR_FILE} /home/app/${LOG_PACKAGE}/$APP_NAME
 
 #应用需要暴露的端口
 EXPOSE 4701
 
 #工作目录，类似于cd命令
-WORKDIR /home/app/jars
+WORKDIR /home/app/${LOG_PACKAGE}
 
 #构建容器后调用，也就是在容器启动时才进行调用
 #-Djava.security.egd=file:/dev/./urandom 可解决tomcat可能启动慢的问题
-CMD ["java","-Djava.security.egd=file:/dev/./urandom", "-jar" ,"admin.jar"]
+CMD ["sh", "-c","java -Djava.security.egd=file:/dev/./urandom -jar $APP_NAME"]

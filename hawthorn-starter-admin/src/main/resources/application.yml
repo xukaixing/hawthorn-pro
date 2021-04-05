@@ -1,7 +1,7 @@
 # =====================================
 # @Desc: springboot工程配置文件，使用yml方式
 # @Auther: andy.ten@tom.com
-# @Version: v1.0.2
+# @Version: v1.1.0
 # =====================================
 
 spring:
@@ -16,7 +16,7 @@ spring:
       name: admin
       password: admin
   profiles:
-    active: prod
+    active: dev
 
 # 配置feign的Ribbon 不建议配置；httpclient的超时可以在类中配置；重试不建议配置是可能会调用多次导致数据重复
 #ribbon:

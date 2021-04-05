@@ -42,6 +42,16 @@ spring:
         instance-id: ${spring.application.name}-${spring.cloud.client.ip-address}-${server.port}
 
 # =====================================
+# swagger
+# =====================================
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true
+knife4j:
+  enable: true
+
+# =====================================
 # log配置
 # =====================================
 logging:

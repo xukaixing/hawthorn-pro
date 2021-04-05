@@ -64,6 +64,9 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
+          <!-- 必须要增加skip，否则打包后jar包中多了一层BOOT-INFO/classes
+          <skip>true</skip>
+          -->
           <!-- 工程主入口-->
           <mainClass>com.hawthorn.backup.BootBackupApplication</mainClass>
         </configuration>

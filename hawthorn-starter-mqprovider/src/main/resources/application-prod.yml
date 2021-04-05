@@ -86,7 +86,7 @@ spring:
       enabled: true
   sleuth:
     sampler:
-      probability: 1 #样本采集量，默认为0.1，为了测试这里修改为1，正式环境一般使用默认值（百分比采样）。
+      probability: 0.1 #样本采集量，默认为0.1，为了测试这里修改为1，正式环境一般使用默认值（百分比采样）。
     async: #过滤async跟踪
       enabled: false
     web:
@@ -129,6 +129,16 @@ spring:
           max-attempts: 3 # 最大重试重新投递消息次数
           initial-interval: 5000ms # 重试重新投递消息间隔时间（单位毫秒）
         default-requeue-rejected: false # 重试次数超过上面的设置之后是否丢弃(消费者listener抛出异常，是否重回队列，默认true：重回队列， false为不重回队列(结合死信交换机))
+
+# =====================================
+# swagger
+# =====================================
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true
+knife4j:
+  enable: true
 
 # =====================================
 # log配置

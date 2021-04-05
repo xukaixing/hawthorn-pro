@@ -95,6 +95,16 @@ spring:
       enabled: false
 
 # =====================================
+# swagger
+# =====================================
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true
+knife4j:
+  enable: true
+
+# =====================================
 # log配置
 # =====================================
 logging:

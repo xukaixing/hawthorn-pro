@@ -130,6 +130,16 @@ spring:
         default-requeue-rejected: false # 重试次数超过上面的设置之后是否丢弃(消费者listener抛出异常，是否重回队列，默认true：重回队列， false为不重回队列(结合死信交换机))
 
 # =====================================
+# swagger
+# =====================================
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true
+knife4j:
+  enable: true
+
+# =====================================
 # log配置
 # =====================================
 logging:

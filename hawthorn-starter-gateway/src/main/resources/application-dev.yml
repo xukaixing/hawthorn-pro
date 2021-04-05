@@ -69,6 +69,16 @@ spring:
     database: 0 # 连接的数据库
 
 # =====================================
+# swagger
+# =====================================
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true
+knife4j:
+  enable: true
+
+# =====================================
 # log配置
 # =====================================
 logging:
