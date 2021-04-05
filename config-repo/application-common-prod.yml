@@ -1,7 +1,7 @@
 # =====================================
 # @Desc: springboot工程配置文件，使用yml方式
 # @Auther: andy.ten@tom.com
-# @Version: v1.1.1
+# @Version: v1.1.2
 # =====================================
 server:
   tomcat:
@@ -180,6 +180,7 @@ spring:
         initial-interval: 10000ms
         max-interval: 300000ms
         multiplier: 2
+
 # =====================================
 # mybatis plus 配置
 # =====================================
@@ -322,15 +323,15 @@ management:
 springfox:
   documentation:
     swagger-ui:
-      enabled: false
+      enabled: true
 knife4j:
-  enable: false
+  enable: true
 
 # =====================================
 # logback
 # =====================================
 logging:
-  config: classpath:logback-spring-prod.xml
+  config: classpath:logback-spring-dev.xml
   level:
     #    io.swagger.models.parameters.AbstractSerializableParameter: error
     com.hawthorn: debug
