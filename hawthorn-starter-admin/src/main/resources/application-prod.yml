@@ -1,15 +1,8 @@
 # =====================================
 # @Desc: springboot工程配置文件，使用yml方式
 # @Auther: andy.ten@tom.com
-# @Version: v1.1.0
+# @Version: v1.1.1
 # =====================================
-server:
-  tomcat:
-    max-connections: 10000
-    accept-count: 1000
-    threads:
-      max: 800
-      min-spare: 100
 
 spring:
   # =====================================
@@ -20,81 +13,3 @@ spring:
       url: jdbc:mysql://10.211.55.2:3306/hawthorn?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useOldAliasMetadataBehavior=true&useSSL=false&autoReconnect=true&failOverReadOnly=false
       username: root
       password: 123456
-
-  # =====================================
-  # redis
-  # =====================================
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    password: 123456
-    timeout: 30000
-    database: 0
-
-  # =====================================
-  # rabbitmq
-  # =====================================
-  rabbitmq:
-    host: 10.211.55.14
-    port: 5672
-    username: hawthorn-rbmq
-    password: 123456
-    virtual-host: hawthorn_vhost
-    connection-timeout: 3000
-    publisher-confirm-type: correlated
-    publisher-returns: true
-    template:
-      retry:
-        enabled: true
-        max-attempts: 3
-        initial-interval: 10000ms
-        max-interval: 300000ms
-        multiplier: 2
-
-  # =====================================
-  # zipkin
-  # =====================================
-  zipkin:
-    sender:
-      type: rabbit
-    compression:
-      enabled: true
-
-  # =====================================
-  # sleuth
-  # =====================================
-  sleuth:
-    sampler:
-      probability: 0.1
-    async:
-      enabled: false
-    web:
-      enabled: true
-      #additional-skip-pattern: ".*feign.hello.*" # 过滤不需要跟踪的url
-    scheduled:
-      enabled: false
-    redis:
-      enabled: false
-
-# =====================================
-# swagger
-# =====================================
-springfox:
-  documentation:
-    swagger-ui:
-      enabled: true
-knife4j:
-  enable: true
-
-# =====================================
-# logback
-# =====================================
-logging:
-  config: classpath:logback-spring-prod.xml
-  level:
-    #    io.swagger.models.parameters.AbstractSerializableParameter: error
-    com.hawthorn: debug
-    org.ibatis: debug
-    druid.sql: debug
-    org.springframework.jdbc: info
-    root: info

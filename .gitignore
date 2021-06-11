@@ -1,5 +1,6 @@
 *~
 HELP.md
+tree.md
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
@@ -32,7 +33,7 @@ target/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
+#build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
@@ -89,6 +90,8 @@ package-lock.json
 *.njsproj
 *.sln
 
+### node_modules ###
+node_modules
 
 ### Log ###
 logs/

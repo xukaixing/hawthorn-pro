@@ -42,10 +42,10 @@ spring:
     # /{label}/{application}-{profile}.properties
     # =====================================
     config:
-      #label: dev-andyten # 在bootstrap.yml中配置分支
+      #label: dev-andyten # 在application.yml中配置分支,使用label
       server:
         git:
-          default-label: dev-andyten # 在application.yml中配置分支
+          default-label: dev-andyten # 在bootstrap.yml中配置分支，使用default-label
           uri: https://gitee.com/xukaixing/hawthorn-pro.git  # 配置git仓库的地址
           search-paths: /config-repo  # git仓库地址下的相对地址，可以配置多个，用,分割。
           username: xukaixing-guest  # git仓库的账号
